@@ -1,0 +1,108 @@
+site_name: ECEG-4192 — Data Structures
+site_description: BSc Electrical Engineering (Computer) · Semester VII · Module Data Storage and Analysis
+site_author: Your Name
+site_url: https://tesfamichael-g.github.io/ECEG-4192-Data-Structures/
+repo_name: YOUR-USERNAME/ECEG-4192
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - navigation.tracking
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  icon:
+    logo: material/file-tree
+    repo: fontawesome/brands/github
+
+nav:
+  - Home: index.md
+  - Syllabus: syllabus.md
+  - Schedule: schedule.md
+  - Chapters:
+      - 1. Introduction & Analysis of Algorithms: chapters/01-introduction.md
+      - 2. Arrays: chapters/02-arrays.md
+      - 3. Linked Lists: chapters/03-linked-lists.md
+      - 4. Stacks and Queues: chapters/04-stacks-queues.md
+      - 5. Trees: chapters/05-trees.md
+      - 6. Hash Tables: chapters/06-hash-tables.md
+      - 7. Graphs: chapters/07-graphs.md
+      - 8. Sorting Algorithms: chapters/08-sorting.md
+  - Slides:
+      - Overview: slides/index.md
+      - Chapter 1 Slides: slides/01-introduction.md
+      - Chapter 2 Slides: slides/02-arrays.md
+      - Chapter 3 Slides: slides/03-linked-lists.md
+      - Chapter 4 Slides: slides/04-stacks-queues.md
+      - Chapter 5 Slides: slides/05-trees.md
+      - Chapter 6 Slides: slides/06-hash-tables.md
+      - Chapter 7 Slides: slides/07-graphs.md
+      - Chapter 8 Slides: slides/08-sorting.md
+  - Solutions:
+      - Overview: solutions/index.md
+      - Chapter 1: solutions/01-introduction.md
+      - Chapter 2: solutions/02-arrays.md
+      - Chapter 3: solutions/03-linked-lists.md
+      - Chapter 4: solutions/04-stacks-queues.md
+      - Chapter 5: solutions/05-trees.md
+      - Chapter 6: solutions/06-hash-tables.md
+      - Chapter 7: solutions/07-graphs.md
+      - Chapter 8: solutions/08-sorting.md
+  - Exam Bank: exam-bank.md
+  - Assessment: assessment.md
+  - Resources: resources.md
+  - Feedback: feedback.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - tables
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.arithmatex:
+      generic: true
+      inline_syntax: ['dollar', 'round']
+      block_syntax: ['dollar', 'square']
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
