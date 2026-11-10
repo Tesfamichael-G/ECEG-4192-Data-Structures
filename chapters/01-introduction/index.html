@@ -1,0 +1,3591 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BSc Electrical Engineering (Computer) · Semester VII · Module Data Storage and Analysis">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+        <link rel="canonical" href="https://tesfamichael-g.github.io/ECEG-4192-Data-Structures/chapters/01-introduction/">
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../02-arrays/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>1. Introduction & Analysis of Algorithms - ECEG-4192 — Data Structures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-1-introduction-data-abstraction-and-analysis-of-algorithms" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-header__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECEG-4192 — Data Structures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1. Introduction & Analysis of Algorithms
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../syllabus.md" class="md-tabs__link">
+        
+  
+    
+  
+  Syllabus
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../schedule.md" class="md-tabs__link">
+        
+  
+    
+  
+  Schedule
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../slides/index.md" class="md-tabs__link">
+          
+  
+    
+  
+  Slides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../solutions/" class="md-tabs__link">
+          
+  
+    
+  
+  Solutions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-nav__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    ECEG-4192 — Data Structures
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../syllabus.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syllabus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schedule
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    1. Introduction & Analysis of Algorithms
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction & Analysis of Algorithms
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-why-a-course-on-data-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 Why a course on data structures?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1 Why a course on data structures?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1.1 The problem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-what-a-data-structure-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1.2 What a data structure is
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-two-roles-of-a-data-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1.3 Two roles of a data structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114-the-recurring-theme-time-versus-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1.4 The recurring theme — time versus space
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-data-abstraction-adt-versus-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 Data abstraction — ADT versus implementation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 Data abstraction — ADT versus implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-the-idea-of-abstraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2.1 The idea of abstraction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-adt-abstract-data-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2.2 ADT — Abstract Data Type
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-why-abstraction-pays-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2.3 Why abstraction pays off
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-11-same-adt-different-costs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.1 — Same ADT, different costs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-12-choosing-the-right-adt-for-a-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.2 — Choosing the right ADT for a problem
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-analysing-algorithms-the-need-for-a-formal-measure" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 Analysing algorithms — the need for a formal measure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 Analysing algorithms — the need for a formal measure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-why-not-just-run-it-and-time-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3.1 Why not just "run it and time it"?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-counting-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3.2 Counting operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#133-growth-not-absolute-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3.3 Growth, not absolute value
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-big-o-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4 Big-O notation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 Big-O notation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141-the-formal-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4.1 The formal definition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142-proving-a-big-o-claim" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4.2 Proving a Big-O claim
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-13-prove-3n-3-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.3 — Prove \(3n + 3 = O(n)\)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-14-prove-n2-5n-7-on2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.4 — Prove \(n^2 - 5n + 7 = O(n^2)\)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-15-prove-a-tighter-bound" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.5 — Prove a tighter bound
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143-rules-of-big-o-arithmetic" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4.3 Rules of Big-O arithmetic
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-big-omega-and-big-theta" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.5 Big-\(\Omega\) and Big-\(\Theta\)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.5 Big-\(\Omega\) and Big-\(\Theta\)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151-big-omega-a-lower-bound" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.5.1 Big-\(\Omega\) — a lower bound
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152-big-theta-a-tight-bound" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.5.2 Big-\(\Theta\) — a tight bound
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#153-the-hierarchy-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.5.3 The hierarchy at a glance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-16-three-statements-about-one-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.6 — Three statements about one function
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-analysing-loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.6 Analysing loops
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.6 Analysing loops">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#161-single-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.6.1 Single loop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-17-loop-with-doubling-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.7 — Loop with doubling index
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#162-nested-loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.6.2 Nested loops
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-18-two-independent-nested-loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.8 — Two independent nested loops
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-19-nested-with-an-upper-triangle-inner-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.9 — Nested with an "upper triangle" inner loop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-110-loop-where-the-input-drives-the-iterations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.10 — Loop where the input drives the iterations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-analysing-recursion" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.7 Analysing recursion
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.7 Analysing recursion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#171-the-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.7.1 The template
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#172-the-three-common-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.7.2 The three common cases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-111-linear-recursion-factorial" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.11 — Linear recursion (factorial)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-112-binary-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.12 — Binary search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-113-merge-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.13 — Merge sort
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-114-naive-fibonacci-why-analysis-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.14 — Naive Fibonacci (why analysis matters)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-the-common-complexity-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.8 The common complexity classes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.8 The common complexity classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#181-the-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.8.1 The table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#182-how-big-is-big" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.8.2 How big is "big"?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-constants-matter-but-not-the-way-you-might-think" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.9 Constants matter — but not the way you might think
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.9 Constants matter — but not the way you might think">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#191-why-big-o-ignores-constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.9.1 Why Big-O ignores constants
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#192-why-constants-matter-anyway" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.9.2 Why constants matter anyway
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#110-space-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.10 Space complexity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#111-chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.11 Chapter summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#112-quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.12 Quiz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.12 Quiz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-multiple-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      A. Multiple choice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-fill-in-the-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      B. Fill in the blank
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-define-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      C. Define / explain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#113-answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.13 Answer key
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#114-further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.14 Further reading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#115-suggested-tutorial-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.15 Suggested tutorial problems
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Linked Lists
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Stacks and Queues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Trees
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Hash Tables
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Graphs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. Sorting Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Slides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/index.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../solutions/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Solutions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-why-a-course-on-data-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 Why a course on data structures?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1 Why a course on data structures?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1.1 The problem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-what-a-data-structure-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1.2 What a data structure is
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-two-roles-of-a-data-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1.3 Two roles of a data structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114-the-recurring-theme-time-versus-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1.4 The recurring theme — time versus space
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-data-abstraction-adt-versus-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 Data abstraction — ADT versus implementation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 Data abstraction — ADT versus implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-the-idea-of-abstraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2.1 The idea of abstraction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-adt-abstract-data-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2.2 ADT — Abstract Data Type
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-why-abstraction-pays-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2.3 Why abstraction pays off
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-11-same-adt-different-costs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.1 — Same ADT, different costs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-12-choosing-the-right-adt-for-a-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.2 — Choosing the right ADT for a problem
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-analysing-algorithms-the-need-for-a-formal-measure" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 Analysing algorithms — the need for a formal measure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 Analysing algorithms — the need for a formal measure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-why-not-just-run-it-and-time-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3.1 Why not just "run it and time it"?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-counting-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3.2 Counting operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#133-growth-not-absolute-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3.3 Growth, not absolute value
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-big-o-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4 Big-O notation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 Big-O notation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141-the-formal-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4.1 The formal definition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142-proving-a-big-o-claim" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4.2 Proving a Big-O claim
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-13-prove-3n-3-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.3 — Prove \(3n + 3 = O(n)\)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-14-prove-n2-5n-7-on2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.4 — Prove \(n^2 - 5n + 7 = O(n^2)\)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-15-prove-a-tighter-bound" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.5 — Prove a tighter bound
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143-rules-of-big-o-arithmetic" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4.3 Rules of Big-O arithmetic
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-big-omega-and-big-theta" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.5 Big-\(\Omega\) and Big-\(\Theta\)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.5 Big-\(\Omega\) and Big-\(\Theta\)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151-big-omega-a-lower-bound" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.5.1 Big-\(\Omega\) — a lower bound
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152-big-theta-a-tight-bound" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.5.2 Big-\(\Theta\) — a tight bound
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#153-the-hierarchy-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.5.3 The hierarchy at a glance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-16-three-statements-about-one-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.6 — Three statements about one function
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-analysing-loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.6 Analysing loops
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.6 Analysing loops">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#161-single-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.6.1 Single loop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-17-loop-with-doubling-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.7 — Loop with doubling index
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#162-nested-loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.6.2 Nested loops
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-18-two-independent-nested-loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.8 — Two independent nested loops
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-19-nested-with-an-upper-triangle-inner-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.9 — Nested with an "upper triangle" inner loop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-110-loop-where-the-input-drives-the-iterations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.10 — Loop where the input drives the iterations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-analysing-recursion" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.7 Analysing recursion
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.7 Analysing recursion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#171-the-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.7.1 The template
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#172-the-three-common-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.7.2 The three common cases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-111-linear-recursion-factorial" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.11 — Linear recursion (factorial)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-112-binary-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.12 — Binary search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-113-merge-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.13 — Merge sort
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-114-naive-fibonacci-why-analysis-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 1.14 — Naive Fibonacci (why analysis matters)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-the-common-complexity-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.8 The common complexity classes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.8 The common complexity classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#181-the-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.8.1 The table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#182-how-big-is-big" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.8.2 How big is "big"?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-constants-matter-but-not-the-way-you-might-think" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.9 Constants matter — but not the way you might think
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.9 Constants matter — but not the way you might think">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#191-why-big-o-ignores-constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.9.1 Why Big-O ignores constants
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#192-why-constants-matter-anyway" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.9.2 Why constants matter anyway
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#110-space-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.10 Space complexity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#111-chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.11 Chapter summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#112-quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.12 Quiz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.12 Quiz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-multiple-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      A. Multiple choice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-fill-in-the-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      B. Fill in the blank
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-define-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      C. Define / explain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#113-answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.13 Answer key
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#114-further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.14 Further reading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#115-suggested-tutorial-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.15 Suggested tutorial problems
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="chapter-1-introduction-data-abstraction-and-analysis-of-algorithms">Chapter 1 — Introduction, Data Abstraction, and Analysis of Algorithms<a class="headerlink" href="#chapter-1-introduction-data-abstraction-and-analysis-of-algorithms" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">Chapter at a glance</p>
+<p><strong>Contact hours:</strong> 2 lecture + 1 tutorial + 2 lab · <strong>Home study:</strong> ~5 h</p>
+<p><strong>Coverage (syllabus):</strong> introduction · overview of data structures · data
+abstraction · introduction to the analysis of algorithms · <strong>Big-O notation</strong>.</p>
+</div>
+<hr />
+<h2 id="learning-outcomes">Learning outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Say what a <strong>data structure</strong> is, and why a course about them exists.</li>
+<li>Distinguish an <strong>abstract data type (ADT)</strong> from a <strong>data structure implementation</strong>.</li>
+<li>Write the <strong>Big-O</strong> bounds of simple loops and nested loops.</li>
+<li>Distinguish <strong>Big-O</strong>, <strong>Big-<span class="arithmatex">\(\Omega\)</span></strong>, and <strong>Big-<span class="arithmatex">\(\Theta\)</span></strong> notation.</li>
+<li>Analyse the complexity of a <strong>recursive</strong> algorithm by writing its recurrence and solving it.</li>
+<li>Recognise the <strong>common complexity classes</strong> (O(1), O(log n), O(n), O(n log n), O(n²), O(2ⁿ)) and give one example of each.</li>
+<li>Explain why <strong>Big-O ignores constants</strong> but why those constants still matter in practice.</li>
+</ol>
+<hr />
+<h2 id="11-why-a-course-on-data-structures">1.1 Why a course on data structures?<a class="headerlink" href="#11-why-a-course-on-data-structures" title="Permanent link">&para;</a></h2>
+<h3 id="111-the-problem">1.1.1 The problem<a class="headerlink" href="#111-the-problem" title="Permanent link">&para;</a></h3>
+<p>Programs spend most of their time <strong>finding, storing, and retrieving</strong> data. How that data is laid out in memory decides whether a program finishes in milliseconds or hours.</p>
+<p>Two implementations of the same idea can differ by a factor of <strong>millions</strong> in runtime. Not a small percentage — a factor of 10⁶.</p>
+<p><strong>Concrete example.</strong> Suppose you store <span class="arithmatex">\(n = 10{,}000\)</span> student records and want to find one by name:</p>
+<ul>
+<li><strong>Unsorted array, scan every record:</strong> up to <span class="arithmatex">\(10{,}000\)</span> comparisons.</li>
+<li><strong>Sorted array, binary search:</strong> about <span class="arithmatex">\(\log_2(10{,}000) \approx 14\)</span> comparisons.</li>
+<li><strong>Hash table:</strong> 1–2 comparisons, on average.</li>
+</ul>
+<p>Same data. Same computer. Same programmer. Different storage strategy — <strong>700× faster</strong>.</p>
+<h3 id="112-what-a-data-structure-is">1.1.2 What a data structure is<a class="headerlink" href="#112-what-a-data-structure-is" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Definition — Data structure</p>
+<p>A <strong>data structure</strong> is a <em>way of organizing data in memory</em> together with
+<em>the set of operations</em> that can be performed on that data efficiently.</p>
+</div>
+<p>Notice both halves of the definition:</p>
+<ul>
+<li>The <strong>layout</strong> — where each item lives in memory, how items relate to each other.</li>
+<li>The <strong>operations</strong> — <code>insert</code>, <code>delete</code>, <code>search</code>, <code>iterate</code>, <code>findMinimum</code> — each has a cost.</li>
+</ul>
+<p>A data structure is not just "how the data is stored." It is <strong>how the data is stored plus what it lets you do cheaply.</strong></p>
+<h3 id="113-two-roles-of-a-data-structure">1.1.3 Two roles of a data structure<a class="headerlink" href="#113-two-roles-of-a-data-structure" title="Permanent link">&para;</a></h3>
+<p>In practice you do two things with data structures:</p>
+<ol>
+<li><strong>Use existing ones</strong> — pick from the standard library, justify the choice with complexity analysis.</li>
+<li><strong>Create new ones</strong> — when no standard structure fits, build a new one out of the existing building blocks.</li>
+</ol>
+<p>The rest of this course develops both skills: the first through implementation of the classics, the second through the reasoning that makes each classic work.</p>
+<h3 id="114-the-recurring-theme-time-versus-space">1.1.4 The recurring theme — time versus space<a class="headerlink" href="#114-the-recurring-theme-time-versus-space" title="Permanent link">&para;</a></h3>
+<p>Every data structure trades <strong>time</strong> against <strong>space</strong>. Almost always:</p>
+<ul>
+<li><strong>More space</strong> = <strong>faster access</strong> (arrays: contiguous, O(1) indexing, but wasteful if sparse).</li>
+<li><strong>Less space</strong> = <strong>slower access</strong> (linked lists: no wasted memory, but O(n) lookup).</li>
+</ul>
+<p>There is no free lunch. The rest of the course is a study of specific trade-offs.</p>
+<hr />
+<h2 id="12-data-abstraction-adt-versus-implementation">1.2 Data abstraction — ADT versus implementation<a class="headerlink" href="#12-data-abstraction-adt-versus-implementation" title="Permanent link">&para;</a></h2>
+<h3 id="121-the-idea-of-abstraction">1.2.1 The idea of abstraction<a class="headerlink" href="#121-the-idea-of-abstraction" title="Permanent link">&para;</a></h3>
+<p><strong>Abstraction</strong> means <em>hiding the details behind a simple interface</em>. You already know this from OOP:</p>
+<ul>
+<li>You use <code>List&lt;String&gt;</code> without knowing whether it's an <code>ArrayList</code> or a <code>LinkedList</code> inside.</li>
+<li>You call <code>add(x)</code> without thinking about resizing or pointer updates.</li>
+</ul>
+<p>Data structures push this idea further. They separate <strong>what</strong> a structure does from <strong>how</strong> it does it.</p>
+<h3 id="122-adt-abstract-data-type">1.2.2 ADT — Abstract Data Type<a class="headerlink" href="#122-adt-abstract-data-type" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Definition — Abstract data type (ADT)</p>
+<p>An <strong>abstract data type</strong> is a specification of a set of values and a set of
+operations, <em>independent of any particular implementation</em>.</p>
+</div>
+<p>An ADT says: "There is a collection of elements, and you can do these things with them." It does not say: "Elements are stored in an array" or "Elements are stored in nodes connected by pointers."</p>
+<p><strong>Examples of ADTs you'll meet in this course:</strong></p>
+<table>
+<thead>
+<tr>
+<th>ADT</th>
+<th>Operations specified</th>
+<th>Possible implementations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>List</strong></td>
+<td>insert, delete, get, size, iterate</td>
+<td>Array, linked list, dynamic array</td>
+</tr>
+<tr>
+<td><strong>Stack</strong></td>
+<td>push, pop, peek, isEmpty</td>
+<td>Array, linked list</td>
+</tr>
+<tr>
+<td><strong>Queue</strong></td>
+<td>enqueue, dequeue, peek</td>
+<td>Array, circular array, linked list</td>
+</tr>
+<tr>
+<td><strong>Map / Dictionary</strong></td>
+<td>put, get, remove, containsKey</td>
+<td>Hash table, balanced tree</td>
+</tr>
+<tr>
+<td><strong>Set</strong></td>
+<td>add, remove, contains</td>
+<td>Hash table, balanced tree</td>
+</tr>
+<tr>
+<td><strong>Priority Queue</strong></td>
+<td>insert, extractMin</td>
+<td>Binary heap, sorted array</td>
+</tr>
+</tbody>
+</table>
+<p>Notice the pattern: <strong>one ADT, many implementations</strong>. The <strong>interface</strong> is the same; the <strong>cost of operations</strong> differs.</p>
+<h3 id="123-why-abstraction-pays-off">1.2.3 Why abstraction pays off<a class="headerlink" href="#123-why-abstraction-pays-off" title="Permanent link">&para;</a></h3>
+<p>Three concrete reasons:</p>
+<p><strong>1. Choose the implementation that fits.</strong></p>
+<p>A program that only needs <code>insert</code> at the front and <code>iterate</code> is well-served by a linked list. A program that needs random access by index wants an array. <strong>The ADT tells you what the caller needs; the implementation is the engineer's decision.</strong></p>
+<p><strong>2. Change it later without breaking callers.</strong></p>
+<p>If your code calls only <code>stack.push(x)</code> and <code>stack.pop()</code>, you can swap the underlying array for a linked list without touching the caller. The <strong>interface is the contract</strong>, and the implementation is free to change.</p>
+<p><strong>3. Reason at the interface level.</strong></p>
+<p>When reasoning about correctness or complexity, you can say "this algorithm makes <span class="arithmatex">\(n\)</span> calls to <code>insert</code>" — that's true regardless of implementation. Cost analysis then multiplies by the per-operation cost of the chosen implementation.</p>
+<h3 id="worked-example-11-same-adt-different-costs">Worked example 1.1 — Same ADT, different costs<a class="headerlink" href="#worked-example-11-same-adt-different-costs" title="Permanent link">&para;</a></h3>
+<p>Consider a <strong>List</strong> ADT with three operations: <code>insertAtEnd(x)</code>, <code>get(i)</code>, and <code>deleteAtEnd()</code>.</p>
+<p>Two implementations:</p>
+<p><strong>Array-based list</strong> (contiguous memory):</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th style="text-align: center;">Cost</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>insertAtEnd(x)</code></td>
+<td style="text-align: center;"><strong>O(1)</strong> amortised</td>
+<td>Append at index <code>size</code>; occasionally double the array (amortised)</td>
+</tr>
+<tr>
+<td><code>get(i)</code></td>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+<td>Direct indexing: <code>array[i]</code></td>
+</tr>
+<tr>
+<td><code>deleteAtEnd()</code></td>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+<td>Decrement <code>size</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Linked-list</strong> (nodes with <code>next</code> pointers):</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th style="text-align: center;">Cost</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>insertAtEnd(x)</code></td>
+<td style="text-align: center;"><strong>O(n)</strong> (or O(1) with tail pointer)</td>
+<td>Walk to the end</td>
+</tr>
+<tr>
+<td><code>get(i)</code></td>
+<td style="text-align: center;"><strong>O(n)</strong></td>
+<td>Walk <code>i</code> steps</td>
+</tr>
+<tr>
+<td><code>deleteAtEnd()</code></td>
+<td style="text-align: center;"><strong>O(n)</strong> (or O(1) with doubly-linked + tail)</td>
+<td>Walk to the end</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation.</strong> Same three operations, same names, same semantics. The array implementation is <strong>dramatically faster</strong> for these three operations. If you had chosen a linked list without thinking, you would have made the program hundreds of times slower for no reason.</p>
+<p><strong>The lesson.</strong> The ADT tells you <em>what to expect</em>. Complexity analysis tells you <em>which implementation delivers</em>.</p>
+<h3 id="worked-example-12-choosing-the-right-adt-for-a-problem">Worked example 1.2 — Choosing the right ADT for a problem<a class="headerlink" href="#worked-example-12-choosing-the-right-adt-for-a-problem" title="Permanent link">&para;</a></h3>
+<p>You are building a <strong>text editor</strong> that needs to:</p>
+<ul>
+<li>Insert characters at the cursor position</li>
+<li>Delete the character before the cursor</li>
+<li>Move the cursor left or right</li>
+<li>Undo the last operation</li>
+</ul>
+<p>Which ADT fits?</p>
+<p><strong>Candidate 1: Array (dynamic).</strong> Insert at position <code>p</code> costs O(n) because everything after <code>p</code> shifts. For a 100,000-character document, editing near the start shifts 100,000 characters — perceptibly slow.</p>
+<p><strong>Candidate 2: Linked list (doubly-linked).</strong> Insert at cursor = O(1) (splice between two nodes). Cursor move = O(1). Undo = O(1) with a stack of operations. <strong>This fits.</strong></p>
+<p><strong>Choice:</strong> a <strong>doubly-linked list</strong> plus a <strong>stack</strong> for undo.</p>
+<p><strong>Justification.</strong> The operations that must be fast (insert, delete, cursor move, undo) are all O(1) in this combination. The operations that would be slow (random access by index) are not needed — the editor never jumps to "position 72,391" directly.</p>
+<p>This is the pattern: <strong>write down the operations, write down the cost of each in each candidate implementation, pick the one whose hot path is cheapest.</strong></p>
+<hr />
+<h2 id="13-analysing-algorithms-the-need-for-a-formal-measure">1.3 Analysing algorithms — the need for a formal measure<a class="headerlink" href="#13-analysing-algorithms-the-need-for-a-formal-measure" title="Permanent link">&para;</a></h2>
+<h3 id="131-why-not-just-run-it-and-time-it">1.3.1 Why not just "run it and time it"?<a class="headerlink" href="#131-why-not-just-run-it-and-time-it" title="Permanent link">&para;</a></h3>
+<p>Suppose you write a function <code>sort</code> and want to know how fast it is. You could:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">sort</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">elapsed</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> s"</span><span class="p">)</span>
+</span></code></pre></div>
+<p>This gives you a number, but the number is <strong>useless for comparison</strong> across:</p>
+<ul>
+<li><strong>Machines.</strong> A laptop and a phone give different times.</li>
+<li><strong>Languages.</strong> The same algorithm in Python and C differ by 100×.</li>
+<li><strong>Data sizes.</strong> The result on 100 items tells you nothing about 10⁶ items.</li>
+<li><strong>Inputs.</strong> The same algorithm can be fast on sorted data and slow on random data.</li>
+</ul>
+<p>What we want is a <strong>machine-independent, size-relative</strong> measure of how the algorithm's cost <strong>grows</strong> with input size.</p>
+<h3 id="132-counting-operations">1.3.2 Counting operations<a class="headerlink" href="#132-counting-operations" title="Permanent link">&para;</a></h3>
+<p>Instead of wall-clock time, <strong>count primitive operations</strong>:</p>
+<ul>
+<li>The number of comparisons</li>
+<li>The number of assignments</li>
+<li>The number of array accesses</li>
+<li>The number of nodes visited</li>
+</ul>
+<p>Different primitives have different physical times, but in asymptotic analysis <strong>they all count as one "step."</strong> The result is a <strong>step count</strong> <span class="arithmatex">\(T(n)\)</span> as a function of input size <span class="arithmatex">\(n\)</span>.</p>
+<p><strong>Example.</strong> The array-sum function:</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">                 </span><span class="c1">// 1 step</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">   </span><span class="c1">// n+1 comparisons, n increments</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">        </span><span class="n">total</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w">             </span><span class="c1">// n additions</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">total</span><span class="p">;</span><span class="w">                  </span><span class="c1">// 1 step</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Total steps: <span class="arithmatex">\(1 + (n+1) + n + n + 1 = 3n + 3\)</span>.</p>
+<p>We say: <strong><span class="arithmatex">\(T(n) = 3n + 3\)</span></strong>, i.e., "the cost grows <strong>linearly</strong> in <span class="arithmatex">\(n\)</span>."</p>
+<h3 id="133-growth-not-absolute-value">1.3.3 Growth, not absolute value<a class="headerlink" href="#133-growth-not-absolute-value" title="Permanent link">&para;</a></h3>
+<p>The key question is not "how many steps at <span class="arithmatex">\(n = 100\)</span>?" but "how many steps at <span class="arithmatex">\(n = 1000\)</span>, <span class="arithmatex">\(n = 10^6\)</span>?"</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><span class="arithmatex">\(n\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(T(n) = 3n + 3\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(T(n) = 0.001 n^2 + 5\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">33</td>
+<td style="text-align: center;">5.1</td>
+</tr>
+<tr>
+<td style="text-align: center;">100</td>
+<td style="text-align: center;">303</td>
+<td style="text-align: center;">15</td>
+</tr>
+<tr>
+<td style="text-align: center;">1,000</td>
+<td style="text-align: center;">3,003</td>
+<td style="text-align: center;">1,005</td>
+</tr>
+<tr>
+<td style="text-align: center;">10,000</td>
+<td style="text-align: center;">30,003</td>
+<td style="text-align: center;">100,005</td>
+</tr>
+<tr>
+<td style="text-align: center;">1,000,000</td>
+<td style="text-align: center;">3,000,003</td>
+<td style="text-align: center;">1,000,000,005</td>
+</tr>
+</tbody>
+</table>
+<p>For small <span class="arithmatex">\(n\)</span>, the quadratic (with a small leading constant) is <strong>faster</strong>. For large <span class="arithmatex">\(n\)</span>, the linear algorithm wins by a factor of ~300,000. <strong>Growth rate is what matters, and Big-O captures it.</strong></p>
+<hr />
+<h2 id="14-big-o-notation">1.4 Big-O notation<a class="headerlink" href="#14-big-o-notation" title="Permanent link">&para;</a></h2>
+<h3 id="141-the-formal-definition">1.4.1 The formal definition<a class="headerlink" href="#141-the-formal-definition" title="Permanent link">&para;</a></h3>
+<div class="admonition abstract">
+<p class="admonition-title">Definition — Big-O</p>
+<p>We write <span class="arithmatex">\(f(n) = O(g(n))\)</span> if there exist positive constants <span class="arithmatex">\(c\)</span> and <span class="arithmatex">\(n_0\)</span> such
+that</p>
+<div class="arithmatex">\[
+f(n) \le c \cdot g(n) \quad \text{for all } n \ge n_0.
+\]</div>
+<p>In words: <strong><span class="arithmatex">\(f\)</span> grows no faster than a constant times <span class="arithmatex">\(g\)</span></strong>, eventually.</p>
+</div>
+<p><strong>The intuition.</strong> <span class="arithmatex">\(f(n) = O(g(n))\)</span> means "<span class="arithmatex">\(g\)</span> is an <strong>upper bound</strong> on the growth of <span class="arithmatex">\(f\)</span>." It ignores constants and small values of <span class="arithmatex">\(n\)</span> — what's left is the <strong>shape of the growth curve</strong>.</p>
+<h3 id="142-proving-a-big-o-claim">1.4.2 Proving a Big-O claim<a class="headerlink" href="#142-proving-a-big-o-claim" title="Permanent link">&para;</a></h3>
+<p>To prove <span class="arithmatex">\(f(n) = O(g(n))\)</span>, you need to <strong>find</strong> constants <span class="arithmatex">\(c\)</span> and <span class="arithmatex">\(n_0\)</span>.</p>
+<h3 id="worked-example-13-prove-3n-3-on">Worked example 1.3 — Prove <span class="arithmatex">\(3n + 3 = O(n)\)</span><a class="headerlink" href="#worked-example-13-prove-3n-3-on" title="Permanent link">&para;</a></h3>
+<p>We need <span class="arithmatex">\(c\)</span> and <span class="arithmatex">\(n_0\)</span> such that <span class="arithmatex">\(3n + 3 \le c \cdot n\)</span> for all <span class="arithmatex">\(n \ge n_0\)</span>.</p>
+<p><strong>Try <span class="arithmatex">\(c = 4\)</span>:</strong> <span class="arithmatex">\(3n + 3 \le 4n\)</span> ⟺ <span class="arithmatex">\(3 \le n\)</span>. This holds for all <span class="arithmatex">\(n \ge 3\)</span>.</p>
+<p><strong>Try <span class="arithmatex">\(c = 6\)</span>:</strong> <span class="arithmatex">\(3n + 3 \le 6n\)</span> ⟺ <span class="arithmatex">\(3 \le 3n\)</span> ⟺ <span class="arithmatex">\(1 \le n\)</span>. Holds for <span class="arithmatex">\(n \ge 1\)</span>.</p>
+<p><strong>Conclusion.</strong> <span class="arithmatex">\(3n + 3 = O(n)\)</span>, with witness <span class="arithmatex">\(c = 6\)</span>, <span class="arithmatex">\(n_0 = 1\)</span>. ✓</p>
+<p><strong>Interpretation.</strong> For large <span class="arithmatex">\(n\)</span>, the linear term dominates; the constant term is negligible.</p>
+<h3 id="worked-example-14-prove-n2-5n-7-on2">Worked example 1.4 — Prove <span class="arithmatex">\(n^2 - 5n + 7 = O(n^2)\)</span><a class="headerlink" href="#worked-example-14-prove-n2-5n-7-on2" title="Permanent link">&para;</a></h3>
+<p>We need <span class="arithmatex">\(c, n_0\)</span> such that <span class="arithmatex">\(n^2 - 5n + 7 \le c n^2\)</span> for all <span class="arithmatex">\(n \ge n_0\)</span>.</p>
+<p><strong>Try <span class="arithmatex">\(c = 2\)</span>:</strong> <span class="arithmatex">\(n^2 - 5n + 7 \le 2n^2\)</span> ⟺ <span class="arithmatex">\(7 - 5n \le n^2\)</span>. Since <span class="arithmatex">\(n^2 \ge 0\)</span> and <span class="arithmatex">\(7 - 5n \le 7\)</span>, we need <span class="arithmatex">\(7 \le n^2\)</span> — holds for <span class="arithmatex">\(n \ge 3\)</span>.</p>
+<p><strong>Conclusion.</strong> <span class="arithmatex">\(n^2 - 5n + 7 = O(n^2)\)</span>, with witness <span class="arithmatex">\(c = 2\)</span>, <span class="arithmatex">\(n_0 = 3\)</span>. ✓</p>
+<p><strong>Interpretation.</strong> For large <span class="arithmatex">\(n\)</span>, the <span class="arithmatex">\(n^2\)</span> term dominates both the linear and the constant terms.</p>
+<h3 id="worked-example-15-prove-a-tighter-bound">Worked example 1.5 — Prove a <em>tighter</em> bound<a class="headerlink" href="#worked-example-15-prove-a-tighter-bound" title="Permanent link">&para;</a></h3>
+<p>Prove <span class="arithmatex">\(5n^2 + 3n \ne O(n)\)</span>.</p>
+<p><strong>Proof by contradiction.</strong> Suppose <span class="arithmatex">\(5n^2 + 3n = O(n)\)</span>. Then there exist <span class="arithmatex">\(c, n_0\)</span> such that <span class="arithmatex">\(5n^2 + 3n \le c \cdot n\)</span> for all <span class="arithmatex">\(n \ge n_0\)</span>.</p>
+<p>Divide by <span class="arithmatex">\(n\)</span> (positive): <span class="arithmatex">\(5n + 3 \le c\)</span> for all <span class="arithmatex">\(n \ge n_0\)</span>.</p>
+<p>But <span class="arithmatex">\(5n + 3\)</span> grows without bound as <span class="arithmatex">\(n\)</span> grows. For any fixed <span class="arithmatex">\(c\)</span>, there exists <span class="arithmatex">\(n &gt; (c - 3)/5\)</span> where the inequality <strong>fails</strong>. Contradiction.</p>
+<p><strong>Conclusion.</strong> <span class="arithmatex">\(5n^2 + 3n \ne O(n)\)</span> — the quadratic term makes the growth strictly faster than linear.</p>
+<h3 id="143-rules-of-big-o-arithmetic">1.4.3 Rules of Big-O arithmetic<a class="headerlink" href="#143-rules-of-big-o-arithmetic" title="Permanent link">&para;</a></h3>
+<p>The following rules let you simplify expressions quickly:</p>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Statement</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Drop constants</strong></td>
+<td><span class="arithmatex">\(c \cdot f(n) = O(f(n))\)</span></td>
+<td><span class="arithmatex">\(7n = O(n)\)</span></td>
+</tr>
+<tr>
+<td><strong>Drop lower-order terms</strong></td>
+<td><span class="arithmatex">\(f(n) + g(n) = O(\max(f, g))\)</span></td>
+<td><span class="arithmatex">\(n^2 + n = O(n^2)\)</span></td>
+</tr>
+<tr>
+<td><strong>Transitivity</strong></td>
+<td><span class="arithmatex">\(f = O(g)\)</span> and <span class="arithmatex">\(g = O(h)\)</span> ⇒ <span class="arithmatex">\(f = O(h)\)</span></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Sum rule</strong></td>
+<td><span class="arithmatex">\(f + g = O(\max(f, g))\)</span></td>
+<td><span class="arithmatex">\(n \log n + n = O(n \log n)\)</span></td>
+</tr>
+<tr>
+<td><strong>Product rule</strong></td>
+<td><span class="arithmatex">\(f \cdot g = O(f \cdot g)\)</span></td>
+<td><span class="arithmatex">\(n \cdot \log n = O(n \log n)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>The trick that catches students.</strong> In <span class="arithmatex">\(O(n^2 + n)\)</span>, the <span class="arithmatex">\(n\)</span> term is <strong>not</strong> "small" — it's just <strong>dominated by</strong> <span class="arithmatex">\(n^2\)</span> for large <span class="arithmatex">\(n\)</span>. The <span class="arithmatex">\(n^2 + n\)</span> expression is <em>exact</em>; the <span class="arithmatex">\(O(n^2)\)</span> is a simplification that captures the dominant growth.</p>
+<hr />
+<h2 id="15-big-omega-and-big-theta">1.5 Big-<span class="arithmatex">\(\Omega\)</span> and Big-<span class="arithmatex">\(\Theta\)</span><a class="headerlink" href="#15-big-omega-and-big-theta" title="Permanent link">&para;</a></h2>
+<h3 id="151-big-omega-a-lower-bound">1.5.1 Big-<span class="arithmatex">\(\Omega\)</span> — a lower bound<a class="headerlink" href="#151-big-omega-a-lower-bound" title="Permanent link">&para;</a></h3>
+<div class="admonition abstract">
+<p class="admonition-title">Definition — Big-<span class="arithmatex">\(\Omega\)</span></p>
+<p>We write <span class="arithmatex">\(f(n) = \Omega(g(n))\)</span> if there exist positive constants <span class="arithmatex">\(c\)</span> and <span class="arithmatex">\(n_0\)</span>
+such that</p>
+<div class="arithmatex">\[
+f(n) \ge c \cdot g(n) \quad \text{for all } n \ge n_0.
+\]</div>
+<p>In words: <strong><span class="arithmatex">\(f\)</span> grows at least as fast as a constant times <span class="arithmatex">\(g\)</span>.</strong></p>
+</div>
+<p><span class="arithmatex">\(f = \Omega(g)\)</span> means "<span class="arithmatex">\(g\)</span> is a <strong>lower bound</strong>." For example, any sort that must examine every element has <span class="arithmatex">\(\Omega(n)\)</span> runtime — no faster than linear is possible.</p>
+<h3 id="152-big-theta-a-tight-bound">1.5.2 Big-<span class="arithmatex">\(\Theta\)</span> — a tight bound<a class="headerlink" href="#152-big-theta-a-tight-bound" title="Permanent link">&para;</a></h3>
+<div class="admonition abstract">
+<p class="admonition-title">Definition — Big-<span class="arithmatex">\(\Theta\)</span></p>
+<p><span class="arithmatex">\(f(n) = \Theta(g(n))\)</span> if <span class="arithmatex">\(f(n) = O(g(n))\)</span> <strong>and</strong> <span class="arithmatex">\(f(n) = \Omega(g(n))\)</span>.</p>
+<p>In words: <strong><span class="arithmatex">\(f\)</span> and <span class="arithmatex">\(g\)</span> grow at the same rate</strong>, up to constants.</p>
+</div>
+<p><span class="arithmatex">\(\Theta\)</span> is the strongest and most useful statement. "Sorting by comparison is <span class="arithmatex">\(\Theta(n \log n)\)</span>" says: no comparison sort is faster than <span class="arithmatex">\(n \log n\)</span>, and algorithms exist that achieve it.</p>
+<h3 id="153-the-hierarchy-at-a-glance">1.5.3 The hierarchy at a glance<a class="headerlink" href="#153-the-hierarchy-at-a-glance" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Notation</th>
+<th>Meaning</th>
+<th>Analogy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(f = O(g)\)</span></td>
+<td><span class="arithmatex">\(f\)</span> grows no faster than <span class="arithmatex">\(g\)</span></td>
+<td><span class="arithmatex">\(f \le g\)</span> (up to constant)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(f = \Omega(g)\)</span></td>
+<td><span class="arithmatex">\(f\)</span> grows no slower than <span class="arithmatex">\(g\)</span></td>
+<td><span class="arithmatex">\(f \ge g\)</span> (up to constant)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(f = \Theta(g)\)</span></td>
+<td><span class="arithmatex">\(f\)</span> grows at the same rate as <span class="arithmatex">\(g\)</span></td>
+<td><span class="arithmatex">\(f = g\)</span> (up to constant)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(f = o(g)\)</span></td>
+<td><span class="arithmatex">\(f\)</span> grows strictly slower than <span class="arithmatex">\(g\)</span></td>
+<td><span class="arithmatex">\(f &lt; g\)</span> (strictly)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(f = \omega(g)\)</span></td>
+<td><span class="arithmatex">\(f\)</span> grows strictly faster than <span class="arithmatex">\(g\)</span></td>
+<td><span class="arithmatex">\(f &gt; g\)</span> (strictly)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="worked-example-16-three-statements-about-one-function">Worked example 1.6 — Three statements about one function<a class="headerlink" href="#worked-example-16-three-statements-about-one-function" title="Permanent link">&para;</a></h3>
+<p>Consider <span class="arithmatex">\(f(n) = 2n^2 + 5n\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th>Claim</th>
+<th style="text-align: center;">True?</th>
+<th>Witness</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(f(n) = O(n^2)\)</span></td>
+<td style="text-align: center;">✓</td>
+<td><span class="arithmatex">\(c = 3\)</span>, <span class="arithmatex">\(n_0 = 5\)</span> (verify: <span class="arithmatex">\(2n^2 + 5n \le 3n^2\)</span> ⟺ <span class="arithmatex">\(5n \le n^2\)</span> ⟺ <span class="arithmatex">\(n \ge 5\)</span>)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(f(n) = \Omega(n^2)\)</span></td>
+<td style="text-align: center;">✓</td>
+<td><span class="arithmatex">\(c = 1\)</span>, <span class="arithmatex">\(n_0 = 1\)</span> (verify: <span class="arithmatex">\(2n^2 + 5n \ge n^2\)</span> ✓)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(f(n) = \Theta(n^2)\)</span></td>
+<td style="text-align: center;">✓</td>
+<td>Follows from both</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(f(n) = O(n)\)</span></td>
+<td style="text-align: center;">✗</td>
+<td>See Worked example 1.5 method</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(f(n) = \Theta(n)\)</span></td>
+<td style="text-align: center;">✗</td>
+<td>Would require the false <span class="arithmatex">\(O(n)\)</span> bound</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Conclusion.</strong> <span class="arithmatex">\(f(n) = \Theta(n^2)\)</span> — the tightest statement.</p>
+<hr />
+<h2 id="16-analysing-loops">1.6 Analysing loops<a class="headerlink" href="#16-analysing-loops" title="Permanent link">&para;</a></h2>
+<p>The single most important skill in complexity analysis is <strong>reading a loop and writing its Big-O</strong>. Here is the procedure.</p>
+<h3 id="161-single-loop">1.6.1 Single loop<a class="headerlink" href="#161-single-loop" title="Permanent link">&para;</a></h3>
+<p><strong>Rule.</strong> If a loop runs a constant number of operations per iteration and executes <span class="arithmatex">\(k\)</span> iterations, its cost is <span class="arithmatex">\(O(k)\)</span>.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="n">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Iterations: <span class="arithmatex">\(n\)</span>. Per iteration: constant. <strong>Total: <span class="arithmatex">\(O(n)\)</span>.</strong></p>
+<h3 id="worked-example-17-loop-with-doubling-index">Worked example 1.7 — Loop with doubling index<a class="headerlink" href="#worked-example-17-loop-with-doubling-index" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="n">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>How many iterations? Each step <strong>doubles</strong> <code>i</code>. Starting at 1, after <span class="arithmatex">\(k\)</span> iterations we have <span class="arithmatex">\(i = 2^k\)</span>. Stop when <span class="arithmatex">\(2^k \ge n\)</span>, i.e., <span class="arithmatex">\(k = \lceil \log_2 n \rceil\)</span>.</p>
+<p><strong>Total: <span class="arithmatex">\(O(\log n)\)</span>.</strong></p>
+<p>This pattern appears constantly — binary search, balanced-tree walks, exponentiation by squaring. <strong>Doubling or halving the index means <span class="arithmatex">\(\log n\)</span> iterations.</strong></p>
+<h3 id="162-nested-loops">1.6.2 Nested loops<a class="headerlink" href="#162-nested-loops" title="Permanent link">&para;</a></h3>
+<p><strong>Rule.</strong> Multiply the iteration counts.</p>
+<h3 id="worked-example-18-two-independent-nested-loops">Worked example 1.8 — Two independent nested loops<a class="headerlink" href="#worked-example-18-two-independent-nested-loops" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">        </span><span class="n">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Outer: <span class="arithmatex">\(n\)</span> iterations. Inner: <span class="arithmatex">\(n\)</span> iterations <strong>for each outer iteration</strong>. Total: <span class="arithmatex">\(n \times n = n^2\)</span>.</p>
+<p><strong><span class="arithmatex">\(O(n^2)\)</span>.</strong></p>
+<h3 id="worked-example-19-nested-with-an-upper-triangle-inner-loop">Worked example 1.9 — Nested with an "upper triangle" inner loop<a class="headerlink" href="#worked-example-19-nested-with-an-upper-triangle-inner-loop" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">        </span><span class="n">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Inner loop runs <span class="arithmatex">\(n - i\)</span> times, for outer index <span class="arithmatex">\(i = 0, 1, \ldots, n-1\)</span>.</p>
+<p>Total iterations: <span class="arithmatex">\(\sum_{i=0}^{n-1} (n - i) = n + (n-1) + \ldots + 1 = \frac{n(n+1)}{2}\)</span>.</p>
+<p><strong>Total: <span class="arithmatex">\(O(n^2)\)</span></strong> (the <span class="arithmatex">\(n^2/2\)</span> leading term dominates; the <span class="arithmatex">\(\frac12\)</span> constant drops).</p>
+<p><strong>The lesson:</strong> halving the iteration count (from <span class="arithmatex">\(n^2\)</span> to <span class="arithmatex">\(n^2/2\)</span>) does <strong>not</strong> change the complexity class. <strong>Big-O ignores constants.</strong></p>
+<h3 id="worked-example-110-loop-where-the-input-drives-the-iterations">Worked example 1.10 — Loop where the input drives the iterations<a class="headerlink" href="#worked-example-110-loop-where-the-input-drives-the-iterations" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">print</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">   </span><span class="c1">// note: j &lt; i, not j &lt; n</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="p">);</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Inner: <span class="arithmatex">\(i\)</span> iterations per outer step <span class="arithmatex">\(i\)</span>. Total: <span class="arithmatex">\(\sum_{i=0}^{n-1} i = \frac{(n-1)n}{2} = O(n^2)\)</span>.</p>
+<p>Same class as Worked example 1.9 — a triangular pattern is <span class="arithmatex">\(O(n^2)\)</span>.</p>
+<hr />
+<h2 id="17-analysing-recursion">1.7 Analysing recursion<a class="headerlink" href="#17-analysing-recursion" title="Permanent link">&para;</a></h2>
+<p>For recursive algorithms, we don't count iterations. We write a <strong>recurrence relation</strong> — an equation for <span class="arithmatex">\(T(n)\)</span> in terms of smaller inputs — and solve it.</p>
+<h3 id="171-the-template">1.7.1 The template<a class="headerlink" href="#171-the-template" title="Permanent link">&para;</a></h3>
+<p>For a recursive function of input size <span class="arithmatex">\(n\)</span> that:</p>
+<ul>
+<li>Performs some constant work,</li>
+<li>Makes <span class="arithmatex">\(a\)</span> recursive calls on inputs of size <span class="arithmatex">\(n/b\)</span>,</li>
+</ul>
+<p>the recurrence is:</p>
+<div class="arithmatex">\[
+T(n) = a \cdot T(n/b) + O(1).
+\]</div>
+<p>Its solution depends on whether <span class="arithmatex">\(a &gt; b\)</span>, <span class="arithmatex">\(a = b\)</span>, or <span class="arithmatex">\(a &lt; b\)</span>.</p>
+<h3 id="172-the-three-common-cases">1.7.2 The three common cases<a class="headerlink" href="#172-the-three-common-cases" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Recurrence</th>
+<th>Solution</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>No branching</strong> (<span class="arithmatex">\(a = 1\)</span>)</td>
+<td><span class="arithmatex">\(T(n) = T(n - 1) + O(1)\)</span></td>
+<td><strong><span class="arithmatex">\(O(n)\)</span></strong></td>
+<td>Factorial, linear search</td>
+</tr>
+<tr>
+<td><strong>Halving</strong> (<span class="arithmatex">\(b = 2, a = 1\)</span>)</td>
+<td><span class="arithmatex">\(T(n) = T(n/2) + O(1)\)</span></td>
+<td><strong><span class="arithmatex">\(O(\log n)\)</span></strong></td>
+<td>Binary search</td>
+</tr>
+<tr>
+<td><strong>Two halvings</strong> (<span class="arithmatex">\(b = 2, a = 2\)</span>)</td>
+<td><span class="arithmatex">\(T(n) = 2\,T(n/2) + O(n)\)</span></td>
+<td><strong><span class="arithmatex">\(O(n \log n)\)</span></strong></td>
+<td>Merge sort</td>
+</tr>
+<tr>
+<td><strong>Exponential</strong> (<span class="arithmatex">\(b=2, a&gt;2\)</span> or <span class="arithmatex">\(b=1\)</span>)</td>
+<td><span class="arithmatex">\(T(n) = 2^n\)</span></td>
+<td><strong><span class="arithmatex">\(O(2^n)\)</span></strong></td>
+<td>Naive Fibonacci</td>
+</tr>
+</tbody>
+</table>
+<h3 id="worked-example-111-linear-recursion-factorial">Worked example 1.11 — Linear recursion (factorial)<a class="headerlink" href="#worked-example-111-linear-recursion-factorial" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">factorial</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Recurrence: <span class="arithmatex">\(T(n) = T(n-1) + O(1)\)</span>.</p>
+<p>Unrolling: <span class="arithmatex">\(T(n) = T(n-1) + c = T(n-2) + 2c = \ldots = T(1) + (n-1)c = O(n)\)</span>.</p>
+<p><strong>Total: <span class="arithmatex">\(O(n)\)</span>.</strong> The recursion <strong>does not multiply</strong> — each call produces exactly one smaller call, so the work is linear.</p>
+<h3 id="worked-example-112-binary-search">Worked example 1.12 — Binary search<a class="headerlink" href="#worked-example-112-binary-search" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">binarySearch</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">lo</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">hi</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lo</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">hi</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">lo</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hi</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="o">[</span><span class="n">mid</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">mid</span><span class="p">;</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="o">[</span><span class="n">mid</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">binarySearch</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">hi</span><span class="p">);</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">binarySearch</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">lo</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>The input is <strong>halved</strong> each call. Recurrence: <span class="arithmatex">\(T(n) = T(n/2) + O(1)\)</span>.</p>
+<p>Unrolling: <span class="arithmatex">\(T(n) = T(n/2) + c = T(n/4) + 2c = \ldots = T(1) + c \cdot \log_2 n = O(\log n)\)</span>.</p>
+<p><strong>Total: <span class="arithmatex">\(O(\log n)\)</span>.</strong></p>
+<p>Why? Because <span class="arithmatex">\(n / 2^k = 1\)</span> when <span class="arithmatex">\(k = \log_2 n\)</span>. That's the depth of the recursion tree.</p>
+<h3 id="worked-example-113-merge-sort">Worked example 1.13 — Merge sort<a class="headerlink" href="#worked-example-113-merge-sort" title="Permanent link">&para;</a></h3>
+<p>The recursive call splits the array in half and <strong>processes both halves</strong>:</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">mergeSort</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">lo</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">hi</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lo</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">hi</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">lo</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hi</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="n">mergeSort</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">lo</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">);</span><span class="w">       </span><span class="c1">// recurse on left half</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="n">mergeSort</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">hi</span><span class="p">);</span><span class="w">   </span><span class="c1">// recurse on right half</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="n">merge</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">lo</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">,</span><span class="w"> </span><span class="n">hi</span><span class="p">);</span><span class="w">       </span><span class="c1">// O(n) merge</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Recurrence: <span class="arithmatex">\(T(n) = 2\,T(n/2) + O(n)\)</span>.</p>
+<p><strong>Recursion tree approach:</strong> at depth <span class="arithmatex">\(d\)</span>, there are <span class="arithmatex">\(2^d\)</span> nodes, each of size <span class="arithmatex">\(n / 2^d\)</span>. Work at depth <span class="arithmatex">\(d\)</span>: <span class="arithmatex">\(2^d \times O(n / 2^d) = O(n)\)</span>. Depth: <span class="arithmatex">\(\log_2 n\)</span>. Total: <span class="arithmatex">\(O(n \log n)\)</span>.</p>
+<p><strong>Total: <span class="arithmatex">\(O(n \log n)\)</span>.</strong> Merge sort is fundamentally better than bubble/insertion/selection sort (<span class="arithmatex">\(O(n^2)\)</span>) for large inputs — this is the payoff of the analysis we'll do in Chapter 8.</p>
+<h3 id="worked-example-114-naive-fibonacci-why-analysis-matters">Worked example 1.14 — Naive Fibonacci (why analysis matters)<a class="headerlink" href="#worked-example-114-naive-fibonacci-why-analysis-matters" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">fib</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">);</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Recurrence: <span class="arithmatex">\(T(n) = T(n-1) + T(n-2) + O(1)\)</span>.</p>
+<p>This is exponential — <span class="arithmatex">\(T(n) = \Theta(\phi^n)\)</span> with <span class="arithmatex">\(\phi \approx 1.618\)</span>. <span class="arithmatex">\(T(50) \approx 2 \times 10^{10}\)</span> — <strong>hours</strong> on a laptop.</p>
+<p><strong>Contrast with an iterative version:</strong></p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">fib</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Total: <span class="arithmatex">\(O(n)\)</span>.</strong> For <span class="arithmatex">\(n = 50\)</span>, that's 50 additions — a microsecond.</p>
+<p><strong>Same math, same answer, 10⁶-times-faster implementation.</strong> The reason: <strong>the naive recursion repeats work</strong> — <code>fib(n-2)</code> is computed inside both <code>fib(n-1)</code> and <code>fib(n)</code>. Complexity analysis reveals this — and tells you to write the iterative version.</p>
+<hr />
+<h2 id="18-the-common-complexity-classes">1.8 The common complexity classes<a class="headerlink" href="#18-the-common-complexity-classes" title="Permanent link">&para;</a></h2>
+<p>Every algorithm you meet in this course fits in one of these classes.</p>
+<h3 id="181-the-table">1.8.1 The table<a class="headerlink" href="#181-the-table" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Class</th>
+<th>Name</th>
+<th>Grows</th>
+<th>Typical example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+<td>constant</td>
+<td>does not grow</td>
+<td>array indexing, hash lookup (average)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>O(log n)</strong></td>
+<td>logarithmic</td>
+<td>very slowly</td>
+<td>binary search, balanced-tree search</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>O(n)</strong></td>
+<td>linear</td>
+<td>linearly</td>
+<td>array scan, linked-list traversal</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>O(n log n)</strong></td>
+<td>linearithmic</td>
+<td>slightly super-linear</td>
+<td>merge sort, quicksort (average)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>O(n²)</strong></td>
+<td>quadratic</td>
+<td>quadratically</td>
+<td>bubble/insertion/selection sort, nested loops</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>O(n³)</strong></td>
+<td>cubic</td>
+<td>cubically</td>
+<td>naive matrix multiplication</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>O(2ⁿ)</strong></td>
+<td>exponential</td>
+<td>explodes</td>
+<td>naive Fibonacci, exhaustive subset enumeration</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>O(n!)</strong></td>
+<td>factorial</td>
+<td>explodes faster</td>
+<td>brute-force TSP</td>
+</tr>
+</tbody>
+</table>
+<h3 id="182-how-big-is-big">1.8.2 How big is "big"?<a class="headerlink" href="#182-how-big-is-big" title="Permanent link">&para;</a></h3>
+<p>For <span class="arithmatex">\(n = 1{,}000{,}000\)</span> (1 million items) at <span class="arithmatex">\(10^9\)</span> operations per second:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Class</th>
+<th style="text-align: center;">Operations</th>
+<th style="text-align: center;">Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><span class="arithmatex">\(O(1)\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1 ns</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="arithmatex">\(O(\log n)\)</span></td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">20 ns</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="arithmatex">\(O(n)\)</span></td>
+<td style="text-align: center;">10⁶</td>
+<td style="text-align: center;">1 ms</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="arithmatex">\(O(n \log n)\)</span></td>
+<td style="text-align: center;">2 × 10⁷</td>
+<td style="text-align: center;">20 ms</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="arithmatex">\(O(n²)\)</span></td>
+<td style="text-align: center;">10¹²</td>
+<td style="text-align: center;"><strong>11.6 days</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="arithmatex">\(O(2ⁿ)\)</span></td>
+<td style="text-align: center;">astronomical</td>
+<td style="text-align: center;"><strong>billions of years</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>The practical message.</strong> Anything worse than <span class="arithmatex">\(O(n \log n)\)</span> is <strong>unusable</strong> on million-item inputs. This is why the analysis matters — it tells you which algorithms are actually deployable.</p>
+<hr />
+<h2 id="19-constants-matter-but-not-the-way-you-might-think">1.9 Constants matter — but not the way you might think<a class="headerlink" href="#19-constants-matter-but-not-the-way-you-might-think" title="Permanent link">&para;</a></h2>
+<h3 id="191-why-big-o-ignores-constants">1.9.1 Why Big-O ignores constants<a class="headerlink" href="#191-why-big-o-ignores-constants" title="Permanent link">&para;</a></h3>
+<p>Big-O is a <strong>statement about growth</strong>, not about performance. Two algorithms with the same Big-O may differ 100× in absolute speed:</p>
+<ul>
+<li>Algorithm A: <span class="arithmatex">\(T_A(n) = 100\,n\)</span></li>
+<li>Algorithm B: <span class="arithmatex">\(T_B(n) = 0.1\,n\)</span></li>
+</ul>
+<p>Both are <span class="arithmatex">\(O(n)\)</span>. For <span class="arithmatex">\(n = 1000\)</span>, A takes <span class="arithmatex">\(100{,}000\)</span> steps, B takes <span class="arithmatex">\(100\)</span> steps. <strong>B is 1000× faster</strong>, but Big-O cannot see it.</p>
+<h3 id="192-why-constants-matter-anyway">1.9.2 Why constants matter anyway<a class="headerlink" href="#192-why-constants-matter-anyway" title="Permanent link">&para;</a></h3>
+<p>For <strong>small</strong> <span class="arithmatex">\(n\)</span>, constants dominate. The crossover point:</p>
+<ul>
+<li>Algorithm A: <span class="arithmatex">\(T_A(n) = 100\,n\)</span> (fast per step)</li>
+<li>Algorithm B: <span class="arithmatex">\(T_B(n) = 0.1\,n^2\)</span> (slow per step, but quadratic)</li>
+</ul>
+<p>At <span class="arithmatex">\(n = 10\)</span>: A takes <span class="arithmatex">\(1000\)</span> steps, B takes <span class="arithmatex">\(10\)</span> steps. <strong>B is 100× faster.</strong>
+At <span class="arithmatex">\(n = 1000\)</span>: A takes <span class="arithmatex">\(100{,}000\)</span> steps, B takes <span class="arithmatex">\(100{,}000\)</span> steps. <strong>Tie.</strong>
+At <span class="arithmatex">\(n = 10{,}000\)</span>: A takes <span class="arithmatex">\(10^6\)</span> steps, B takes <span class="arithmatex">\(10^7\)</span> steps. <strong>A is 10× faster.</strong></p>
+<p><strong>The crossover at <span class="arithmatex">\(n = 1000\)</span>.</strong> For small datasets, use the "slower" algorithm. For large datasets, use the "faster" one. <strong>This is why quicksort (average <span class="arithmatex">\(O(n \log n)\)</span>, but with a small constant) is faster than merge sort in practice on small to medium inputs</strong>, even though both are <span class="arithmatex">\(O(n \log n)\)</span> — and why insertion sort (<span class="arithmatex">\(O(n^2)\)</span> but tiny constant) beats both on arrays of <span class="arithmatex">\(&lt; 20\)</span> elements.</p>
+<div class="admonition tip">
+<p class="admonition-title">Practical rule</p>
+<p><strong>Big-O tells you what scales.</strong> Constants tell you <strong>what fits in cache, what fits in a register, what dominates at your actual problem size.</strong> Always use both. Never pick an algorithm by Big-O alone when the actual data is small.</p>
+</div>
+<hr />
+<h2 id="110-space-complexity">1.10 Space complexity<a class="headerlink" href="#110-space-complexity" title="Permanent link">&para;</a></h2>
+<p>Time is only half the story. <strong>Space complexity</strong> measures <strong>how much extra memory</strong> an algorithm uses, as a function of input size <span class="arithmatex">\(n\)</span>.</p>
+<p><strong>Auxiliary space</strong> — memory in addition to the input.
+<strong>Total space</strong> — input + auxiliary.</p>
+<p><strong>Example.</strong> Array reversal:</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">// In-place reversal: O(1) auxiliary space</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="p">}</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="c1">// Out-of-place reversal: O(n) auxiliary space</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">b</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="o">]</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Both are <span class="arithmatex">\(O(n)\)</span> time. But the first uses <span class="arithmatex">\(O(1)\)</span> auxiliary space; the second uses <span class="arithmatex">\(O(n)\)</span>. On a memory-constrained embedded device, this matters.</p>
+<div class="admonition note">
+<p class="admonition-title">Recursion uses space too</p>
+<p>Every recursive call occupies <strong>a stack frame</strong> — typically tens to hundreds of bytes. So a recursion of depth <span class="arithmatex">\(d\)</span> uses <span class="arithmatex">\(O(d)\)</span> auxiliary space. <strong>Fibonacci's naive recursion uses <span class="arithmatex">\(O(n)\)</span> stack space</strong> — the depth is <span class="arithmatex">\(n\)</span>.</p>
+</div>
+<hr />
+<h2 id="111-chapter-summary">1.11 Chapter summary<a class="headerlink" href="#111-chapter-summary" title="Permanent link">&para;</a></h2>
+<ol>
+<li>A <strong>data structure</strong> is a way of organizing data <strong>and</strong> the operations on it. The layout and the operations are equally important.</li>
+<li><strong>Abstraction</strong> — an <strong>ADT</strong> specifies <em>what</em>, an <strong>implementation</strong> specifies <em>how</em>. One ADT, many implementations.</li>
+<li><strong>Big-O</strong> describes the <strong>growth</strong> of an algorithm's cost as input size increases. It <strong>drops constants and lower-order terms</strong>.</li>
+<li><strong>Big-<span class="arithmatex">\(\Omega\)</span></strong> is a lower bound, <strong>Big-<span class="arithmatex">\(\Theta\)</span></strong> is a tight bound. <span class="arithmatex">\(\Theta\)</span> is the strongest and most useful.</li>
+<li><strong>Loops</strong> — count iterations; multiply for nested loops.</li>
+<li><strong>Recursion</strong> — write the recurrence, solve it. No-branching → <span class="arithmatex">\(O(n)\)</span>; halving → <span class="arithmatex">\(O(\log n)\)</span>; two-halving → <span class="arithmatex">\(O(n \log n)\)</span>; exponential → <span class="arithmatex">\(O(2^n)\)</span>.</li>
+<li>The <strong>common complexity classes</strong> are <span class="arithmatex">\(O(1)\)</span>, <span class="arithmatex">\(O(\log n)\)</span>, <span class="arithmatex">\(O(n)\)</span>, <span class="arithmatex">\(O(n \log n)\)</span>, <span class="arithmatex">\(O(n^2)\)</span>, <span class="arithmatex">\(O(n^3)\)</span>, <span class="arithmatex">\(O(2^n)\)</span>, <span class="arithmatex">\(O(n!)\)</span>. Anything worse than <span class="arithmatex">\(O(n \log n)\)</span> is un-deployable on large data.</li>
+<li><strong>Constants matter.</strong> Big-O gives the growth shape; constants give the practical performance. Both matter, especially for small <span class="arithmatex">\(n\)</span>.</li>
+<li><strong>Space complexity</strong> matters as much as time. Recursion costs stack space.</li>
+</ol>
+<hr />
+<h2 id="112-quiz">1.12 Quiz<a class="headerlink" href="#112-quiz" title="Permanent link">&para;</a></h2>
+<h3 id="a-multiple-choice">A. Multiple choice<a class="headerlink" href="#a-multiple-choice" title="Permanent link">&para;</a></h3>
+<ol>
+<li>What does it mean for <span class="arithmatex">\(f(n) = O(g(n))\)</span>?</li>
+</ol>
+<p>(a) <span class="arithmatex">\(f\)</span> is always smaller than <span class="arithmatex">\(g\)</span> (b) <span class="arithmatex">\(f\)</span> grows no faster than <span class="arithmatex">\(g\)</span>, up to a constant
+   (c) <span class="arithmatex">\(f\)</span> and <span class="arithmatex">\(g\)</span> have equal value at every <span class="arithmatex">\(n\)</span> (d) <span class="arithmatex">\(f\)</span> is an algorithm, <span class="arithmatex">\(g\)</span> a program</p>
+<ol>
+<li>Which is <strong>not</strong> a valid Big-O simplification?</li>
+</ol>
+<p>(a) <span class="arithmatex">\(5n + 3 = O(n)\)</span> (b) <span class="arithmatex">\(n^2 + n = O(n^2)\)</span> (c) <span class="arithmatex">\(n \log n + n = O(n \log n)\)</span> (d) <span class="arithmatex">\(n^2 = O(n)\)</span></p>
+<ol>
+<li>A loop <code>for (int i = 0; i &lt; n; i++)</code> has complexity:</li>
+</ol>
+<p>(a) <span class="arithmatex">\(O(1)\)</span> (b) <span class="arithmatex">\(O(\log n)\)</span> (c) <span class="arithmatex">\(O(n)\)</span> (d) <span class="arithmatex">\(O(n^2)\)</span></p>
+<ol>
+<li>A loop <code>for (int i = 1; i &lt; n; i *= 2)</code> has complexity:</li>
+</ol>
+<p>(a) <span class="arithmatex">\(O(1)\)</span> (b) <span class="arithmatex">\(O(\log n)\)</span> (c) <span class="arithmatex">\(O(n)\)</span> (d) <span class="arithmatex">\(O(n^2)\)</span></p>
+<ol>
+<li>Two nested loops, each iterating <span class="arithmatex">\(n\)</span> times, give:</li>
+</ol>
+<p>(a) <span class="arithmatex">\(O(n)\)</span> (b) <span class="arithmatex">\(O(n \log n)\)</span> (c) <span class="arithmatex">\(O(n^2)\)</span> (d) <span class="arithmatex">\(O(2^n)\)</span></p>
+<ol>
+<li>The recurrence <span class="arithmatex">\(T(n) = 2\,T(n/2) + O(n)\)</span> solves to:</li>
+</ol>
+<p>(a) <span class="arithmatex">\(O(n)\)</span> (b) <span class="arithmatex">\(O(n \log n)\)</span> (c) <span class="arithmatex">\(O(n^2)\)</span> (d) <span class="arithmatex">\(O(2^n)\)</span></p>
+<ol>
+<li>The recurrence <span class="arithmatex">\(T(n) = T(n-1) + O(1)\)</span> solves to:</li>
+</ol>
+<p>(a) <span class="arithmatex">\(O(1)\)</span> (b) <span class="arithmatex">\(O(\log n)\)</span> (c) <span class="arithmatex">\(O(n)\)</span> (d) <span class="arithmatex">\(O(n \log n)\)</span></p>
+<ol>
+<li>Big-<span class="arithmatex">\(\Theta\)</span> notation means:</li>
+</ol>
+<p>(a) an upper bound (b) a lower bound (c) a tight upper <strong>and</strong> lower bound (d) the average case</p>
+<ol>
+<li>Which of these is the <strong>slowest-growing</strong> function?</li>
+</ol>
+<p>(a) <span class="arithmatex">\(O(n)\)</span> (b) <span class="arithmatex">\(O(\log n)\)</span> (c) <span class="arithmatex">\(O(n \log n)\)</span> (d) <span class="arithmatex">\(O(n^2)\)</span></p>
+<ol>
+<li>
+<p>The naive recursive Fibonacci is which complexity class?</p>
+<p>(a) <span class="arithmatex">\(O(n)\)</span> (b) <span class="arithmatex">\(O(n \log n)\)</span> (c) <span class="arithmatex">\(O(n^2)\)</span> (d) <span class="arithmatex">\(O(2^n)\)</span></p>
+</li>
+<li>
+<p>An array reversal done in place uses what auxiliary space?</p>
+<p>(a) <span class="arithmatex">\(O(1)\)</span> (b) <span class="arithmatex">\(O(\log n)\)</span> (c) <span class="arithmatex">\(O(n)\)</span> (d) <span class="arithmatex">\(O(n^2)\)</span></p>
+</li>
+<li>
+<p>If Algorithm A is <span class="arithmatex">\(O(n)\)</span> with constant 100, and B is <span class="arithmatex">\(O(n^2)\)</span> with constant 0.1, which is <strong>faster for small <span class="arithmatex">\(n\)</span></strong>?</p>
+<p>(a) A always (b) B for small <span class="arithmatex">\(n\)</span>, A for large <span class="arithmatex">\(n\)</span> (c) A always for <span class="arithmatex">\(n \ge 1\)</span> (d) they are equal for all <span class="arithmatex">\(n\)</span></p>
+</li>
+</ol>
+<h3 id="b-fill-in-the-blank">B. Fill in the blank<a class="headerlink" href="#b-fill-in-the-blank" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>A ______ data type (ADT) specifies a set of values and operations, independent of any implementation.</p>
+</li>
+<li>
+<p>The Big-O definition requires finding two constants: <span class="arithmatex">\(c\)</span> and ______.</p>
+</li>
+<li>
+<p>The recurrence for <strong>binary search</strong> is <span class="arithmatex">\(T(n) = T(n/2) + O(1)\)</span>, which solves to <span class="arithmatex">\(T(n) = O(\underline{\ \ \ \ })\)</span>.</p>
+</li>
+<li>
+<p>Two nested loops, one counting to <span class="arithmatex">\(n\)</span> and one counting to <span class="arithmatex">\(\log n\)</span>, give <span class="arithmatex">\(O(\underline{\ \ \ \ })\)</span>.</p>
+</li>
+<li>
+<p>In Big-O notation, <span class="arithmatex">\(5n^2 + 100n + 7 = O(\underline{\ \ \ \ })\)</span>.</p>
+</li>
+<li>
+<p>Big-<span class="arithmatex">\(\Theta\)</span> means both Big-O <strong>and</strong> Big-______ hold.</p>
+</li>
+<li>
+<p>The naive recursive Fibonacci algorithm is exponential because each call ______ the same subproblems.</p>
+</li>
+<li>
+<p>The auxiliary space used by a recursion of depth <span class="arithmatex">\(d\)</span> is <span class="arithmatex">\(O(\underline{\ \ \ \ })\)</span>.</p>
+</li>
+<li>
+<p>An algorithm that halves the input on each recursive call runs in <span class="arithmatex">\(O(\underline{\ \ \ \ })\)</span>.</p>
+</li>
+<li>
+<p>An algorithm that doubles a counter each iteration runs in <span class="arithmatex">\(O(\underline{\ \ \ \ })\)</span>.</p>
+</li>
+</ol>
+<h3 id="c-define-explain">C. Define / explain<a class="headerlink" href="#c-define-explain" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Define</strong> a data structure. Why must the definition include operations, not just layout?</li>
+<li><strong>Distinguish</strong> an ADT from an implementation. Give one ADT and two different implementations, and explain when each is preferred.</li>
+<li><strong>State</strong> the formal definition of Big-O. Use it to <strong>prove</strong> that <span class="arithmatex">\(4n^2 + 3n + 1 = O(n^2)\)</span>.</li>
+<li><strong>Distinguish</strong> Big-O, Big-<span class="arithmatex">\(\Omega\)</span>, and Big-<span class="arithmatex">\(\Theta\)</span>. Give one example function for which <span class="arithmatex">\(f = O(g)\)</span>, <span class="arithmatex">\(f = \Omega(g)\)</span>, <strong>and</strong> <span class="arithmatex">\(f = \Theta(g)\)</span> all hold.</li>
+<li><strong>Analyse</strong> this code and give its Big-O:</li>
+</ol>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">            </span><span class="n">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<ol>
+<li><strong>Write</strong> the recurrence for the following function and solve it:</li>
+</ol>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<ol>
+<li><strong>Explain</strong> why Big-O ignores constants, and why constants still matter in practice. Give one concrete example where the "slower" algorithm is actually faster.</li>
+<li><strong>Compare</strong> the <strong>time</strong> and <strong>auxiliary space</strong> complexity of computing the <span class="arithmatex">\(n\)</span>-th Fibonacci number via recursion versus iteration.</li>
+</ol>
+<hr />
+<h2 id="113-answer-key">1.13 Answer key<a class="headerlink" href="#113-answer-key" title="Permanent link">&para;</a></h2>
+<details class="success">
+<summary>A. Multiple choice</summary>
+<ol>
+<li><strong>(b)</strong> — <span class="arithmatex">\(f\)</span> grows no faster than <span class="arithmatex">\(g\)</span>, up to a constant.</li>
+<li><strong>(d)</strong> — <span class="arithmatex">\(n^2 = O(n)\)</span> is false; the quadratic term dominates.</li>
+<li><strong>(c)</strong> — <span class="arithmatex">\(O(n)\)</span>.</li>
+<li><strong>(b)</strong> — <span class="arithmatex">\(O(\log n)\)</span>.</li>
+<li><strong>(c)</strong> — <span class="arithmatex">\(O(n^2)\)</span>.</li>
+<li><strong>(b)</strong> — <span class="arithmatex">\(O(n \log n)\)</span>.</li>
+<li><strong>(c)</strong> — <span class="arithmatex">\(O(n)\)</span>.</li>
+<li><strong>(c)</strong> — a tight bound (upper <strong>and</strong> lower).</li>
+<li><strong>(b)</strong> — <span class="arithmatex">\(\log n\)</span> is the slowest-growing.</li>
+<li><strong>(d)</strong> — <span class="arithmatex">\(O(2^n)\)</span>.</li>
+<li><strong>(a)</strong> — <span class="arithmatex">\(O(1)\)</span>.</li>
+<li><strong>(b)</strong> — B for small <span class="arithmatex">\(n\)</span>, A for large <span class="arithmatex">\(n\)</span> (crossover around <span class="arithmatex">\(n = 1000\)</span>).</li>
+</ol>
+</details>
+<details class="success">
+<summary>B. Fill in the blank</summary>
+<ol>
+<li>abstract</li>
+<li><span class="arithmatex">\(n_0\)</span></li>
+<li><span class="arithmatex">\(\log n\)</span></li>
+<li><span class="arithmatex">\(n \log n\)</span></li>
+<li><span class="arithmatex">\(n^2\)</span></li>
+<li><span class="arithmatex">\(\Omega\)</span></li>
+<li>recomputes (repeats)</li>
+<li><span class="arithmatex">\(d\)</span></li>
+<li><span class="arithmatex">\(\log n\)</span></li>
+<li><span class="arithmatex">\(\log n\)</span></li>
+</ol>
+</details>
+<details class="success">
+<summary>C. Define / explain — model answers</summary>
+<ol>
+<li><em>Data structure:</em> a way of organizing data in memory <strong>together with</strong> the operations on that data. <em>Why include operations:</em> layout alone does not determine what you can do cheaply. Two layouts with the same data may have wildly different costs for <code>insert</code>, <code>search</code>, <code>delete</code>. A data structure is defined by what it <em>enables</em>, not just where the bits go.</li>
+<li><em>ADT vs. implementation:</em> ADT = the <em>interface</em>, specification of operations independent of representation. Implementation = the <em>concrete realization</em>, with specific memory layout and operation costs. <em>Example:</em> the <strong>List</strong> ADT (insert, delete, get, size). <em>Implementation 1:</em> array-backed — O(1) <code>get(i)</code>, O(n) <code>insert(0, x)</code>. <em>Implementation 2:</em> linked list — O(n) <code>get(i)</code>, O(1) <code>insert(0, x)</code>. <em>Preferred:</em> array when reads dominate and index access is frequent (e.g., storing a matrix); linked list when insertions/deletions at arbitrary positions dominate (e.g., a text editor's cursor).</li>
+<li><em>Definition:</em> <span class="arithmatex">\(f(n) = O(g(n))\)</span> if <span class="arithmatex">\(\exists c, n_0 &gt; 0\)</span> such that <span class="arithmatex">\(f(n) \le c \cdot g(n)\)</span> for all <span class="arithmatex">\(n \ge n_0\)</span>. <em>Proof of <span class="arithmatex">\(4n^2 + 3n + 1 = O(n^2)\)</span>:</em> Need <span class="arithmatex">\(c, n_0\)</span> with <span class="arithmatex">\(4n^2 + 3n + 1 \le c n^2\)</span> for all <span class="arithmatex">\(n \ge n_0\)</span>. Take <span class="arithmatex">\(c = 8\)</span>: <span class="arithmatex">\(4n^2 + 3n + 1 \le 8n^2\)</span> ⟺ <span class="arithmatex">\(3n + 1 \le 4n^2\)</span> ⟺ <span class="arithmatex">\(4n^2 - 3n - 1 \ge 0\)</span> ⟺ <span class="arithmatex">\((4n+1)(n-1) \ge 0\)</span>, which holds for <span class="arithmatex">\(n \ge 1\)</span>. Witness: <span class="arithmatex">\(c = 8\)</span>, <span class="arithmatex">\(n_0 = 1\)</span>.</li>
+<li><em>Definitions:</em> <span class="arithmatex">\(O\)</span> = upper bound, <span class="arithmatex">\(\Omega\)</span> = lower bound, <span class="arithmatex">\(\Theta\)</span> = both. <em>Example:</em> <span class="arithmatex">\(f(n) = 3n\)</span> and <span class="arithmatex">\(g(n) = n\)</span>. <em>Then:</em> <span class="arithmatex">\(3n = O(n)\)</span> (take <span class="arithmatex">\(c=3\)</span>, <span class="arithmatex">\(n_0=1\)</span>); <span class="arithmatex">\(3n = \Omega(n)\)</span> (take <span class="arithmatex">\(c=3\)</span>, <span class="arithmatex">\(n_0=1\)</span>); <span class="arithmatex">\(3n = \Theta(n)\)</span> (both hold).</li>
+<li><em>Analysis:</em> The outermost loop runs <span class="arithmatex">\(n\)</span> times. For each outer iteration, the inner runs <span class="arithmatex">\(n - i\)</span> times, giving the triangular sum <span class="arithmatex">\(\sum_i (n-i) = \frac{n(n+1)}{2} = O(n^2)\)</span>. The innermost loop runs a <strong>constant</strong> 10 times — a constant factor does not change the class. <strong>Total: <span class="arithmatex">\(O(n^2)\)</span>.</strong> (Precisely <span class="arithmatex">\(10 \cdot n(n+1)/2\)</span> — still <span class="arithmatex">\(O(n^2)\)</span>.)</li>
+<li><em>Recurrence:</em> <span class="arithmatex">\(T(n) = 2\,T(n/2) + O(n)\)</span>. This is the merge-sort recurrence. Recursion-tree solution: at depth <span class="arithmatex">\(d\)</span>, there are <span class="arithmatex">\(2^d\)</span> nodes each with size <span class="arithmatex">\(n/2^d\)</span>, work per level <span class="arithmatex">\(O(n)\)</span>, depth <span class="arithmatex">\(\log_2 n\)</span>. Total: <strong><span class="arithmatex">\(O(n \log n)\)</span></strong>.</li>
+<li><em>Why Big-O ignores constants:</em> it is a statement about <em>growth</em>, not absolute time. For comparing algorithms on <em>large</em> inputs, constants are dominated by the growth rate. <em>Why constants still matter:</em> (i) for <em>small</em> inputs, the constant dominates — insertion sort with tiny constant beats merge sort up to <span class="arithmatex">\(n \approx 20\)</span>; (ii) cache behavior — a cache-friendly O(n²) can beat a cache-thrashing O(n log n); (iii) memory constraints — an O(n) algorithm using <span class="arithmatex">\(O(n)\)</span> extra space may be unusable on an embedded device, whereas an O(n²) algorithm with <span class="arithmatex">\(O(1)\)</span> space may be preferred. <em>Concrete example:</em> Python's <code>sorted()</code> uses Timsort (<span class="arithmatex">\(O(n \log n)\)</span>, small constant) but switches to insertion sort (<span class="arithmatex">\(O(n^2)\)</span>) inside sorted blocks of ≤ 64 elements — because the smaller constant wins for small arrays.</li>
+<li><em>Time and space comparison — Fibonacci:</em></li>
+<li><em>Recursive:</em> Time <span class="arithmatex">\(O(2^n)\)</span> (recomputes subproblems exponentially); auxiliary space <span class="arithmatex">\(O(n)\)</span> (depth of recursion). For <span class="arithmatex">\(n = 50\)</span>: time ≈ hours, stack depth 50.</li>
+<li><em>Iterative:</em> Time <span class="arithmatex">\(O(n)\)</span> (single loop); auxiliary space <span class="arithmatex">\(O(1)\)</span> (two variables). For <span class="arithmatex">\(n = 50\)</span>: time ≈ microseconds, memory ≈ 8 bytes.
+   <strong>Iterative wins overwhelmingly on both time and space.</strong></li>
+</ol>
+</details>
+<hr />
+<h2 id="114-further-reading">1.14 Further reading<a class="headerlink" href="#114-further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Weiss</strong>, <em>Data Structures and Algorithm Analysis</em>, Chapters 1–2 — the standard reference for Big-O in a data-structures context.</li>
+<li><strong>Lafore</strong>, <em>Data Structures &amp; Algorithms in Java</em>, Chapters 1–2 — gentler introduction with working code.</li>
+<li><strong>CLRS</strong>, Chapter 3 (growth of functions) — the formal definition of <span class="arithmatex">\(O\)</span>, <span class="arithmatex">\(\Omega\)</span>, <span class="arithmatex">\(\Theta\)</span>, and the Master Theorem.</li>
+<li><strong>Sedgewick &amp; Wayne</strong>, <em>Algorithms</em>, Section 1.4 (analysis of algorithms) — clear explanation of the doubling method.</li>
+<li><strong>Open Data Structures</strong> (free online) Chapter 1 — complexity primer with code in multiple languages.</li>
+<li><strong>VisuAlgo</strong> — <a href="https://visualgo.net/">visualgo.net</a> — animate any algorithm from this chapter to build intuition.</li>
+<li><strong>MIT 6.006</strong> lecture 1 (Big-O) — <a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/">OCW</a> — first 50 minutes are the classic introduction.</li>
+<li><strong>Python Tutor</strong> — <a href="https://pythontutor.com/">pythontutor.com</a> — step through the recursion examples above and watch the stack grow.</li>
+</ul>
+<hr />
+<h2 id="115-suggested-tutorial-problems">1.15 Suggested tutorial problems<a class="headerlink" href="#115-suggested-tutorial-problems" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Prove Big-O statements.</strong> Prove each:</li>
+<li><span class="arithmatex">\(7n^2 + 4n + 2 = O(n^2)\)</span></li>
+<li><span class="arithmatex">\(3n + \log n = O(n)\)</span></li>
+<li>
+<p><span class="arithmatex">\(100\log n + 5 = O(\log n)\)</span></p>
+</li>
+<li>
+<p><strong>Disprove Big-O statements.</strong> Show that:</p>
+</li>
+<li><span class="arithmatex">\(n^2 \ne O(n)\)</span></li>
+<li><span class="arithmatex">\(n \log n \ne O(n)\)</span></li>
+<li>
+<p><span class="arithmatex">\(2^n \ne O(n^{100})\)</span></p>
+</li>
+<li>
+<p><strong>Analyse these loops</strong> — give the Big-O of each:</p>
+</li>
+<li><code>for (i = 0; i &lt; n; i++) for (j = 0; j &lt; i; j++) { ... }</code></li>
+<li><code>for (i = 1; i &lt; n; i *= 3) { ... }</code></li>
+<li><code>for (i = 0; i &lt; n; i++) for (j = 0; j &lt; n; j++) for (k = 0; k &lt; n; k++) { ... }</code></li>
+<li>
+<p><code>for (i = 0; i &lt; 100; i++) for (j = 0; j &lt; n; j++) { ... }</code></p>
+</li>
+<li>
+<p><strong>Write a recurrence</strong> for each function and solve it:</p>
+</li>
+</ol>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">g</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">h</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">h</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<ol>
+<li>
+<p><strong>Prove or disprove:</strong> if <span class="arithmatex">\(f(n) = \Theta(g(n))\)</span> and <span class="arithmatex">\(g(n) = \Theta(h(n))\)</span>, then <span class="arithmatex">\(f(n) = \Theta(h(n))\)</span>.</p>
+</li>
+<li>
+<p><strong>Non-obvious case.</strong> Give an example of two functions <span class="arithmatex">\(f\)</span> and <span class="arithmatex">\(g\)</span> for which <span class="arithmatex">\(f = O(g)\)</span> but <span class="arithmatex">\(f \ne \Theta(g)\)</span>.</p>
+</li>
+<li>
+<p><strong>Same function, three bounds.</strong> For <span class="arithmatex">\(f(n) = 10n^3 + 100n^2 + 1000n + 10000\)</span>, give witnesses <span class="arithmatex">\((c, n_0)\)</span> for all three: <span class="arithmatex">\(f = O(n^3)\)</span>, <span class="arithmatex">\(f = \Omega(n^3)\)</span>, <span class="arithmatex">\(f = \Theta(n^3)\)</span>.</p>
+</li>
+<li>
+<p><strong>Space matters.</strong> An algorithm runs in <span class="arithmatex">\(O(n)\)</span> time but uses <span class="arithmatex">\(O(n)\)</span> auxiliary space. Can you always replace it with an <span class="arithmatex">\(O(1)\)</span>-space version? Give an example where you can, and one where you can't.</p>
+</li>
+<li>
+<p><strong>The crossover.</strong> Algorithm A is <span class="arithmatex">\(5n + 10\)</span> (per step cost <span class="arithmatex">\(1\)</span> ns); B is <span class="arithmatex">\(0.001n^2\)</span> (per step cost <span class="arithmatex">\(0.001\)</span> ns). Find the <span class="arithmatex">\(n\)</span> at which B becomes slower than A.</p>
+</li>
+<li>
+<p><strong>Practical comparison.</strong> On your laptop, time the naive recursive Fibonacci vs. the iterative version for <span class="arithmatex">\(n = 20, 25, 30, 35\)</span>. Plot the ratio of times. What do you see? What does Big-O predict?</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

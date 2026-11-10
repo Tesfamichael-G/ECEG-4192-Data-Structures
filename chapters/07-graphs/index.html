@@ -1,0 +1,3636 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BSc Electrical Engineering (Computer) · Semester VII · Module Data Storage and Analysis">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+        <link rel="canonical" href="https://tesfamichael-g.github.io/ECEG-4192-Data-Structures/chapters/07-graphs/">
+      
+      
+        <link rel="prev" href="../06-hash-tables/">
+      
+      
+        <link rel="next" href="../08-sorting/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>7. Graphs - ECEG-4192 — Data Structures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-7-graphs" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-header__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECEG-4192 — Data Structures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              7. Graphs
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../syllabus.md" class="md-tabs__link">
+        
+  
+    
+  
+  Syllabus
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../schedule.md" class="md-tabs__link">
+        
+  
+    
+  
+  Schedule
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../slides/index.md" class="md-tabs__link">
+          
+  
+    
+  
+  Slides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../solutions/" class="md-tabs__link">
+          
+  
+    
+  
+  Solutions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-nav__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    ECEG-4192 — Data Structures
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../syllabus.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syllabus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schedule
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction & Analysis of Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Linked Lists
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Stacks and Queues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Trees
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Hash Tables
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    7. Graphs
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    7. Graphs
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#71-graph-terminology" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 Graph terminology
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.1 Graph terminology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#711-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1.1 Definition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#712-sparse-vs-dense" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1.2 Sparse vs. dense
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72-graph-representations" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 Graph representations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2 Graph representations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#721-adjacency-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2.1 Adjacency matrix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#722-adjacency-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2.2 Adjacency list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#723-weighted-adjacency-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2.3 Weighted adjacency list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#724-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2.4 Comparison
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#73-breadth-first-search-bfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 Breadth-First Search (BFS)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.3 Breadth-First Search (BFS)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#731-the-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3.1 The algorithm
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#732-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3.2 Properties
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#733-bfs-computes-shortest-distances" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3.3 BFS computes shortest distances
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#74-depth-first-search-dfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.4 Depth-First Search (DFS)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.4 Depth-First Search (DFS)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#741-the-algorithm-recursive" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.4.1 The algorithm — recursive
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#742-the-algorithm-iterative" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.4.2 The algorithm — iterative
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#743-dfs-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.4.3 DFS properties
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-71-bfs-trace-on-a-small-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 7.1 — BFS trace on a small graph
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-72-dfs-trace-on-the-same-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 7.2 — DFS trace on the same graph
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#75-shortest-paths-dijkstras-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.5 Shortest paths — Dijkstra's algorithm
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.5 Shortest paths — Dijkstra's algorithm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#751-the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.5.1 The problem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#752-the-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.5.2 The algorithm
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#753-correctness" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.5.3 Correctness
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#754-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.5.4 Complexity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-73-dijkstra-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 7.3 — Dijkstra trace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#76-bellmanford-negative-edges" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.6 Bellman–Ford — negative edges
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.6 Bellman–Ford — negative edges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#761-the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.6.1 The problem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#762-bellmanford-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.6.2 Bellman–Ford algorithm
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#763-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.6.3 Complexity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-74-bellmanford-with-a-negative-edge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 7.4 — Bellman–Ford with a negative edge
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#77-minimum-spanning-tree-mst" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.7 Minimum Spanning Tree (MST)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.7 Minimum Spanning Tree (MST)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#771-the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.7.1 The problem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#772-the-cut-property-the-underlying-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.7.2 The cut property — the underlying theorem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#773-kruskals-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.7.3 Kruskal's algorithm
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-75-kruskals-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 7.5 — Kruskal's trace
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#774-prims-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.7.4 Prim's algorithm
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-76-prims-on-the-same-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 7.6 — Prim's on the same graph
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#78-which-shortest-path-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.8 Which shortest-path algorithm?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quiz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quiz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-multiple-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      A. Multiple choice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-fill-in-the-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      B. Fill in the blank
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-define-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      C. Define / explain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Answer key
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suggested-tutorial-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Suggested tutorial problems
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. Sorting Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Slides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/index.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../solutions/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Solutions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#71-graph-terminology" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 Graph terminology
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.1 Graph terminology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#711-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1.1 Definition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#712-sparse-vs-dense" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1.2 Sparse vs. dense
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72-graph-representations" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 Graph representations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2 Graph representations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#721-adjacency-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2.1 Adjacency matrix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#722-adjacency-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2.2 Adjacency list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#723-weighted-adjacency-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2.3 Weighted adjacency list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#724-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2.4 Comparison
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#73-breadth-first-search-bfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 Breadth-First Search (BFS)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.3 Breadth-First Search (BFS)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#731-the-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3.1 The algorithm
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#732-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3.2 Properties
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#733-bfs-computes-shortest-distances" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3.3 BFS computes shortest distances
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#74-depth-first-search-dfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.4 Depth-First Search (DFS)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.4 Depth-First Search (DFS)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#741-the-algorithm-recursive" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.4.1 The algorithm — recursive
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#742-the-algorithm-iterative" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.4.2 The algorithm — iterative
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#743-dfs-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.4.3 DFS properties
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-71-bfs-trace-on-a-small-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 7.1 — BFS trace on a small graph
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-72-dfs-trace-on-the-same-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 7.2 — DFS trace on the same graph
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#75-shortest-paths-dijkstras-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.5 Shortest paths — Dijkstra's algorithm
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.5 Shortest paths — Dijkstra's algorithm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#751-the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.5.1 The problem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#752-the-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.5.2 The algorithm
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#753-correctness" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.5.3 Correctness
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#754-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.5.4 Complexity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-73-dijkstra-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 7.3 — Dijkstra trace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#76-bellmanford-negative-edges" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.6 Bellman–Ford — negative edges
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.6 Bellman–Ford — negative edges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#761-the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.6.1 The problem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#762-bellmanford-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.6.2 Bellman–Ford algorithm
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#763-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.6.3 Complexity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-74-bellmanford-with-a-negative-edge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 7.4 — Bellman–Ford with a negative edge
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#77-minimum-spanning-tree-mst" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.7 Minimum Spanning Tree (MST)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.7 Minimum Spanning Tree (MST)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#771-the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.7.1 The problem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#772-the-cut-property-the-underlying-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.7.2 The cut property — the underlying theorem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#773-kruskals-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.7.3 Kruskal's algorithm
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-75-kruskals-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 7.5 — Kruskal's trace
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#774-prims-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.7.4 Prim's algorithm
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-76-prims-on-the-same-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 7.6 — Prim's on the same graph
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#78-which-shortest-path-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.8 Which shortest-path algorithm?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quiz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quiz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-multiple-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      A. Multiple choice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-fill-in-the-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      B. Fill in the blank
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-define-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      C. Define / explain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Answer key
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suggested-tutorial-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Suggested tutorial problems
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="chapter-7-graphs">Chapter 7 — Graphs<a class="headerlink" href="#chapter-7-graphs" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">Chapter at a glance</p>
+<p><strong>Contact hours:</strong> 2 lecture + 1 tutorial + 2 lab · <strong>Home study:</strong> ~5 h</p>
+<p><strong>Coverage (syllabus):</strong> definition · implementation (adjacency matrix, adjacency
+list) · DFS and BFS · selected graph algorithms (shortest path, minimum spanning
+tree) · applications.</p>
+</div>
+<hr />
+<h2 id="learning-outcomes">Learning outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Define the <strong>graph terminology</strong>: vertex, edge, directed vs. undirected, weighted, cycle, path.</li>
+<li>Represent a graph using <strong>adjacency matrix</strong>, <strong>adjacency list</strong>, and (for weighted graphs) <strong>edge list</strong>.</li>
+<li>Explain the <strong>time/memory trade-offs</strong> of each representation.</li>
+<li>Implement <strong>DFS</strong> and <strong>BFS</strong> — both recursively and iteratively.</li>
+<li>Use DFS and BFS to solve: <strong>connected components</strong>, <strong>cycle detection</strong>, <strong>topological sort</strong>, <strong>bipartite check</strong>.</li>
+<li>Implement <strong>Dijkstra's algorithm</strong> for single-source shortest paths (non-negative weights).</li>
+<li>Implement <strong>Bellman–Ford</strong> for graphs with negative edges; <strong>detect negative cycles</strong>.</li>
+<li>Implement <strong>Prim's</strong> and <strong>Kruskal's</strong> algorithms for minimum spanning trees.</li>
+<li>Recognise when to use <strong>Dijkstra vs. Bellman–Ford vs. BFS</strong> for shortest paths.</li>
+<li>Apply graph algorithms to real problems (networks, routing, dependency resolution, recommendation).</li>
+</ol>
+<hr />
+<h2 id="71-graph-terminology">7.1 Graph terminology<a class="headerlink" href="#71-graph-terminology" title="Permanent link">&para;</a></h2>
+<h3 id="711-definition">7.1.1 Definition<a class="headerlink" href="#711-definition" title="Permanent link">&para;</a></h3>
+<p>A <strong>graph</strong> <span class="arithmatex">\(G = (V, E)\)</span> consists of:</p>
+<ul>
+<li><strong><span class="arithmatex">\(V\)</span></strong> — a set of <strong>vertices</strong> (nodes).</li>
+<li><strong><span class="arithmatex">\(E\)</span></strong> — a set of <strong>edges</strong> — pairs of vertices.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Directed</strong></td>
+<td>Edges have direction: <span class="arithmatex">\((u, v) \ne (v, u)\)</span></td>
+</tr>
+<tr>
+<td><strong>Undirected</strong></td>
+<td>Edges are symmetric: <span class="arithmatex">\(\{u, v\} = \{v, u\}\)</span></td>
+</tr>
+<tr>
+<td><strong>Weighted</strong></td>
+<td>Each edge has a numeric <strong>weight</strong> (cost, distance, capacity)</td>
+</tr>
+<tr>
+<td><strong>Adjacent</strong></td>
+<td>Two vertices connected by an edge</td>
+</tr>
+<tr>
+<td><strong>Degree</strong></td>
+<td>Number of edges touching a vertex</td>
+</tr>
+<tr>
+<td><strong>Path</strong></td>
+<td>Sequence of vertices with edges between consecutive ones</td>
+</tr>
+<tr>
+<td><strong>Cycle</strong></td>
+<td>Path that starts and ends at the same vertex, with no repeated edges</td>
+</tr>
+<tr>
+<td><strong>Connected</strong></td>
+<td>Every vertex reachable from every other (undirected)</td>
+</tr>
+<tr>
+<td><strong>Strongly connected</strong></td>
+<td>Every vertex reachable from every other, following edges (directed)</td>
+</tr>
+<tr>
+<td><strong>DAG</strong></td>
+<td>Directed Acyclic Graph — directed, no cycles</td>
+</tr>
+</tbody>
+</table>
+<h3 id="712-sparse-vs-dense">7.1.2 Sparse vs. dense<a class="headerlink" href="#712-sparse-vs-dense" title="Permanent link">&para;</a></h3>
+<p>A graph with <span class="arithmatex">\(n\)</span> vertices can have up to <span class="arithmatex">\(\binom{n}{2} = \frac{n(n-1)}{2}\)</span> edges (undirected).</p>
+<table>
+<thead>
+<tr>
+<th>Density</th>
+<th>Edges <code>m</code></th>
+<th>Memory implication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sparse</strong></td>
+<td><span class="arithmatex">\(m \approx O(n)\)</span></td>
+<td>Adjacency list is best</td>
+</tr>
+<tr>
+<td><strong>Dense</strong></td>
+<td><span class="arithmatex">\(m \approx O(n²)\)</span></td>
+<td>Adjacency matrix is fine</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Most real-world graphs are sparse.</strong> A road network with a million cities has maybe 2–3 million road segments — not <span class="arithmatex">\(10^{12}\)</span>.</p>
+<hr />
+<h2 id="72-graph-representations">7.2 Graph representations<a class="headerlink" href="#72-graph-representations" title="Permanent link">&para;</a></h2>
+<h3 id="721-adjacency-matrix">7.2.1 Adjacency matrix<a class="headerlink" href="#721-adjacency-matrix" title="Permanent link">&para;</a></h3>
+<p>A 2D array <code>matrix[i][j] = 1</code> if there's an edge from <code>i</code> to <code>j</code>; <code>0</code> otherwise. For weighted graphs, store the weight instead.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">class</span> <span class="nc">AdjacencyMatrix</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">matrix</span><span class="p">;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="n">AdjacencyMatrix</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">matrix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">][</span><span class="n">n</span><span class="o">]</span><span class="p">;</span><span class="w">   </span><span class="c1">// 0 = no edge, weight = edge present</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">addEdge</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">        </span><span class="n">matrix</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">v</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">;</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">        </span><span class="n">matrix</span><span class="o">[</span><span class="n">v</span><span class="o">][</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">;</span><span class="w">   </span><span class="c1">// for undirected</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">hasEdge</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">matrix</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">v</span><span class="o">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">neighbors</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">v</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">matrix</span><span class="o">[</span><span class="n">u</span><span class="o">][</span><span class="n">v</span><span class="o">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th style="text-align: center;">Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add edge</td>
+<td style="text-align: center;">O(1)</td>
+</tr>
+<tr>
+<td>Check edge</td>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+</tr>
+<tr>
+<td>List neighbors</td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td style="text-align: center;"><strong>O(n²)</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Best for:</strong> dense graphs, or when you need O(1) edge lookup. <strong>Worst for:</strong> sparse graphs (wasted memory).</p>
+<h3 id="722-adjacency-list">7.2.2 Adjacency list<a class="headerlink" href="#722-adjacency-list" title="Permanent link">&para;</a></h3>
+<p>An array of lists — <code>adj[i]</code> contains all neighbors of <code>i</code>.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">class</span> <span class="nc">AdjacencyList</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="n">AdjacencyList</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">adj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">());</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">addEdge</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">        </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">u</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">        </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">v</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="n">u</span><span class="p">);</span><span class="w">   </span><span class="c1">// for undirected</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">hasEdge</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">u</span><span class="p">).</span><span class="na">contains</span><span class="p">(</span><span class="n">v</span><span class="p">);</span><span class="w">   </span><span class="c1">// O(degree(u))</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">neighbors</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th style="text-align: center;">Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add edge</td>
+<td style="text-align: center;">O(1)</td>
+</tr>
+<tr>
+<td>Check edge</td>
+<td style="text-align: center;">O(degree(u)) — worst O(n)</td>
+</tr>
+<tr>
+<td>List neighbors</td>
+<td style="text-align: center;"><strong>O(degree(u))</strong> — optimal</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td style="text-align: center;"><strong>O(n + m)</strong> — optimal for sparse</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Best for:</strong> sparse graphs (the common case). <strong>Worst for:</strong> edge lookup.</p>
+<h3 id="723-weighted-adjacency-list">7.2.3 Weighted adjacency list<a class="headerlink" href="#723-weighted-adjacency-list" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kd">class</span> <span class="nc">Edge</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="kd">to</span><span class="p">,</span><span class="w"> </span><span class="n">weight</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="n">Edge</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="kd">to</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">to</span><span class="p">;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">}</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="kd">class</span> <span class="nc">WeightedGraph</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">;</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="n">WeightedGraph</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">        </span><span class="n">adj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">());</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">addEdge</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">        </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">u</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Edge</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">));</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">        </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">v</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Edge</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">));</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>This is what Dijkstra, Prim, and Kruskal expect.</p>
+<h3 id="724-comparison">7.2.4 Comparison<a class="headerlink" href="#724-comparison" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Adjacency matrix</th>
+<th>Adjacency list</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Memory</td>
+<td>O(n²)</td>
+<td><strong>O(n + m)</strong></td>
+</tr>
+<tr>
+<td>Add edge</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Check edge</td>
+<td><strong>O(1)</strong></td>
+<td>O(degree)</td>
+</tr>
+<tr>
+<td>List neighbors</td>
+<td>O(n)</td>
+<td><strong>O(degree)</strong></td>
+</tr>
+<tr>
+<td>Dense graph</td>
+<td>fine</td>
+<td>O(n²) too — no savings</td>
+</tr>
+<tr>
+<td>Sparse graph</td>
+<td><strong>wastes O(n²)</strong></td>
+<td>best</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Rule:</strong> adjacency list unless the graph is dense (&gt; ~30% of possible edges) or the algorithm needs many edge lookups.</p>
+<hr />
+<h2 id="73-breadth-first-search-bfs">7.3 Breadth-First Search (BFS)<a class="headerlink" href="#73-breadth-first-search-bfs" title="Permanent link">&para;</a></h2>
+<h3 id="731-the-algorithm">7.3.1 The algorithm<a class="headerlink" href="#731-the-algorithm" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">bfs</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="kt">boolean</span><span class="o">[]</span><span class="w"> </span><span class="n">visited</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">boolean</span><span class="o">[</span><span class="n">adj</span><span class="p">.</span><span class="na">size</span><span class="p">()</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="n">Queue</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">queue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="n">queue</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">start</span><span class="p">);</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="n">visited</span><span class="o">[</span><span class="n">start</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">queue</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">queue</span><span class="p">.</span><span class="na">remove</span><span class="p">();</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">u</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">visited</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">                </span><span class="n">visited</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">                </span><span class="n">queue</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Idea:</strong> expand outward from the start, visiting all distance-1 vertices first, then all distance-2, then all distance-3, etc.</p>
+<p><strong>Cost:</strong> O(V + E) — every vertex and edge visited at most once.</p>
+<p><strong>Space:</strong> O(V) for the queue and visited set.</p>
+<h3 id="732-properties">7.3.2 Properties<a class="headerlink" href="#732-properties" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Shortest paths in unweighted graphs.</strong> BFS explores by edge count; the first time it reaches a vertex, that's the shortest path.</li>
+<li><strong>Level-order in trees</strong> (Chapter 5).</li>
+<li><strong>Undirected connectivity:</strong> BFS from a start vertex reaches all vertices in its connected component.</li>
+</ul>
+<h3 id="733-bfs-computes-shortest-distances">7.3.3 BFS computes shortest distances<a class="headerlink" href="#733-bfs-computes-shortest-distances" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="nf">bfsDistances</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">dist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">adj</span><span class="p">.</span><span class="na">size</span><span class="p">()</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="n">Arrays</span><span class="p">.</span><span class="na">fill</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="n">dist</span><span class="o">[</span><span class="n">start</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="n">Queue</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">queue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="n">queue</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">start</span><span class="p">);</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">queue</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">queue</span><span class="p">.</span><span class="na">remove</span><span class="p">();</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">u</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dist</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">                </span><span class="n">dist</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">                </span><span class="n">queue</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">dist</span><span class="p">;</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Proof of correctness.</strong> BFS processes vertices in non-decreasing order of distance from <code>start</code>. When it reaches <code>v</code> from <code>u</code>, <code>dist[v]</code> is set to <code>dist[u] + 1</code>. If a shorter path existed, BFS would have found it earlier (contradiction with the FIFO order). ✓</p>
+<p><strong>Cost:</strong> O(V + E).</p>
+<hr />
+<h2 id="74-depth-first-search-dfs">7.4 Depth-First Search (DFS)<a class="headerlink" href="#74-depth-first-search-dfs" title="Permanent link">&para;</a></h2>
+<h3 id="741-the-algorithm-recursive">7.4.1 The algorithm — recursive<a class="headerlink" href="#741-the-algorithm-recursive" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">boolean</span><span class="o">[]</span><span class="w"> </span><span class="n">visited</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="n">visited</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">u</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">visited</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="n">dfs</span><span class="p">(</span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">visited</span><span class="p">);</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Idea:</strong> dive as deep as possible before backtracking. Follow one neighbor all the way to a dead end, then backtrack.</p>
+<p><strong>Cost:</strong> O(V + E).</p>
+<p><strong>Space:</strong> O(V) for visited + O(h) call stack, where h is the maximum depth.</p>
+<h3 id="742-the-algorithm-iterative">7.4.2 The algorithm — iterative<a class="headerlink" href="#742-the-algorithm-iterative" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">dfsIterative</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="kt">boolean</span><span class="o">[]</span><span class="w"> </span><span class="n">visited</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">boolean</span><span class="o">[</span><span class="n">adj</span><span class="p">.</span><span class="na">size</span><span class="p">()</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="n">Deque</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">stack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="n">stack</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="n">start</span><span class="p">);</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">stack</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stack</span><span class="p">.</span><span class="na">pop</span><span class="p">();</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">visited</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">        </span><span class="n">visited</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">u</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">visited</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="n">stack</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Same result as recursive DFS</strong> — but no recursion depth risk.</p>
+<h3 id="743-dfs-properties">7.4.3 DFS properties<a class="headerlink" href="#743-dfs-properties" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Cycle detection</strong> — if we find a back edge to an ancestor, there's a cycle.</li>
+<li><strong>Topological sort</strong> — reverse postorder of a DFS on a DAG.</li>
+<li><strong>Connected components</strong> — count separate DFS starts.</li>
+<li><strong>Bipartite check</strong> — 2-coloring during DFS.</li>
+<li><strong>DFS tree depth = O(V) worst case</strong> — recursive DFS can stack-overflow on large graphs.</li>
+</ul>
+<hr />
+<h2 id="worked-example-71-bfs-trace-on-a-small-graph">Worked example 7.1 — BFS trace on a small graph<a class="headerlink" href="#worked-example-71-bfs-trace-on-a-small-graph" title="Permanent link">&para;</a></h2>
+<p><strong>Graph (undirected):</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>0 — 1 — 3
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>|   |   |
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>2 — 4 — 5
+</span></code></pre></div></p>
+<p><strong>Edges:</strong> <code>{(0,1), (0,2), (1,3), (1,4), (2,4), (3,5), (4,5)}</code>.</p>
+<p><strong>BFS from 0:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Step</th>
+<th>Queue</th>
+<th>Visited</th>
+<th><code>dist</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td>[0]</td>
+<td>{0}</td>
+<td>0:0</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td>[1, 2]</td>
+<td>{0, 1, 2}</td>
+<td>1:1, 2:1</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>[2, 3, 4]</td>
+<td>{0, 1, 2, 3, 4}</td>
+<td>3:2, 4:2</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>[3, 4]</td>
+<td>(none new from 2)</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>[4, 5]</td>
+<td>{0–5}</td>
+<td>5:3</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>[5]</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td>[]</td>
+<td>done</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Visit order:</strong> <code>0, 1, 2, 3, 4, 5</code> — level by level. <strong>Distances:</strong> <code>[0, 1, 1, 2, 2, 3]</code>.</p>
+<p><strong>The BFS tree edges</strong> (parent of each vertex): <code>0 → {1, 2}, 1 → {3, 4}, 4 → 5</code>.</p>
+<p><strong>Note:</strong> there are two shortest paths to vertex 5 (via 3 and via 4), both length 3. BFS finds one — the one reached first in BFS order.</p>
+<hr />
+<h2 id="worked-example-72-dfs-trace-on-the-same-graph">Worked example 7.2 — DFS trace on the same graph<a class="headerlink" href="#worked-example-72-dfs-trace-on-the-same-graph" title="Permanent link">&para;</a></h2>
+<p><strong>DFS from 0 (recursive, neighbors in sorted order):</strong></p>
+<p><strong>Trace:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Step</th>
+<th>Stack (call)</th>
+<th>Action</th>
+<th>Visited</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>dfs(0)</td>
+<td>visit 0</td>
+<td>{0}</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>dfs(1)</td>
+<td>visit 1</td>
+<td>{0, 1}</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>dfs(3)</td>
+<td>visit 3 (from 1)</td>
+<td>{0, 1, 3}</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>dfs(5)</td>
+<td>visit 5 (from 3)</td>
+<td>{0, 1, 3, 5}</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td></td>
+<td>neighbor 4 (from 5)</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td>dfs(4)</td>
+<td>visit 4</td>
+<td>{0, 1, 3, 4, 5}</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td></td>
+<td>neighbor 0 (visited), 1 (visited), 2 (unvisited)</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td>dfs(2)</td>
+<td>visit 2</td>
+<td>{0, 1, 2, 3, 4, 5}</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td></td>
+<td>back up</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Visit order:</strong> <code>0, 1, 3, 5, 4, 2</code> — <strong>not</strong> the same as BFS. DFS dives deep first.</p>
+<p><strong>The DFS tree edges:</strong> <code>0 → 1, 1 → 3, 3 → 5, 5 → 4, 4 → 2</code>. A <strong>path-shaped</strong> tree — depth 5.</p>
+<p><strong>Contrast with BFS tree depth: 3.</strong></p>
+<hr />
+<h2 id="75-shortest-paths-dijkstras-algorithm">7.5 Shortest paths — Dijkstra's algorithm<a class="headerlink" href="#75-shortest-paths-dijkstras-algorithm" title="Permanent link">&para;</a></h2>
+<h3 id="751-the-problem">7.5.1 The problem<a class="headerlink" href="#751-the-problem" title="Permanent link">&para;</a></h3>
+<p>Given a weighted graph with <strong>non-negative</strong> edge weights, find the shortest path from a source vertex <code>s</code> to every other vertex.</p>
+<p><strong>"Shortest"</strong> means minimal <strong>sum of edge weights</strong> — not edge count. BFS solves this only when all weights are equal (unweighted = weight 1 each).</p>
+<h3 id="752-the-algorithm">7.5.2 The algorithm<a class="headerlink" href="#752-the-algorithm" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="nf">dijkstra</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">source</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">size</span><span class="p">();</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">dist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="n">Arrays</span><span class="p">.</span><span class="na">fill</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="p">);</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="n">dist</span><span class="o">[</span><span class="n">source</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="n">PriorityQueue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;</span><span class="w"> </span><span class="n">pq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PriorityQueue</span><span class="o">&lt;&gt;</span><span class="p">((</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">b</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">);</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="n">pq</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="p">{</span><span class="n">source</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">});</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="kt">boolean</span><span class="o">[]</span><span class="w"> </span><span class="n">settled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">boolean</span><span class="o">[</span><span class="n">n</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">pq</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pq</span><span class="p">.</span><span class="na">poll</span><span class="p">();</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">settled</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">        </span><span class="n">settled</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Edge</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">u</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">to</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">weight</span><span class="p">;</span>
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dist</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="w">                </span><span class="n">dist</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w</span><span class="p">;</span>
+</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="w">                </span><span class="n">pq</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="p">{</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="p">});</span>
+</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">dist</span><span class="p">;</span>
+</span><span id="__span-8-27"><a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Idea:</strong></p>
+<ol>
+<li>Start with <code>dist[s] = 0</code>, all others infinity.</li>
+<li>Repeatedly pick the unvisited vertex with the smallest tentative distance.</li>
+<li><strong>Relax</strong> its outgoing edges: if <code>dist[u] + w(u,v) &lt; dist[v]</code>, update <code>dist[v]</code>.</li>
+<li>Repeat until all vertices settled.</li>
+</ol>
+<p><strong>The priority queue</strong> (Chapter 5 heap) makes picking the minimum vertex O(log V).</p>
+<h3 id="753-correctness">7.5.3 Correctness<a class="headerlink" href="#753-correctness" title="Permanent link">&para;</a></h3>
+<p><strong>Invariant:</strong> once a vertex <code>u</code> is settled (popped from PQ), its <code>dist[u]</code> is final.</p>
+<p><strong>Proof by contradiction.</strong> Suppose <code>u</code> is settled with tentative distance <code>D</code>, but there's a shorter path <code>P</code> of length <code>L &lt; D</code>. Along <code>P</code>, at least one vertex is unsettled. Let <code>x</code> be the first unsettled vertex on <code>P</code>, with predecessor <code>p</code> (settled). By induction, <code>dist[p]</code> is final. When <code>p</code> was settled, <code>dist[x]</code> was updated to <code>dist[p] + w(p,x) ≤ L &lt; D</code>. So <code>x</code>'s tentative distance is &lt; D. Since the PQ pops minimum, <code>x</code> (or some vertex with even smaller tentative distance) would have been popped before <code>u</code> — contradicting that <code>u</code> was popped now. Therefore <code>D = L</code>. ✓</p>
+<p><strong>Requires non-negative weights</strong> — the invariant breaks with negative edges (a path through a settled vertex might be improved later).</p>
+<h3 id="754-complexity">7.5.4 Complexity<a class="headerlink" href="#754-complexity" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Implementation</th>
+<th>Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Binary heap PQ</td>
+<td><strong>O((V + E) log V)</strong></td>
+</tr>
+<tr>
+<td>Fibonacci heap</td>
+<td>O(E + V log V)</td>
+</tr>
+<tr>
+<td>Array (for dense)</td>
+<td>O(V²)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>For sparse graphs</strong> (E ≈ V), binary heap gives ~O(V log V). <strong>For dense graphs</strong> (E ≈ V²), the array version O(V²) wins.</p>
+<h3 id="worked-example-73-dijkstra-trace">Worked example 7.3 — Dijkstra trace<a class="headerlink" href="#worked-example-73-dijkstra-trace" title="Permanent link">&para;</a></h3>
+<p><strong>Graph (directed weighted, 6 vertices):</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>        0
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>       / \
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>      4   1
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>     /    \
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    1 —— 2 —— 3
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>      3  1   2
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>        \  /
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>         5
+</span></code></pre></div></p>
+<p>More formally:</p>
+<p>Edges: <code>0→1 (4), 0→2 (1), 1→3 (1), 2→1 (3), 2→3 (5), 3→4 (2), 2→4 (6)</code>.</p>
+<p><strong>Dijkstra from 0:</strong></p>
+<p>Init: <code>dist = [0, ∞, ∞, ∞, ∞]</code>, PQ = <code>{(0, 0)}</code>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Step</th>
+<th>Pop <code>(u, d)</code></th>
+<th>Settled set</th>
+<th><code>dist</code> (0..4)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>(0, 0)</td>
+<td>{0}</td>
+<td>[0, 4, 1, ∞, ∞]</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>(2, 1)</td>
+<td>{0, 2}</td>
+<td>[0, 4, 1, 6, 7] — relax 2→1 (4), 2→3 (5), 2→4 (7)</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>(1, 4)</td>
+<td>{0, 1, 2}</td>
+<td>[0, 4, 1, 5, 7] — relax 1→3 (5 &lt; 6)</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>(3, 5)</td>
+<td>{0, 1, 2, 3}</td>
+<td>[0, 4, 1, 5, 7] — 3→4 (7, no update)</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>(4, 7)</td>
+<td>{0, 1, 2, 3, 4}</td>
+<td>done</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Final distances from 0:</strong>
+- <code>dist[0] = 0</code>
+- <code>dist[1] = 4</code> (direct edge 0→1, weight 4)
+- <code>dist[2] = 1</code> (direct edge 0→2)
+- <code>dist[3] = 5</code> (path 0→2→1→3, total 1+3+1=5)
+- <code>dist[4] = 7</code> (path 0→2→4, total 1+6=7)</p>
+<p><strong>Verify by hand:</strong> shortest path to 3 is 0→2→1→3 (5), not 0→1→3 (5) — actually equal here. Shortest to 4 is 0→2→4 (7) or 0→2→1→3→4 (1+3+1+2=7) — again equal.</p>
+<hr />
+<h2 id="76-bellmanford-negative-edges">7.6 Bellman–Ford — negative edges<a class="headerlink" href="#76-bellmanford-negative-edges" title="Permanent link">&para;</a></h2>
+<h3 id="761-the-problem">7.6.1 The problem<a class="headerlink" href="#761-the-problem" title="Permanent link">&para;</a></h3>
+<p>Dijkstra assumes <strong>non-negative weights</strong>. If the graph has negative edges, Dijkstra's invariant breaks — it may settle a vertex too early.</p>
+<p><strong>Example.</strong> Graph <code>s → u</code> (weight 1), <code>s → v</code> (weight 4), <code>u → v</code> (weight -3). Dijkstra settles <code>u</code> first (dist 1), then <code>v</code> at dist 4 (via direct edge) — but the path <code>s → u → v</code> has cost <code>1 + (-3) = -2</code>, shorter. Dijkstra misses this because it settled <code>u</code> before considering the negative edge.</p>
+<h3 id="762-bellmanford-algorithm">7.6.2 Bellman–Ford algorithm<a class="headerlink" href="#762-bellmanford-algorithm" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="nf">bellmanFord</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;</span><span class="w"> </span><span class="n">edges</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">source</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="c1">// edges: [u, v, w]</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">dist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="n">Arrays</span><span class="p">.</span><span class="na">fill</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="p">);</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="n">dist</span><span class="o">[</span><span class="n">source</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">edges</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dist</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">                </span><span class="n">dist</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w</span><span class="p">;</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="w">    </span><span class="c1">// Check for negative-weight cycles</span>
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">edges</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dist</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">"Negative cycle detected"</span><span class="p">);</span>
+</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">dist</span><span class="p">;</span>
+</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Idea:</strong> relax every edge <code>V - 1</code> times. Why <code>V - 1</code>?</p>
+<p><strong>The shortest path has at most V - 1 edges.</strong> (If it had V edges, it would visit V+1 vertices — contradiction, since a shortest path visits each vertex at most once.) After <code>k</code> full passes, <code>dist[v]</code> is the shortest path using at most <code>k</code> edges. After <code>V-1</code> passes, all shortest paths are found.</p>
+<p><strong>Negative cycle detection:</strong> if a further pass improves any distance, there must be a negative cycle (a cycle whose total weight is negative) — no finite shortest path exists.</p>
+<h3 id="763-complexity">7.6.3 Complexity<a class="headerlink" href="#763-complexity" title="Permanent link">&para;</a></h3>
+<p><strong>O(V · E)</strong> — V passes × E edge relaxations.</p>
+<table>
+<thead>
+<tr>
+<th>Graph</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sparse (E ≈ V)</td>
+<td>O(V²)</td>
+</tr>
+<tr>
+<td>Dense (E ≈ V²)</td>
+<td>O(V³)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Much slower than Dijkstra</strong> — but handles negative edges and detects negative cycles.</p>
+<h3 id="worked-example-74-bellmanford-with-a-negative-edge">Worked example 7.4 — Bellman–Ford with a negative edge<a class="headerlink" href="#worked-example-74-bellmanford-with-a-negative-edge" title="Permanent link">&para;</a></h3>
+<p><strong>Graph:</strong> <code>s=0 → 1 (4), 0 → 2 (5), 1 → 2 (-3)</code>.</p>
+<p><strong>Bellman–Ford from 0:</strong></p>
+<p><strong>Init:</strong> <code>dist = [0, ∞, ∞]</code>.</p>
+<p><strong>Pass 1 (over all edges):</strong>
+- Edge (0, 1, 4): <code>dist[1] = min(∞, 0 + 4) = 4</code>.
+- Edge (0, 2, 5): <code>dist[2] = min(∞, 0 + 5) = 5</code>.
+- Edge (1, 2, -3): <code>dist[2] = min(5, 4 + (-3)) = 1</code>.</p>
+<p><strong>Pass 2 (over all edges):</strong>
+- Edge (0, 1, 4): <code>dist[1] = 4</code> (no change).
+- Edge (0, 2, 5): <code>dist[2] = min(1, 5) = 1</code> (no change).
+- Edge (1, 2, -3): <code>dist[2] = min(1, 4 - 3) = 1</code> (no change).</p>
+<p><strong>Pass 3 (over all edges):</strong> no changes → converged.</p>
+<p><strong>Final:</strong> <code>dist = [0, 4, 1]</code>.</p>
+<p><strong>Correct:</strong> <code>dist[2] = 1</code> (via 0 → 1 → 2, cost 4 + (-3) = 1), not 5 (direct). <strong>Dijkstra would have returned 5</strong> because it would settle node 2 at cost 5 before discovering the negative edge.</p>
+<p><strong>Verify — Dijkstra on this graph:</strong> settle 0 (dist 0), then 1 (dist 4, since direct edge weight 4 &lt; ... nothing else), then 2. When we relax 0 → 2, dist[2] = 5. When we later relax 1 → 2 (weight -3), we'd update dist[2] to 1 — <strong>but only if 1 is popped from the PQ before 2</strong>. If PQ pops 2 first (dist 5 &lt; ∞), then 2 is settled at 5, and the -3 edge updates never help. <strong>Dijkstra returns 5 — wrong.</strong> ✓ (This confirms Bellman–Ford is needed.)</p>
+<hr />
+<h2 id="77-minimum-spanning-tree-mst">7.7 Minimum Spanning Tree (MST)<a class="headerlink" href="#77-minimum-spanning-tree-mst" title="Permanent link">&para;</a></h2>
+<h3 id="771-the-problem">7.7.1 The problem<a class="headerlink" href="#771-the-problem" title="Permanent link">&para;</a></h3>
+<p>Given a <strong>connected, undirected, weighted graph</strong>, find a subset of edges that connects all vertices with <strong>minimum total weight</strong>.</p>
+<p>A <strong>spanning tree</strong> has exactly <code>V - 1</code> edges, connects all vertices, contains no cycles.</p>
+<p><strong>MST applications:</strong></p>
+<ul>
+<li><strong>Network design</strong> — laying cable / fiber to connect all homes with minimum total cost.</li>
+<li><strong>Road networks</strong> — building roads to connect all towns with minimum total length.</li>
+<li><strong>Clustering</strong> — MST edges connect similar items; cutting MST edges gives clusters.</li>
+<li><strong>Approximation algorithms</strong> — the MST gives a 2-approximation to the Traveling Salesman Problem.</li>
+</ul>
+<h3 id="772-the-cut-property-the-underlying-theorem">7.7.2 The cut property — the underlying theorem<a class="headerlink" href="#772-the-cut-property-the-underlying-theorem" title="Permanent link">&para;</a></h3>
+<p><strong>Cut.</strong> A partition of <code>V</code> into two non-empty sets <code>S</code> and <code>V - S</code>.</p>
+<p><strong>Cut property.</strong> For any cut <code>(S, V - S)</code>, the <strong>minimum-weight edge crossing the cut</strong> belongs to some MST.</p>
+<p><strong>Why this is the key.</strong> Both Prim's and Kruskal's algorithms are grounded in this property — they greedily select edges that are minimum-weight crossing some cut.</p>
+<h3 id="773-kruskals-algorithm">7.7.3 Kruskal's algorithm<a class="headerlink" href="#773-kruskals-algorithm" title="Permanent link">&para;</a></h3>
+<p><strong>Idea:</strong> sort all edges by weight; add them to the MST one at a time, skipping edges that would create a cycle. <strong>Uses Union-Find</strong> for fast cycle detection.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kd">class</span> <span class="nc">UnionFind</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">parent</span><span class="p">,</span><span class="w"> </span><span class="n">rank</span><span class="p">;</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="n">UnionFind</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">        </span><span class="n">parent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">        </span><span class="n">rank</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">parent</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">find</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">parent</span><span class="o">[</span><span class="n">x</span><span class="o">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">parent</span><span class="o">[</span><span class="n">x</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">find</span><span class="p">(</span><span class="n">parent</span><span class="o">[</span><span class="n">x</span><span class="o">]</span><span class="p">);</span><span class="w">   </span><span class="c1">// path compression</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">parent</span><span class="o">[</span><span class="n">x</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">union</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">rx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">find</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">ry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">find</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rx</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ry</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">   </span><span class="c1">// already in same set</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rank</span><span class="o">[</span><span class="n">rx</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">rank</span><span class="o">[</span><span class="n">ry</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="n">parent</span><span class="o">[</span><span class="n">rx</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ry</span><span class="p">;</span>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rank</span><span class="o">[</span><span class="n">rx</span><span class="o">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">rank</span><span class="o">[</span><span class="n">ry</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="n">parent</span><span class="o">[</span><span class="n">ry</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rx</span><span class="p">;</span>
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">parent</span><span class="o">[</span><span class="n">ry</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rx</span><span class="p">;</span><span class="w"> </span><span class="n">rank</span><span class="o">[</span><span class="n">rx</span><span class="o">]++</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="p">}</span>
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>
+</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="n">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;</span><span class="w"> </span><span class="nf">kruskal</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;</span><span class="w"> </span><span class="n">edges</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="w">    </span><span class="c1">// edges: [u, v, w]</span>
+</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="w">    </span><span class="n">edges</span><span class="p">.</span><span class="na">sort</span><span class="p">((</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">b</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">);</span>
+</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="w">    </span><span class="n">UnionFind</span><span class="w"> </span><span class="n">uf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UnionFind</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;</span><span class="w"> </span><span class="n">mst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">edges</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">uf</span><span class="p">.</span><span class="na">union</span><span class="p">(</span><span class="n">e</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a><span class="w">            </span><span class="n">mst</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+</span><span id="__span-11-30"><a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">mst</span><span class="p">.</span><span class="na">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+</span><span id="__span-11-31"><a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-11-32"><a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-11-33"><a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">mst</span><span class="p">;</span>
+</span><span id="__span-11-34"><a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost:</strong> O(E log E) for sorting + O(E α(V)) for Union-Find operations. <strong>O(E log E) total</strong> — dominated by sorting.</p>
+<p><strong>Sparse graphs:</strong> O(E log E) ≈ O(V log V) — competitive.
+<strong>Dense graphs:</strong> O(V² log V) — Prim's with an array is faster.</p>
+<h3 id="worked-example-75-kruskals-trace">Worked example 7.5 — Kruskal's trace<a class="headerlink" href="#worked-example-75-kruskals-trace" title="Permanent link">&para;</a></h3>
+<p><strong>Graph (6 vertices, 9 edges):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Edge</th>
+<th style="text-align: center;">Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(0,1)</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td>(0,2)</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td>(1,2)</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td>(1,3)</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td>(2,3)</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td>(2,4)</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td>(3,4)</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td>(3,5)</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td>(4,5)</td>
+<td style="text-align: center;">6</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sort edges by weight:</strong></p>
+<ol>
+<li><code>(1,2)</code> — 1</li>
+<li><code>(3,4)</code> — 2</li>
+<li><code>(3,5)</code> — 4</li>
+<li><code>(0,2)</code> — 5</li>
+<li><code>(1,3)</code> — 5</li>
+<li><code>(2,3)</code> — 5</li>
+<li><code>(0,1)</code> — 6</li>
+<li><code>(2,4)</code> — 6</li>
+<li><code>(4,5)</code> — 6</li>
+</ol>
+<p><strong>Process:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Edge</th>
+<th style="text-align: center;">Add?</th>
+<th>MST edges</th>
+<th>Total weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">(1,2), 1</td>
+<td style="text-align: center;">✓</td>
+<td>{(1,2)}</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align: center;">(3,4), 2</td>
+<td style="text-align: center;">✓</td>
+<td>{(1,2), (3,4)}</td>
+<td>3</td>
+</tr>
+<tr>
+<td style="text-align: center;">(3,5), 4</td>
+<td style="text-align: center;">✓</td>
+<td>{(1,2), (3,4), (3,5)}</td>
+<td>7</td>
+</tr>
+<tr>
+<td style="text-align: center;">(0,2), 5</td>
+<td style="text-align: center;">✓</td>
+<td>{(1,2), (3,4), (3,5), (0,2)}</td>
+<td>12</td>
+</tr>
+<tr>
+<td style="text-align: center;">(1,3), 5</td>
+<td style="text-align: center;">✓ (connects {1,2,0} to {3,4,5})</td>
+<td>{(1,2), (3,4), (3,5), (0,2), (1,3)}</td>
+<td>17</td>
+</tr>
+<tr>
+<td style="text-align: center;">(2,3), 5</td>
+<td style="text-align: center;">✗ (creates cycle 1-2-3-1)</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">(0,1), 6</td>
+<td style="text-align: center;">✗ (cycle)</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">...</td>
+<td style="text-align: center;"></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>MST edges: 5</strong> = V - 1 = 6 - 1. ✓</p>
+<p><strong>Total weight: 17.</strong></p>
+<p><strong>Verify it's a tree:</strong> <code>0–2, 1–2, 1–3, 3–4, 3–5</code>. All 6 vertices connected, 5 edges, no cycles. ✓</p>
+<h3 id="774-prims-algorithm">7.7.4 Prim's algorithm<a class="headerlink" href="#774-prims-algorithm" title="Permanent link">&para;</a></h3>
+<p><strong>Idea:</strong> grow the MST from a start vertex, always adding the cheapest edge connecting a vertex <strong>inside</strong> the current tree to one <strong>outside</strong>.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">prim</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">size</span><span class="p">();</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="kt">boolean</span><span class="o">[]</span><span class="w"> </span><span class="n">inMST</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">boolean</span><span class="o">[</span><span class="n">n</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="n">PriorityQueue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;</span><span class="w"> </span><span class="n">pq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PriorityQueue</span><span class="o">&lt;&gt;</span><span class="p">((</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">b</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">);</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="n">pq</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="p">{</span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">});</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">totalWeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">pq</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pq</span><span class="p">.</span><span class="na">poll</span><span class="p">();</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inMST</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">        </span><span class="n">inMST</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">        </span><span class="n">totalWeight</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">w</span><span class="p">;</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Edge</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">u</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">inMST</span><span class="o">[</span><span class="n">e</span><span class="p">.</span><span class="na">to</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="n">pq</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="p">{</span><span class="n">e</span><span class="p">.</span><span class="na">to</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">weight</span><span class="p">});</span>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">totalWeight</span><span class="p">;</span>
+</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost:</strong> O((V + E) log V) with binary heap — same as Dijkstra.</p>
+<p><strong>For dense graphs:</strong> array-based version O(V²).</p>
+<p><strong>Advantage over Kruskal:</strong> grows the MST from a specific start — useful when edges are not known in advance (e.g., a physical network you're exploring).</p>
+<h3 id="worked-example-76-prims-on-the-same-graph">Worked example 7.6 — Prim's on the same graph<a class="headerlink" href="#worked-example-76-prims-on-the-same-graph" title="Permanent link">&para;</a></h3>
+<p><strong>Start at vertex 0.</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Step</th>
+<th>Tree vertices</th>
+<th>Min edge to outside</th>
+<th>Add</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>{0}</td>
+<td>(0,2, 5)</td>
+<td>2 (weight 5)</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>{0,2}</td>
+<td>(1,2, 1)</td>
+<td>1 (weight 1)</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>{0,1,2}</td>
+<td>(1,3, 5)</td>
+<td>3 (weight 5)</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>{0,1,2,3}</td>
+<td>(3,4, 2)</td>
+<td>4 (weight 2)</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>{0–4}</td>
+<td>(3,5, 4)</td>
+<td>5 (weight 4)</td>
+</tr>
+<tr>
+<td style="text-align: center;">done</td>
+<td>all</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total: 5 + 1 + 5 + 2 + 4 = 17.</strong> Same as Kruskal. ✓</p>
+<p><strong>MST is not unique</strong> — when there are ties in edge weights, multiple MSTs may exist. But <strong>total weight is unique</strong> (all MSTs have the same total).</p>
+<hr />
+<h2 id="78-which-shortest-path-algorithm">7.8 Which shortest-path algorithm?<a class="headerlink" href="#78-which-shortest-path-algorithm" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th style="text-align: center;">Handles negative weights?</th>
+<th style="text-align: center;">Detects negative cycles?</th>
+<th style="text-align: center;">Time complexity</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BFS</strong></td>
+<td style="text-align: center;">n/a (unweighted)</td>
+<td style="text-align: center;">n/a</td>
+<td style="text-align: center;">O(V + E)</td>
+<td>Unweighted graphs</td>
+</tr>
+<tr>
+<td><strong>Dijkstra</strong></td>
+<td style="text-align: center;"><strong>No</strong></td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">O((V+E) log V)</td>
+<td>Non-negative weights, single source</td>
+</tr>
+<tr>
+<td><strong>Bellman–Ford</strong></td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: center;">O(VE)</td>
+<td>Negative edges, negative-cycle detection</td>
+</tr>
+<tr>
+<td><strong>Floyd–Warshall</strong></td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">O(V³)</td>
+<td>All-pairs shortest paths (small graphs)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Flowchart:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Weights negative? → No → Unweighted? → Yes → BFS
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>                  |     → No → Single source? → Yes → Dijkstra
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>                  |                            → No → Floyd-Warshall
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>                  → Yes → Single source? → Yes → Bellman-Ford
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>                                       → No → Floyd-Warshall (with negative cycle detection)
+</span></code></pre></div>
+<hr />
+<h2 id="chapter-summary">Chapter summary<a class="headerlink" href="#chapter-summary" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Graph</strong> = vertices + edges. Directed vs. undirected; weighted vs. unweighted; sparse vs. dense.</li>
+<li><strong>Adjacency matrix:</strong> O(n²) memory, O(1) edge lookup — best for dense graphs.</li>
+<li><strong>Adjacency list:</strong> O(n + m) memory, O(degree) edge lookup — best for sparse graphs (<strong>most real graphs</strong>).</li>
+<li><strong>BFS</strong> — level-by-level, uses a <strong>queue</strong>, O(V + E). Finds shortest paths in unweighted graphs.</li>
+<li><strong>DFS</strong> — dives deep, uses a <strong>stack</strong> (or recursion), O(V + E). Basis for cycle detection, topological sort, connected components.</li>
+<li><strong>Dijkstra</strong> — single-source shortest paths on <strong>non-negative</strong> weights, uses a priority queue. O((V + E) log V).</li>
+<li><strong>Bellman–Ford</strong> — handles <strong>negative</strong> weights, detects <strong>negative cycles</strong>. O(VE) — slower but more general.</li>
+<li><strong>MST</strong> — minimum total weight to connect all vertices. <strong>Kruskal</strong> (edge-sort + union-find) and <strong>Prim</strong> (grow from vertex) both compute MST in O(E log E) or O((V+E) log V).</li>
+<li><strong>Cut property</strong> — the minimum edge across any cut is in some MST. This theorem justifies the greedy strategies of both Kruskal and Prim.</li>
+</ol>
+<hr />
+<h2 id="quiz">Quiz<a class="headerlink" href="#quiz" title="Permanent link">&para;</a></h2>
+<h3 id="a-multiple-choice">A. Multiple choice<a class="headerlink" href="#a-multiple-choice" title="Permanent link">&para;</a></h3>
+<ol>
+<li>The <strong>degree</strong> of a vertex in an undirected graph is:</li>
+</ol>
+<p>(a) its index (b) <strong>the number of edges touching it</strong> (c) its weight (d) the length of its path to root</p>
+<ol>
+<li>Adjacency list memory is:</li>
+</ol>
+<p>(a) O(n) (b) <strong>O(n + m)</strong> (c) O(n²) (d) O(2ⁿ)</p>
+<ol>
+<li>BFS uses which data structure?</li>
+</ol>
+<p>(a) stack (b) <strong>queue</strong> (c) heap (d) hash table</p>
+<ol>
+<li>DFS uses which data structure?</li>
+</ol>
+<p>(a) <strong>stack (or recursion)</strong> (b) queue (c) heap (d) hash table</p>
+<ol>
+<li>BFS finds shortest paths in:</li>
+</ol>
+<p>(a) weighted graphs (b) <strong>unweighted graphs</strong> (c) only DAGs (d) only trees</p>
+<ol>
+<li>Dijkstra requires:</li>
+</ol>
+<p>(a) non-negative weights (b) <strong>non-negative weights</strong> (c) negative weights (d) no weights</p>
+<ol>
+<li>Bellman–Ford can detect:</li>
+</ol>
+<p>(a) any cycle (b) <strong>negative-weight cycles</strong> (c) self-loops (d) bipartite structure</p>
+<ol>
+<li>Kruskal's MST algorithm uses:</li>
+</ol>
+<p>(a) BFS (b) DFS (c) <strong>Union-Find</strong> (d) hash table</p>
+<ol>
+<li>Prim's MST algorithm uses:</li>
+</ol>
+<p>(a) <strong>a priority queue</strong> (b) Union-Find (c) a stack (d) hash table</p>
+<ol>
+<li>
+<p>The cut property says:</p>
+<p>(a) every edge is in some MST (b) <strong>the minimum edge crossing any cut is in some MST</strong>
+(c) MST weight is unique (d) MST has exactly V edges</p>
+</li>
+<li>
+<p>Dijkstra's complexity with binary heap is:</p>
+<p>(a) O(V) (b) O(E) (c) <strong>O((V+E) log V)</strong> (d) O(V²)</p>
+</li>
+<li>
+<p>The number of edges in a spanning tree of V vertices is:</p>
+<p>(a) 0 (b) <strong>V - 1</strong> (c) V (d) V + 1</p>
+</li>
+</ol>
+<h3 id="b-fill-in-the-blank">B. Fill in the blank<a class="headerlink" href="#b-fill-in-the-blank" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>A graph with n vertices has at most <strong>_____</strong> edges if undirected and unweighted.</p>
+</li>
+<li>
+<p>Adjacency matrix memory is <strong>O(_____</strong>).</p>
+</li>
+<li>
+<p>Adjacency list memory is <strong>O(_____</strong>).</p>
+</li>
+<li>
+<p>BFS visits vertices in <strong>_____</strong> order from the start.</p>
+</li>
+<li>
+<p>DFS visits vertices in <strong>_____</strong> order.</p>
+</li>
+<li>
+<p><strong>Dijkstra</strong> requires <strong>_____</strong> edge weights.</p>
+</li>
+<li>
+<p><strong>Bellman–Ford</strong> runs in <strong>O(_____</strong>).</p>
+</li>
+<li>
+<p>Kruskal's algorithm sorts edges by <strong>_____</strong>.</p>
+</li>
+<li>
+<p>The <strong>cut property</strong> guarantees the minimum edge across a cut is in <strong>_____</strong> MST.</p>
+</li>
+<li>
+<p>A spanning tree of V vertices has <strong>_____</strong> edges.</p>
+</li>
+</ol>
+<h3 id="c-define-explain">C. Define / explain<a class="headerlink" href="#c-define-explain" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Define</strong> a graph. Distinguish directed vs. undirected, weighted vs. unweighted, sparse vs. dense.</p>
+</li>
+<li>
+<p><strong>Compare</strong> adjacency matrix and adjacency list on: memory, edge lookup, neighbor iteration. Give a scenario where each is preferred.</p>
+</li>
+<li>
+<p><strong>Describe</strong> BFS. What property makes it find shortest paths in unweighted graphs?</p>
+</li>
+<li>
+<p><strong>Describe</strong> DFS. What three problem classes does it naturally solve (cycle, topo-sort, components)?</p>
+</li>
+<li>
+<p><strong>State</strong> Dijkstra's algorithm. Why does it require non-negative weights?</p>
+</li>
+<li>
+<p><strong>Compare</strong> Dijkstra and Bellman–Ford. Give a scenario where only Bellman–Ford gives correct answers.</p>
+</li>
+<li>
+<p><strong>State</strong> the cut property. Use it to justify why Kruskal's algorithm produces a minimum spanning tree.</p>
+</li>
+<li>
+<p><strong>Compare</strong> Kruskal and Prim. When is each preferred?</p>
+</li>
+<li>
+<p><strong>Trace</strong> BFS on the graph in Example 7.1 from vertex 3. What is the visit order? The distances?</p>
+</li>
+<li>
+<p><strong>Trace</strong> Dijkstra on the graph in Example 7.3 from vertex 2. What are the shortest distances?</p>
+</li>
+</ol>
+<hr />
+<h2 id="answer-key">Answer key<a class="headerlink" href="#answer-key" title="Permanent link">&para;</a></h2>
+<details class="success">
+<summary>A. Multiple choice</summary>
+<ol>
+<li><strong>(b)</strong> number of edges touching it.</li>
+<li><strong>(b)</strong> O(n + m).</li>
+<li><strong>(b)</strong> queue.</li>
+<li><strong>(a)</strong> stack (or recursion).</li>
+<li><strong>(b)</strong> unweighted graphs.</li>
+<li><strong>(a) / (b)</strong> non-negative weights (both answers equivalent; (b) is the same as (a)).</li>
+<li><strong>(b)</strong> negative-weight cycles.</li>
+<li><strong>(c)</strong> Union-Find.</li>
+<li><strong>(a)</strong> priority queue.</li>
+<li><strong>(b)</strong> minimum edge across cut is in some MST.</li>
+<li><strong>(c)</strong> O((V + E) log V).</li>
+<li><strong>(b)</strong> V - 1.</li>
+</ol>
+</details>
+<details class="success">
+<summary>B. Fill in the blank</summary>
+<ol>
+<li><span class="arithmatex">\(\frac{n(n-1)}{2}\)</span> (undirected, no self-loops) or <span class="arithmatex">\(n(n-1)\)</span> (directed)</li>
+<li><span class="arithmatex">\(n^2\)</span></li>
+<li><span class="arithmatex">\(n + m\)</span></li>
+<li>level / breadth-first</li>
+<li>depth-first</li>
+<li>non-negative</li>
+<li><span class="arithmatex">\(V \cdot E\)</span></li>
+<li>weight</li>
+<li>some</li>
+<li><span class="arithmatex">\(V - 1\)</span></li>
+</ol>
+</details>
+<details class="success">
+<summary>C. Define / explain — model answers</summary>
+<ol>
+<li><em>Graph:</em> <span class="arithmatex">\(G = (V, E)\)</span> — a set of vertices and a set of edges (pairs of vertices). <em>Directed vs. undirected:</em> directed edges have orientation <span class="arithmatex">\((u, v) \ne (v, u)\)</span>; undirected edges are symmetric <span class="arithmatex">\(\{u, v\} = \{v, u\}\)</span>. <em>Weighted vs. unweighted:</em> weighted edges carry a numeric cost; unweighted edges all cost 1. <em>Sparse vs. dense:</em> sparse has <span class="arithmatex">\(E \approx O(V)\)</span>; dense has <span class="arithmatex">\(E \approx O(V^2)\)</span>. Most real graphs are sparse.</li>
+<li><em>Matrix vs. list:</em> (a) <strong>memory</strong> — matrix O(n²), list O(n + m). (b) <strong>edge lookup</strong> — matrix O(1), list O(degree). (c) <strong>neighbor iteration</strong> — matrix O(n) (must scan row), list O(degree). <em>Preferred:</em> matrix for dense graphs or frequent edge lookups; list for sparse graphs (the common case) or when iterating neighbors frequently.</li>
+<li><em>BFS:</em> use a FIFO queue, mark start visited, enqueue. Dequeue one vertex, visit its unvisited neighbors (mark visited, enqueue). <em>Why shortest paths in unweighted graphs:</em> BFS processes vertices in non-decreasing distance. When it first reaches vertex <code>v</code> from <code>u</code>, <code>dist[v] = dist[u] + 1</code>. If a shorter path existed, that path's intermediate vertex would have been reached earlier — contradicting FIFO order. So the first assignment is optimal.</li>
+<li><em>DFS:</em> visit vertex, then recursively DFS each unvisited neighbor, backtracking when stuck. <em>Problems:</em> (i) <strong>cycle detection</strong> — if we visit an already-visited ancestor, cycle exists; (ii) <strong>topological sort</strong> — reverse postorder of DFS on a DAG gives topological order; (iii) <strong>connected components</strong> — a new DFS start reveals a new component.</li>
+<li><em>Dijkstra:</em> start with <code>dist[source] = 0</code>, all ∞. Use a priority queue. Repeatedly pop the unsettled vertex with the smallest tentative distance; relax its outgoing edges. <em>Requires non-negative:</em> the invariant "once popped, distance is final" relies on the fact that extending a path via a non-negative edge cannot make it shorter. With negative edges, a path through a settled vertex could later be improved — invalidating the invariant.</li>
+<li><em>Dijkstra vs. Bellman–Ford:</em> Dijkstra is <strong>faster</strong> O((V+E) log V but <strong>requires non-negative weights</strong>. Bellman–Ford is <strong>slower</strong> O(VE) but <strong>handles negative edges</strong> and detects negative cycles. <em>Example where Dijkstra fails:</em> <code>s→u (1), s→v (4), u→v (-3)</code>. Dijkstra settles <code>v</code> at 4 (via direct edge), missing the shorter path <code>s→u→v (1-3=-2)</code>. Bellman–Ford correctly gives <code>dist[v] = -2</code>.</li>
+<li><em>Cut property:</em> for any partition <code>(S, V-S)</code> of vertices, the minimum-weight edge crossing the cut belongs to at least one MST. <em>Kruskal justification:</em> at each step, we add the minimum-weight edge that doesn't create a cycle. Consider the moment the algorithm adds edge <code>e = (u, v)</code>. Define <code>S</code> = the connected component containing <code>u</code> in the current MST (before adding <code>e</code>). <code>e</code> is the minimum edge crossing <code>(S, V-S)</code> in the remaining edges (because Kruskal processes in sorted order). By the cut property, <code>e</code> is in some MST of the graph. By induction over Kruskal's steps, the final tree is an MST.</li>
+<li><em>Kruskal vs. Prim:</em> Kruskal — sort edges, then add if not creating cycle, using Union-Find. O(E log E). Best for <strong>sparse</strong> graphs (few edges). <em>Prim</em> — grow tree from a vertex using a priority queue. O((V+E) log V). Best for <strong>dense</strong> graphs (array-based Prim O(V²) beats Kruskal's O(E log E) = O(V² log V)). <em>Also:</em> Kruskal gives an <strong>edge-list</strong> MST — good when edges are known upfront. Prim grows from a <strong>vertex</strong> — good when the graph is explored dynamically.</li>
+<li><em>BFS from 3:</em> neighbors of 3 = {1, 5}. Visit 3, then 1 and 5. From 1: {0, 3, 4}, so 0 and 4. From 5: {3, 4} — 4 already visited. From 0: {1, 2}, so 2. From 4: {1, 2, 5}, 2 already visited. <em>Visit order:</em> 3, 1, 5, 0, 4, 2. <em>Distances:</em> <code>dist[3]=0, dist[1]=1, dist[5]=1, dist[0]=2, dist[4]=2, dist[2]=3</code>.</li>
+<li><em>Dijkstra from 2:</em> <code>dist = [∞, ∞, 0, ∞, ∞]</code>. Pop 2 (dist 0): relax 2→1 (3), 2→3 (5), 2→4 (6). PQ: (1, 3), (3, 5), (4, 6). Pop 1 (3): relax 1→3 (1+3=4 &lt; 5, update to 4). PQ: (3, 4), (4, 6). Pop 3 (4): relax 3→4 (2+4=6, no change). PQ: (4, 6). Pop 4 (6): no outgoing edges. <em>Final:</em> <code>dist = [∞, 3, 0, 4, 6]</code>. Node 0 is unreachable from 2 (∞). ✓</li>
+</ol>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>CLRS</strong>, Chapters 22 (BFS/DFS), 23 (MST), 24 (Shortest paths).</li>
+<li><strong>Weiss</strong>, Chapter 9 (Graph algorithms).</li>
+<li><strong>Lafore</strong>, Chapter 14 (Weighted graphs).</li>
+<li><strong>Sedgewick &amp; Wayne</strong>, Chapters 4.1–4.4 (Undirected, directed, MST, shortest paths).</li>
+<li><strong>Skiena</strong>, <em>The Algorithm Design Manual</em>, Chapters 5–6 — practical guide with examples.</li>
+<li><strong>VisuAlgo</strong> — <a href="https://visualgo.net/en/dfsbfs">visualgo.net</a> — animated BFS, DFS, Dijkstra, MST.</li>
+<li><strong>cp-algorithms.com</strong> — <a href="https://cp-algorithms.com/graph/breadth-first-search.html">cp-algorithms.com/graph/breadth-first-search.html</a> — dense reference for competitive programming.</li>
+<li><strong>"Dijkstra's algorithm"</strong> — <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">en.wikipedia.org/wiki/Dijkstra%27s_algorithm</a> — the definitive history and pseudocode.</li>
+</ul>
+<hr />
+<h2 id="suggested-tutorial-problems">Suggested tutorial problems<a class="headerlink" href="#suggested-tutorial-problems" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>Adjacency matrix vs. list.</strong> Build both for the graph in Example 7.1. Compare memory (bytes) for <code>n = 6, m = 7</code>.</p>
+</li>
+<li>
+<p><strong>BFS trace.</strong> Run BFS on the graph of Example 7.1 from vertex 4. Record visit order and distances.</p>
+</li>
+<li>
+<p><strong>DFS trace.</strong> Run DFS on the same graph from vertex 2 (recursive, neighbors sorted ascending). Record visit order and DFS tree edges.</p>
+</li>
+<li>
+<p><strong>Connected components.</strong> Given a graph with two disjoint components, modify BFS to count the number of connected components in O(V + E).</p>
+</li>
+<li>
+<p><strong>Bipartite check.</strong> Modify BFS or DFS to check whether a graph is bipartite. What coloring invariant must hold?</p>
+</li>
+<li>
+<p><strong>Cycle detection (undirected).</strong> Modify DFS to detect a cycle in an undirected graph. What's the key observation about "back edges"?</p>
+</li>
+<li>
+<p><strong>Cycle detection (directed).</strong> Modify DFS to detect a cycle in a directed graph. Why does the undirected approach fail? (Hint: 3-color DFS.)</p>
+</li>
+<li>
+<p><strong>Topological sort.</strong> Given a DAG, implement topological sort using (a) DFS postorder reversal; (b) Kahn's algorithm (BFS on in-degrees). Verify both give the same order (up to ties).</p>
+</li>
+<li>
+<p><strong>Dijkstra trace.</strong> Run Dijkstra on the graph of Example 7.3 from vertex 2. Record all iterations.</p>
+</li>
+<li>
+<p><strong>Dijkstra fails with negative edges.</strong> Construct a 3-vertex graph where Dijkstra gives the wrong answer but Bellman–Ford gives the right one.</p>
+</li>
+<li>
+<p><strong>Bellman–Ford trace.</strong> Run Bellman–Ford on the graph of Worked example 7.4 with a 4th vertex and edge <code>2→3 (-1)</code>. Detect the resulting negative cycle.</p>
+</li>
+<li>
+<p><strong>Kruskal trace.</strong> Run Kruskal on the graph of Example 7.5. Show the union-find state after each edge.</p>
+</li>
+<li>
+<p><strong>Prim trace.</strong> Run Prim on the same graph from vertex 3. Compare the final MST total weight to Kruskal's (must be the same).</p>
+</li>
+<li>
+<p><strong>MST uniqueness.</strong> When is the MST of a graph unique? Give a graph where two different MSTs exist and identify both.</p>
+</li>
+<li>
+<p><strong>Road network.</strong> Design a graph representation for a road network (cities = vertices, roads = weighted edges). Which representation fits? Which algorithm finds the shortest route? Which finds the cheapest road-construction plan?</p>
+</li>
+<li>
+<p><strong>Friend network.</strong> A social network has 100 million users. You want to find the shortest path from Alice to Bob. Estimate the memory for adjacency matrix vs. adjacency list. Which representation fits on a modern server?</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

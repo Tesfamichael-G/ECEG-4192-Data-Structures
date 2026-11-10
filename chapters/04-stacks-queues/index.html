@@ -1,0 +1,3622 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BSc Electrical Engineering (Computer) · Semester VII · Module Data Storage and Analysis">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+        <link rel="canonical" href="https://tesfamichael-g.github.io/ECEG-4192-Data-Structures/chapters/04-stacks-queues/">
+      
+      
+        <link rel="prev" href="../03-linked-lists/">
+      
+      
+        <link rel="next" href="../05-trees/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>4. Stacks and Queues - ECEG-4192 — Data Structures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-4-stacks-and-queues" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-header__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECEG-4192 — Data Structures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4. Stacks and Queues
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../syllabus.md" class="md-tabs__link">
+        
+  
+    
+  
+  Syllabus
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../schedule.md" class="md-tabs__link">
+        
+  
+    
+  
+  Schedule
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../slides/index.md" class="md-tabs__link">
+          
+  
+    
+  
+  Slides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../solutions/" class="md-tabs__link">
+          
+  
+    
+  
+  Solutions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-nav__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    ECEG-4192 — Data Structures
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../syllabus.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syllabus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schedule
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction & Analysis of Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Linked Lists
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    4. Stacks and Queues
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    4. Stacks and Queues
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#41-the-stack-lifo" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 The stack — LIFO
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 The stack — LIFO">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411-the-principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1.1 The principle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#412-the-adt" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1.2 The ADT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#413-the-underlying-idea-one-end-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1.3 The underlying idea — one end only
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-stack-implementations" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 Stack implementations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 Stack implementations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#421-array-based-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2.1 Array-based stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#422-dynamic-array-based-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2.2 Dynamic array-based stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#423-linked-list-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2.3 Linked-list stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#424-python-same-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2.4 Python — same idea
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#43-stack-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Stack applications
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Stack applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431-balanced-parentheses" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.1 Balanced parentheses
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#432-postfix-reverse-polish-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.2 Postfix (Reverse Polish) evaluation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#433-expression-conversion-infix-postfix" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.3 Expression conversion (infix → postfix)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#434-undoredo" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.4 Undo/redo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#435-function-calls-the-call-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.5 Function calls — the call stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#436-other-stack-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.6 Other stack applications
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#44-the-queue-fifo" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 The queue — FIFO
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.4 The queue — FIFO">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#441-the-principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4.1 The principle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#442-the-adt" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4.2 The ADT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#443-the-naive-array-implementation-and-why-it-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4.3 The naive array implementation — and why it fails
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#45-the-circular-queue" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5 The circular queue
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.5 The circular queue">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#451-the-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5.1 The idea
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#452-why-size-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5.2 Why size matters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#453-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5.3 Trace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#46-linked-list-queue" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.6 Linked-list queue
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#47-variants-deque-and-priority-queue" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.7 Variants — deque and priority queue
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.7 Variants — deque and priority queue">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#471-deque-double-ended-queue" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.7.1 Deque (double-ended queue)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#472-priority-queue" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.7.2 Priority queue
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-41-balanced-parentheses-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.1 — Balanced parentheses trace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-42-postfix-evaluation-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.2 — Postfix evaluation trace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-43-infix-to-postfix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.3 — Infix to postfix
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-44-two-stack-expression-evaluator-infix-with-parentheses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.4 — Two-stack expression evaluator (infix with parentheses)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-45-circular-queue-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.5 — Circular queue trace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-46-queue-used-for-bfs-preview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.6 — Queue used for BFS (preview)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#48-comparison-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.8 Comparison table
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quiz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quiz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-multiple-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      A. Multiple choice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-fill-in-the-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      B. Fill in the blank
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-define-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      C. Define / explain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Answer key
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suggested-tutorial-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Suggested tutorial problems
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Trees
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Hash Tables
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Graphs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. Sorting Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Slides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/index.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../solutions/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Solutions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#41-the-stack-lifo" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 The stack — LIFO
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 The stack — LIFO">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411-the-principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1.1 The principle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#412-the-adt" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1.2 The ADT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#413-the-underlying-idea-one-end-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1.3 The underlying idea — one end only
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-stack-implementations" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 Stack implementations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 Stack implementations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#421-array-based-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2.1 Array-based stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#422-dynamic-array-based-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2.2 Dynamic array-based stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#423-linked-list-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2.3 Linked-list stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#424-python-same-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2.4 Python — same idea
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#43-stack-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Stack applications
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Stack applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431-balanced-parentheses" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.1 Balanced parentheses
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#432-postfix-reverse-polish-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.2 Postfix (Reverse Polish) evaluation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#433-expression-conversion-infix-postfix" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.3 Expression conversion (infix → postfix)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#434-undoredo" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.4 Undo/redo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#435-function-calls-the-call-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.5 Function calls — the call stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#436-other-stack-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.6 Other stack applications
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#44-the-queue-fifo" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 The queue — FIFO
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.4 The queue — FIFO">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#441-the-principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4.1 The principle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#442-the-adt" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4.2 The ADT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#443-the-naive-array-implementation-and-why-it-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4.3 The naive array implementation — and why it fails
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#45-the-circular-queue" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5 The circular queue
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.5 The circular queue">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#451-the-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5.1 The idea
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#452-why-size-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5.2 Why size matters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#453-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5.3 Trace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#46-linked-list-queue" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.6 Linked-list queue
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#47-variants-deque-and-priority-queue" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.7 Variants — deque and priority queue
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.7 Variants — deque and priority queue">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#471-deque-double-ended-queue" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.7.1 Deque (double-ended queue)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#472-priority-queue" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.7.2 Priority queue
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-41-balanced-parentheses-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.1 — Balanced parentheses trace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-42-postfix-evaluation-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.2 — Postfix evaluation trace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-43-infix-to-postfix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.3 — Infix to postfix
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-44-two-stack-expression-evaluator-infix-with-parentheses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.4 — Two-stack expression evaluator (infix with parentheses)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-45-circular-queue-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.5 — Circular queue trace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-46-queue-used-for-bfs-preview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.6 — Queue used for BFS (preview)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#48-comparison-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.8 Comparison table
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quiz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quiz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-multiple-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      A. Multiple choice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-fill-in-the-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      B. Fill in the blank
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-define-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      C. Define / explain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Answer key
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suggested-tutorial-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Suggested tutorial problems
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="chapter-4-stacks-and-queues">Chapter 4 — Stacks and Queues<a class="headerlink" href="#chapter-4-stacks-and-queues" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">Chapter at a glance</p>
+<p><strong>Contact hours:</strong> 2 lecture + 1 tutorial + 2 lab · <strong>Home study:</strong> ~5 h</p>
+<p><strong>Coverage (syllabus):</strong> stacks (definition, implementation, application) ·
+queues (definition, implementation, application).</p>
+</div>
+<hr />
+<h2 id="learning-outcomes">Learning outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>State the <strong>LIFO</strong> (stack) and <strong>FIFO</strong> (queue) principles and their ADT operations.</li>
+<li>Implement a stack using both an <strong>array</strong> and a <strong>linked list</strong>, with all O(1) operations.</li>
+<li>Evaluate a <strong>postfix expression</strong> with a stack — the classic stack algorithm.</li>
+<li>Detect <strong>balanced parentheses</strong> and <strong>matching brackets</strong> with a stack.</li>
+<li>Implement a <strong>circular queue</strong> on an array — avoiding the "wrap-around" bug.</li>
+<li>Implement a <strong>queue</strong> using a linked list with a tail pointer — O(1) enqueue and dequeue.</li>
+<li>Recognise the applications of <strong>deque</strong> and <strong>priority queue</strong> (deferred to Chapter 5).</li>
+<li>Choose between array and linked-list implementations based on the operation mix.</li>
+</ol>
+<hr />
+<h2 id="41-the-stack-lifo">4.1 The stack — LIFO<a class="headerlink" href="#41-the-stack-lifo" title="Permanent link">&para;</a></h2>
+<h3 id="411-the-principle">4.1.1 The principle<a class="headerlink" href="#411-the-principle" title="Permanent link">&para;</a></h3>
+<p>A <strong>stack</strong> is a collection with a single access point — the <strong>top</strong>. Items can only be added or removed at the top. This gives <strong>LIFO</strong> (Last In, First Out) behaviour.</p>
+<p>Mental model: a stack of plates. You add at the top, you take from the top. The bottom plate is the last one you'll ever reach.</p>
+<h3 id="412-the-adt">4.1.2 The ADT<a class="headerlink" href="#412-the-adt" title="Permanent link">&para;</a></h3>
+<p>The Stack ADT specifies these operations:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Effect</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>push(x)</code></td>
+<td>Insert <code>x</code> at the top</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>pop()</code></td>
+<td>Remove and return the top element</td>
+<td>Top value</td>
+</tr>
+<tr>
+<td><code>peek()</code> / <code>top()</code></td>
+<td>Return the top without removing</td>
+<td>Top value</td>
+</tr>
+<tr>
+<td><code>isEmpty()</code></td>
+<td>Check whether the stack has elements</td>
+<td><code>true</code> / <code>false</code></td>
+</tr>
+<tr>
+<td><code>size()</code></td>
+<td>Number of elements</td>
+<td><code>int</code></td>
+</tr>
+</tbody>
+</table>
+<p>All operations must be <strong>O(1)</strong> — anything else defeats the purpose.</p>
+<h3 id="413-the-underlying-idea-one-end-only">4.1.3 The underlying idea — one end only<a class="headerlink" href="#413-the-underlying-idea-one-end-only" title="Permanent link">&para;</a></h3>
+<p>A stack is a <strong>special case of a list</strong> where you only operate at one end. That means:</p>
+<ul>
+<li><strong>No searching</strong> — you can't reach into the middle.</li>
+<li><strong>No random access</strong> — only the top is visible.</li>
+<li><strong>Both array and linked-list</strong> can implement it, and both give O(1) push/pop.</li>
+</ul>
+<hr />
+<h2 id="42-stack-implementations">4.2 Stack implementations<a class="headerlink" href="#42-stack-implementations" title="Permanent link">&para;</a></h2>
+<h3 id="421-array-based-stack">4.2.1 Array-based stack<a class="headerlink" href="#421-array-based-stack" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">class</span> <span class="nc">ArrayStack</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">top</span><span class="p">;</span><span class="w">   </span><span class="c1">// index of the top element; -1 when empty</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="n">ArrayStack</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">capacity</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">        </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">capacity</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="n">top</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">push</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">top</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">"Stack full"</span><span class="p">);</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">        </span><span class="n">data</span><span class="o">[++</span><span class="n">top</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">pop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">"Stack empty"</span><span class="p">);</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">top</span><span class="o">--]</span><span class="p">;</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">peek</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">"Stack empty"</span><span class="p">);</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">top</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">top</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">size</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">top</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost:</strong> all operations <strong>O(1)</strong>. Push might need to <strong>resize</strong> if the array is full — see the dynamic version below.</p>
+<p><strong>Drawback:</strong> fixed capacity. Push onto a full stack throws — unless you resize.</p>
+<h3 id="422-dynamic-array-based-stack">4.2.2 Dynamic array-based stack<a class="headerlink" href="#422-dynamic-array-based-stack" title="Permanent link">&para;</a></h3>
+<p>Grow by doubling when full, shrink at capacity/4 (same policy as Chapter 2 dynamic arrays):</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">class</span> <span class="nc">DynamicArrayStack</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">top</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">push</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">top</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">resize</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">        </span><span class="n">data</span><span class="o">[++</span><span class="n">top</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">pop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">top</span><span class="o">--]</span><span class="p">;</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">top</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">top</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="n">resize</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">resize</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">cap</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">nd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">cap</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">arraycopy</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">nd</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">top</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">        </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nd</span><span class="p">;</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">    </span><span class="c1">// peek, isEmpty, size as above</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Amortised push/pop:</strong> O(1) — same analysis as Chapter 2 (geometric series bound).</p>
+<p><strong>Worst-case single push/pop:</strong> O(n) when a resize occurs.</p>
+<h3 id="423-linked-list-stack">4.2.3 Linked-list stack<a class="headerlink" href="#423-linked-list-stack" title="Permanent link">&para;</a></h3>
+<p>Push at head, pop from head — both O(1):</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kd">class</span> <span class="nc">LinkedStack</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">push</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">        </span><span class="n">Node</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">        </span><span class="n">n</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">        </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">pop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">head</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">"Stack empty"</span><span class="p">);</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">.</span><span class="na">value</span><span class="p">;</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">        </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">peek</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">head</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">"Stack empty"</span><span class="p">);</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">head</span><span class="p">.</span><span class="na">value</span><span class="p">;</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost:</strong> all operations <strong>O(1) worst case</strong> — no resize, no amortisation needed.</p>
+<p><strong>Trade-off vs. array:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Array stack</th>
+<th>Linked-list stack</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Push (amortised)</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Push (worst case)</td>
+<td>O(n) on resize</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Memory per element</td>
+<td>4 bytes (int)</td>
+<td>4 bytes + 8 for <code>next</code> = 16 bytes</td>
+</tr>
+<tr>
+<td>Cache locality</td>
+<td>Excellent</td>
+<td>Poor</td>
+</tr>
+<tr>
+<td>Total memory</td>
+<td>Allocated capacity (may waste up to 50%)</td>
+<td>Exact</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Practical choice:</strong> dynamic array in almost every case — the cache advantage is worth the occasional resize. Linked-list stack only when you need <strong>strict O(1) worst case</strong> (real-time systems) or the number of elements varies wildly.</p>
+<h3 id="424-python-same-idea">4.2.4 Python — same idea<a class="headerlink" href="#424-python-same-idea" title="Permanent link">&para;</a></h3>
+<p>Python's built-in <code>list</code> works as a stack with <code>append</code> and <code>pop</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>    <span class="c1"># push</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">top</span> <span class="o">=</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>     <span class="c1"># peek</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">value</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="c1"># pop</span>
+</span></code></pre></div>
+<p><code>append</code> and <code>pop()</code> at the end are <strong>O(1) amortised</strong> (Python's list uses the same doubling policy). Perfect stack.</p>
+<hr />
+<h2 id="43-stack-applications">4.3 Stack applications<a class="headerlink" href="#43-stack-applications" title="Permanent link">&para;</a></h2>
+<h3 id="431-balanced-parentheses">4.3.1 Balanced parentheses<a class="headerlink" href="#431-balanced-parentheses" title="Permanent link">&para;</a></h3>
+<p><strong>Problem.</strong> Given a string of <code>()</code>, <code>[]</code>, <code>{}</code>, determine if every opening bracket is closed by the correct closing bracket, in the right order.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">boolean</span><span class="w"> </span><span class="nf">isBalanced</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="n">Deque</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">&gt;</span><span class="w"> </span><span class="n">stack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="na">toCharArray</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">'('</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">'['</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">'{'</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">            </span><span class="n">stack</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">')'</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">']'</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">'}'</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">stack</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">            </span><span class="kt">char</span><span class="w"> </span><span class="kd">open</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stack</span><span class="p">.</span><span class="na">pop</span><span class="p">();</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">')'</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="kd">open</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">'('</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">']'</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="kd">open</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">'['</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">'}'</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="kd">open</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">'{'</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">stack</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">();</span><span class="w">   </span><span class="c1">// stack must be empty at end</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost.</strong> O(n) time, O(n) space worst case (all opening brackets).</p>
+<p><strong>Why a stack?</strong> The most recently opened bracket must be the next one closed. That's LIFO. No other data structure handles this as cleanly.</p>
+<h3 id="432-postfix-reverse-polish-evaluation">4.3.2 Postfix (Reverse Polish) evaluation<a class="headerlink" href="#432-postfix-reverse-polish-evaluation" title="Permanent link">&para;</a></h3>
+<p><strong>Notation.</strong> Normal math is <strong>infix</strong> (<code>3 + 4</code>). <strong>Postfix</strong> writes operators after their operands: <code>3 4 +</code>. This eliminates the need for parentheses and follows a simple left-to-right rule.</p>
+<p>Examples:
+- <code>3 + 4</code> → <code>3 4 +</code> = 7
+- <code>(3 + 4) × 5</code> → <code>3 4 + 5 ×</code> = 35
+- <code>3 + 4 × 5</code> → <code>3 4 5 × +</code> = 23</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">evalPostfix</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">expr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="n">Deque</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">stack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">tok</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">expr</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">split</span><span class="p">(</span><span class="s">"\\s+"</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isNumber</span><span class="p">(</span><span class="n">tok</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">            </span><span class="n">stack</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">tok</span><span class="p">));</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stack</span><span class="p">.</span><span class="na">pop</span><span class="p">();</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stack</span><span class="p">.</span><span class="na">pop</span><span class="p">();</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">tok</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">                </span><span class="k">case</span><span class="w"> </span><span class="s">"+"</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">                </span><span class="k">case</span><span class="w"> </span><span class="s">"-"</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">                </span><span class="k">case</span><span class="w"> </span><span class="s">"*"</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">                </span><span class="k">case</span><span class="w"> </span><span class="s">"/"</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">                </span><span class="k">default</span><span class="w">  </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="n">tok</span><span class="p">);</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">            </span><span class="p">};</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">            </span><span class="n">stack</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">stack</span><span class="p">.</span><span class="na">pop</span><span class="p">();</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost.</strong> O(n) time, O(n) space. <strong>Every token processed exactly once.</strong> No parsing complexity, no operator precedence, no parentheses.</p>
+<p><strong>Why postfix matters.</strong> All compilers lower expressions to postfix (or a similar stack-based representation) before generating code. The stack is what makes expression evaluation trivial.</p>
+<h3 id="433-expression-conversion-infix-postfix">4.3.3 Expression conversion (infix → postfix)<a class="headerlink" href="#433-expression-conversion-infix-postfix" title="Permanent link">&para;</a></h3>
+<p>Given infix <code>3 + 4 × 5</code>, use <strong>Dijkstra's shunting-yard</strong> to produce postfix.</p>
+<p><strong>Rules:</strong>
+- Number: emit directly.
+- Operator: pop and emit operators of <strong>higher or equal precedence</strong> from the stack, then push the new operator.
+- <code>(</code>: push.
+- <code>)</code>: pop and emit until <code>(</code>; discard the <code>(</code>.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">String</span><span class="w"> </span><span class="nf">infixToPostfix</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">expr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="n">StringBuilder</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StringBuilder</span><span class="p">();</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="n">Deque</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ops</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">expr</span><span class="p">.</span><span class="na">toCharArray</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Character</span><span class="p">.</span><span class="na">isDigit</span><span class="p">(</span><span class="n">c</span><span class="p">))</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="na">append</span><span class="p">(</span><span class="n">c</span><span class="p">).</span><span class="na">append</span><span class="p">(</span><span class="sc">' '</span><span class="p">);</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">'('</span><span class="p">)</span><span class="w"> </span><span class="n">ops</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">')'</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">ops</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">ops</span><span class="p">.</span><span class="na">peek</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">'('</span><span class="p">)</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="na">append</span><span class="p">(</span><span class="n">ops</span><span class="p">.</span><span class="na">pop</span><span class="p">()).</span><span class="na">append</span><span class="p">(</span><span class="sc">' '</span><span class="p">);</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">            </span><span class="n">ops</span><span class="p">.</span><span class="na">pop</span><span class="p">();</span><span class="w">   </span><span class="c1">// discard '('</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="s">"+-*/"</span><span class="p">.</span><span class="na">indexOf</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">ops</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">prec</span><span class="p">(</span><span class="n">ops</span><span class="p">.</span><span class="na">peek</span><span class="p">())</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">prec</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">                </span><span class="n">out</span><span class="p">.</span><span class="na">append</span><span class="p">(</span><span class="n">ops</span><span class="p">.</span><span class="na">pop</span><span class="p">()).</span><span class="na">append</span><span class="p">(</span><span class="sc">' '</span><span class="p">);</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">            </span><span class="n">ops</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">ops</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="na">append</span><span class="p">(</span><span class="n">ops</span><span class="p">.</span><span class="na">pop</span><span class="p">()).</span><span class="na">append</span><span class="p">(</span><span class="sc">' '</span><span class="p">);</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="na">toString</span><span class="p">().</span><span class="na">trim</span><span class="p">();</span>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="p">}</span>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="kt">int</span><span class="w"> </span><span class="nf">prec</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">op</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">op</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">'*'</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">op</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">'/'</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="n">op</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">'+'</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">op</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">'-'</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Trace</strong> on <code>3 + 4 * 5</code>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Token</th>
+<th>Output</th>
+<th>Operator stack</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>3</code></td>
+<td><code>3</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>+</code></td>
+<td><code>3</code></td>
+<td><code>+</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>4</code></td>
+<td><code>3 4</code></td>
+<td><code>+</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>*</code></td>
+<td><code>3 4</code></td>
+<td><code>+ *</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>5</code></td>
+<td><code>3 4 5</code></td>
+<td><code>+ *</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">end</td>
+<td><code>3 4 5 * +</code></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Correct:</strong> <code>3 4 5 * +</code> evaluates to <code>3 + (4 * 5) = 23</code>. ✓</p>
+<p><strong>Cost.</strong> O(n) time, O(n) space.</p>
+<h3 id="434-undoredo">4.3.4 Undo/redo<a class="headerlink" href="#434-undoredo" title="Permanent link">&para;</a></h3>
+<p>A simple text editor's <strong>undo</strong> feature is a stack of editor states. Each edit pushes the previous state; undo pops and restores.</p>
+<p><strong>Redo</strong> requires a <strong>second stack</strong> — every undo pushes onto the redo stack; a new edit clears the redo stack.</p>
+<p>This is not just a toy — it's the same pattern used in browsers (back/forward buttons), IDEs (Ctrl+Z/Ctrl+Y), and version-control tools.</p>
+<h3 id="435-function-calls-the-call-stack">4.3.5 Function calls — the call stack<a class="headerlink" href="#435-function-calls-the-call-stack" title="Permanent link">&para;</a></h3>
+<p>Every function call in every programming language uses a <strong>stack</strong> — the <strong>call stack</strong>:</p>
+<ul>
+<li>Calling a function: push a <strong>stack frame</strong> (arguments, local variables, return address).</li>
+<li>Returning: pop the frame.</li>
+<li>Recursion: each recursive call is a new frame — depth of recursion = stack depth.</li>
+</ul>
+<p><strong>This is why</strong> deep recursion overflows the stack — the OS allocates a fixed-size call stack (typically 1–8 MB) and the program crashes when exceeded. Anything that grows the stack unboundedly (naive Fibonacci on <span class="arithmatex">\(n = 10^6\)</span>) will crash — not run slowly, <strong>crash</strong>.</p>
+<h3 id="436-other-stack-applications">4.3.6 Other stack applications<a class="headerlink" href="#436-other-stack-applications" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Depth-first search (DFS)</strong> — iterative DFS uses an explicit stack (Chapter 7).</li>
+<li><strong>Backtracking algorithms</strong> — maze solving, N-queens, sudoku — push/pop choices.</li>
+<li><strong>Tower of Hanoi</strong> — recursion is literally a stack.</li>
+<li><strong>Syntax parsing</strong> — compilers use a stack to parse nested constructs.</li>
+</ul>
+<hr />
+<h2 id="44-the-queue-fifo">4.4 The queue — FIFO<a class="headerlink" href="#44-the-queue-fifo" title="Permanent link">&para;</a></h2>
+<h3 id="441-the-principle">4.4.1 The principle<a class="headerlink" href="#441-the-principle" title="Permanent link">&para;</a></h3>
+<p>A <strong>queue</strong> is a collection where items are added at one end (<strong>rear</strong>) and removed at the other (<strong>front</strong>). This gives <strong>FIFO</strong> (First In, First Out).</p>
+<p>Mental model: a checkout line. The first customer in is the first out.</p>
+<h3 id="442-the-adt">4.4.2 The ADT<a class="headerlink" href="#442-the-adt" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enqueue(x)</code></td>
+<td>Insert <code>x</code> at the rear</td>
+</tr>
+<tr>
+<td><code>dequeue()</code></td>
+<td>Remove and return the front element</td>
+</tr>
+<tr>
+<td><code>peek()</code> / <code>front()</code></td>
+<td>Return the front without removing</td>
+</tr>
+<tr>
+<td><code>isEmpty()</code></td>
+<td>Check whether empty</td>
+</tr>
+<tr>
+<td><code>size()</code></td>
+<td>Number of elements</td>
+</tr>
+</tbody>
+</table>
+<p>All operations must be <strong>O(1)</strong>.</p>
+<h3 id="443-the-naive-array-implementation-and-why-it-fails">4.4.3 The naive array implementation — and why it fails<a class="headerlink" href="#443-the-naive-array-implementation-and-why-it-fails" title="Permanent link">&para;</a></h3>
+<p>Tempting first attempt:</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kd">class</span> <span class="nc">NaiveQueue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="mi">100</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">front</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">rear</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">enqueue</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">rear</span><span class="o">++]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">dequeue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">front</span><span class="o">++]</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>The bug: <strong><code>front</code> and <code>rear</code> both move forward, never resetting</strong>. After 100 enqueues and 100 dequeues, the array is "empty" but <code>front = 100</code>, <code>rear = 100</code> — the next enqueue overflows even though there's space.</p>
+<p><strong>Fix 1: shift every dequeue.</strong> Move all elements left by one — <strong>O(n) per dequeue</strong> → O(n²) for n operations. Unacceptable.</p>
+<p><strong>Fix 2: wrap around — the circular queue.</strong></p>
+<hr />
+<h2 id="45-the-circular-queue">4.5 The circular queue<a class="headerlink" href="#45-the-circular-queue" title="Permanent link">&para;</a></h2>
+<h3 id="451-the-idea">4.5.1 The idea<a class="headerlink" href="#451-the-idea" title="Permanent link">&para;</a></h3>
+<p>Treat the array as a <strong>circle</strong>: index <code>(i + 1) % capacity</code> wraps around. Front and rear both advance by 1 modulo capacity; when front catches up to rear, the queue is empty.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kd">class</span> <span class="nc">CircularQueue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">front</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">;</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">capacity</span><span class="p">;</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="n">CircularQueue</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">capacity</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">capacity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">capacity</span><span class="p">;</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">        </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">capacity</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">        </span><span class="n">front</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">        </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">enqueue</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">capacity</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">"Queue full"</span><span class="p">);</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">        </span><span class="n">data</span><span class="o">[</span><span class="p">(</span><span class="n">front</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">size</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">capacity</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">        </span><span class="n">size</span><span class="o">++</span><span class="p">;</span>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">dequeue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">"Queue empty"</span><span class="p">);</span>
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">front</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="w">        </span><span class="n">front</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">front</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">capacity</span><span class="p">;</span>
+</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="w">        </span><span class="n">size</span><span class="o">--</span><span class="p">;</span>
+</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>
+</span><span id="__span-8-27"><a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">peek</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-28"><a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">"Queue empty"</span><span class="p">);</span>
+</span><span id="__span-8-29"><a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">front</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-8-30"><a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-8-31"><a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a>
+</span><span id="__span-8-32"><a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-8-33"><a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">size</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">size</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-8-34"><a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost.</strong> All operations <strong>O(1)</strong> — constant time, no shifting, no waste.</p>
+<p><strong>Key design choice: use <code>size</code> not <code>(rear - front)</code>.</strong> If you track <code>rear</code> and <code>front</code> both, you can't distinguish "empty" from "full" without an extra flag or a deliberate one-slot gap. Tracking <code>size</code> makes both checks trivial.</p>
+<h3 id="452-why-size-matters">4.5.2 Why <code>size</code> matters<a class="headerlink" href="#452-why-size-matters" title="Permanent link">&para;</a></h3>
+<p>Consider the alternative:</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kt">int</span><span class="w"> </span><span class="n">front</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">rear</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="kt">boolean</span><span class="w"> </span><span class="nf">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">front</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">rear</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="kt">boolean</span><span class="w"> </span><span class="nf">isFull</span><span class="p">()</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">front</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">rear</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w">   </span><span class="c1">// oops — same condition</span>
+</span></code></pre></div>
+<p>Empty and full look identical without extra state. Options:</p>
+<ul>
+<li><strong>Sacrifice one slot:</strong> only <code>capacity - 1</code> elements stored; full when <code>(rear + 1) % capacity == front</code>.</li>
+<li><strong>Track <code>size</code>:</strong> straightforward, no wasted slot. This is the cleaner approach.</li>
+</ul>
+<h3 id="453-trace">4.5.3 Trace<a class="headerlink" href="#453-trace" title="Permanent link">&para;</a></h3>
+<p><strong>Setup:</strong> <code>capacity = 5</code>, empty.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Operation</th>
+<th><code>data</code> (index 0..4)</th>
+<th style="text-align: center;"><code>front</code></th>
+<th style="text-align: center;"><code>size</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">enqueue(10)</td>
+<td><code>[10, _, _, _, _]</code></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">enqueue(20)</td>
+<td><code>[10, 20, _, _, _]</code></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">enqueue(30)</td>
+<td><code>[10, 20, 30, _, _]</code></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: center;">dequeue() → 10</td>
+<td><code>[_, 20, 30, _, _]</code></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">dequeue() → 20</td>
+<td><code>[_, _, 30, _, _]</code></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">enqueue(40)</td>
+<td><code>[_, _, 30, 40, _]</code></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">enqueue(50)</td>
+<td><code>[_, _, 30, 40, 50]</code></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: center;">enqueue(60)</td>
+<td><code>[60, _, 30, 40, 50]</code> (wrapped!)</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td style="text-align: center;">dequeue() → 30</td>
+<td><code>[60, _, _, 40, 50]</code></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: center;">dequeue() → 40</td>
+<td><code>[60, _, _, _, 50]</code></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">dequeue() → 50</td>
+<td><code>[60, _, _, _, _]</code></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">dequeue() → 60</td>
+<td><code>[_, _, _, _, _]</code></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The wrap-around</strong> keeps the queue O(1) per operation — no shifting, no waste. This is the standard queue implementation in every real system.</p>
+<hr />
+<h2 id="46-linked-list-queue">4.6 Linked-list queue<a class="headerlink" href="#46-linked-list-queue" title="Permanent link">&para;</a></h2>
+<p>Alternative — no capacity limit:</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kd">class</span> <span class="nc">LinkedQueue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="n">head</span><span class="p">,</span><span class="w"> </span><span class="n">tail</span><span class="p">;</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">enqueue</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">        </span><span class="n">Node</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tail</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">tail</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">dequeue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">head</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">"Queue empty"</span><span class="p">);</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">.</span><span class="na">value</span><span class="p">;</span>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">        </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">head</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">   </span><span class="c1">// queue became empty</span>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">peek</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">head</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">"Queue empty"</span><span class="p">);</span>
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">head</span><span class="p">.</span><span class="na">value</span><span class="p">;</span>
+</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>
+</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost.</strong> All operations <strong>O(1)</strong>. Both enqueue and dequeue modify the ends.</p>
+<p><strong>Why both <code>head</code> and <code>tail</code> pointers matter.</strong> Enqueue at <code>tail</code>, dequeue from <code>head</code> — both O(1). With only <code>head</code>, enqueue would be O(n).</p>
+<p><strong>The empty-queue edge case.</strong> After the last dequeue, <code>head = null</code> but <code>tail</code> still points to the old node — a bug unless you explicitly reset <code>tail = null</code>. This is one of the two "classic" queue bugs (the other is the same for enqueue when starting from empty).</p>
+<p><strong>Trade-off vs. circular array:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Circular array</th>
+<th>Linked list</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enqueue / dequeue</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Capacity</td>
+<td>Fixed (must resize)</td>
+<td>Unbounded</td>
+</tr>
+<tr>
+<td>Memory per element</td>
+<td>4 bytes</td>
+<td>4 + 8 = 16 bytes</td>
+</tr>
+<tr>
+<td>Cache locality</td>
+<td>Excellent</td>
+<td>Poor</td>
+</tr>
+<tr>
+<td>Bug risk</td>
+<td>Wrap-around index arithmetic</td>
+<td>Null-pointer bugs</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Practical choice:</strong> circular array for fixed-size buffers (network packets, streaming); linked list when unbounded growth is needed.</p>
+<hr />
+<h2 id="47-variants-deque-and-priority-queue">4.7 Variants — deque and priority queue<a class="headerlink" href="#47-variants-deque-and-priority-queue" title="Permanent link">&para;</a></h2>
+<h3 id="471-deque-double-ended-queue">4.7.1 Deque (double-ended queue)<a class="headerlink" href="#471-deque-double-ended-queue" title="Permanent link">&para;</a></h3>
+<p>A <strong>deque</strong> allows insert and remove at <strong>both ends</strong> — O(1) at each end.</p>
+<p>Operations: <code>addFirst</code>, <code>addLast</code>, <code>removeFirst</code>, <code>removeLast</code>, <code>peekFirst</code>, <code>peekLast</code>.</p>
+<p><strong>Implementation:</strong> doubly-linked list, or circular array (with two valid pointers).</p>
+<p><strong>Use cases:</strong></p>
+<ul>
+<li><strong>Sliding window maximum</strong> — maintain a monotonic deque.</li>
+<li><strong>Palindrome check</strong> — remove from both ends, compare.</li>
+<li><strong>Undo/redo</strong> — push and pop at both ends.</li>
+<li><strong>Work-stealing schedulers</strong> — threads steal from the <em>other</em> end.</li>
+</ul>
+<p>Java's <code>ArrayDeque</code> is the standard <code>Deque</code> implementation — fast, cache-friendly, O(1) amortised at both ends. <strong>Prefer <code>ArrayDeque</code> over <code>Stack</code> or <code>LinkedList</code></strong> in Java unless you need linked semantics.</p>
+<h3 id="472-priority-queue">4.7.2 Priority queue<a class="headerlink" href="#472-priority-queue" title="Permanent link">&para;</a></h3>
+<p>A <strong>priority queue</strong> — not FIFO or LIFO — returns the element with the <strong>highest (or lowest) priority</strong> first.</p>
+<p>Standard implementation: <strong>binary heap</strong> (Chapter 5). All operations O(log n) except peek (O(1)).</p>
+<p><strong>Use cases:</strong> Dijkstra's algorithm (Chapter 7), Huffman coding, task scheduling by priority, event simulation.</p>
+<p>We defer the full treatment to Chapter 5 — the heap is a tree.</p>
+<hr />
+<h2 id="worked-example-41-balanced-parentheses-trace">Worked example 4.1 — Balanced parentheses trace<a class="headerlink" href="#worked-example-41-balanced-parentheses-trace" title="Permanent link">&para;</a></h2>
+<p><strong>Input:</strong> <code>"([{}])"</code>.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">Deque</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">&gt;</span><span class="w"> </span><span class="n">stack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span></code></pre></div>
+<p><strong>Trace:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Char</th>
+<th>Action</th>
+<th>Stack (top on right)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>(</code></td>
+<td>push</td>
+<td><code>(</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>[</code></td>
+<td>push</td>
+<td><code>( [</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>{</code></td>
+<td>push</td>
+<td><code>( [ {</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>}</code></td>
+<td>pop <code>{</code>, matches</td>
+<td><code>( [</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>]</code></td>
+<td>pop <code>[</code>, matches</td>
+<td><code>(</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>)</code></td>
+<td>pop <code>(</code>, matches</td>
+<td>(empty)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Result:</strong> stack empty at end → <strong>balanced</strong> ✓</p>
+<p><strong>Input:</strong> <code>"([)]"</code>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Char</th>
+<th>Action</th>
+<th>Stack</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>(</code></td>
+<td>push</td>
+<td><code>(</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>[</code></td>
+<td>push</td>
+<td><code>( [</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>)</code></td>
+<td>pop <code>[</code> — <strong>mismatch</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Result:</strong> mismatch → <strong>not balanced</strong> ✓</p>
+<p><strong>Cost.</strong> O(n) time, O(n) space.</p>
+<hr />
+<h2 id="worked-example-42-postfix-evaluation-trace">Worked example 4.2 — Postfix evaluation trace<a class="headerlink" href="#worked-example-42-postfix-evaluation-trace" title="Permanent link">&para;</a></h2>
+<p><strong>Input:</strong> <code>"3 4 + 5 *"</code> — that's <code>(3 + 4) × 5 = 35</code>.</p>
+<p><strong>Trace:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Token</th>
+<th>Action</th>
+<th>Stack</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>3</code></td>
+<td>push</td>
+<td><code>[3]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>4</code></td>
+<td>push</td>
+<td><code>[3, 4]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>+</code></td>
+<td>pop 4, pop 3, push 7</td>
+<td><code>[7]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>5</code></td>
+<td>push</td>
+<td><code>[7, 5]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>*</code></td>
+<td>pop 5, pop 7, push 35</td>
+<td><code>[35]</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Result:</strong> <code>35</code> ✓</p>
+<p><strong>Note the order of pops.</strong> For <code>a b -</code>, pop <code>b</code> first, then <code>a</code>, compute <code>a - b</code>. <strong>Order matters</strong> for non-commutative operators (<code>-</code>, <code>/</code>).</p>
+<hr />
+<h2 id="worked-example-43-infix-to-postfix">Worked example 4.3 — Infix to postfix<a class="headerlink" href="#worked-example-43-infix-to-postfix" title="Permanent link">&para;</a></h2>
+<p><strong>Input:</strong> <code>"a + b * c - d"</code> (no parentheses — standard precedence).</p>
+<p><strong>Precedence:</strong> <code>*</code> and <code>/</code> = 2, <code>+</code> and <code>-</code> = 1.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Token</th>
+<th>Output</th>
+<th>Operator stack</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>a</code></td>
+<td><code>a</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>+</code></td>
+<td><code>a</code></td>
+<td><code>+</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>b</code></td>
+<td><code>a b</code></td>
+<td><code>+</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>*</code></td>
+<td><code>a b</code></td>
+<td><code>+ *</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>c</code></td>
+<td><code>a b c</code></td>
+<td><code>+ *</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>-</code></td>
+<td><code>a b c * +</code> (pop <code>*</code>, then <code>+</code>)</td>
+<td><code>-</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>d</code></td>
+<td><code>a b c * + d</code></td>
+<td><code>-</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">end</td>
+<td><code>a b c * + d -</code></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Result:</strong> <code>a b c * + d -</code></p>
+<p><strong>Sanity check.</strong> Infix <code>a + b*c - d</code> = <code>a + (b*c) - d</code>. Postfix <code>a b c * + d -</code> = <code>(a + b*c) - d</code>. ✓</p>
+<p><strong>The <code>-</code> case.</strong> When the new operator <code>-</code> arrives, pop and emit all higher-or-equal precedence ops (<code>*</code>, <code>+</code>) first — then push <code>-</code>.</p>
+<hr />
+<h2 id="worked-example-44-two-stack-expression-evaluator-infix-with-parentheses">Worked example 4.4 — Two-stack expression evaluator (infix with parentheses)<a class="headerlink" href="#worked-example-44-two-stack-expression-evaluator-infix-with-parentheses" title="Permanent link">&para;</a></h2>
+<p><strong>Input:</strong> <code>"3 + 4 * (2 - 1)"</code>.</p>
+<p>Two stacks: one for numbers, one for operators.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">evalInfix</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="n">Deque</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nums</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="n">Deque</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ops</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="na">length</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">        </span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="na">charAt</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">' '</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Character</span><span class="p">.</span><span class="na">isDigit</span><span class="p">(</span><span class="n">c</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">Character</span><span class="p">.</span><span class="na">isDigit</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="na">charAt</span><span class="p">(</span><span class="n">i</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">                </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="na">charAt</span><span class="p">(</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="sc">'0'</span><span class="p">);</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">            </span><span class="n">i</span><span class="o">--</span><span class="p">;</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">            </span><span class="n">nums</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">'('</span><span class="p">)</span><span class="w"> </span><span class="n">ops</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">')'</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">ops</span><span class="p">.</span><span class="na">peek</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">'('</span><span class="p">)</span><span class="w"> </span><span class="n">apply</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span><span class="w"> </span><span class="n">ops</span><span class="p">);</span>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="w">            </span><span class="n">ops</span><span class="p">.</span><span class="na">pop</span><span class="p">();</span>
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">   </span><span class="c1">// operator</span>
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">ops</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">prec</span><span class="p">(</span><span class="n">ops</span><span class="p">.</span><span class="na">peek</span><span class="p">())</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">prec</span><span class="p">(</span><span class="n">c</span><span class="p">))</span><span class="w"> </span><span class="n">apply</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span><span class="w"> </span><span class="n">ops</span><span class="p">);</span>
+</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="w">            </span><span class="n">ops</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">ops</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="n">apply</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span><span class="w"> </span><span class="n">ops</span><span class="p">);</span>
+</span><span id="__span-12-24"><a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">nums</span><span class="p">.</span><span class="na">pop</span><span class="p">();</span>
+</span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a><span class="p">}</span>
+</span><span id="__span-12-26"><a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a>
+</span><span id="__span-12-27"><a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a><span class="kt">void</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="n">Deque</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nums</span><span class="p">,</span><span class="w"> </span><span class="n">Deque</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ops</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-28"><a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">op</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ops</span><span class="p">.</span><span class="na">pop</span><span class="p">();</span>
+</span><span id="__span-12-29"><a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nums</span><span class="p">.</span><span class="na">pop</span><span class="p">(),</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nums</span><span class="p">.</span><span class="na">pop</span><span class="p">();</span>
+</span><span id="__span-12-30"><a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a><span class="w">    </span><span class="n">nums</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="n">op</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">'+'</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">op</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">'-'</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">op</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">'*'</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">b</span><span class="p">);</span>
+</span><span id="__span-12-31"><a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Trace:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Char</th>
+<th>Action</th>
+<th>Num stack</th>
+<th>Op stack</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>3</code></td>
+<td>push</td>
+<td><code>[3]</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>+</code></td>
+<td>push</td>
+<td><code>[3]</code></td>
+<td><code>+</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>4</code></td>
+<td>push</td>
+<td><code>[3, 4]</code></td>
+<td><code>+</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>*</code></td>
+<td>push (higher prec)</td>
+<td><code>[3, 4]</code></td>
+<td><code>+ *</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>(</code></td>
+<td>push</td>
+<td><code>[3, 4]</code></td>
+<td><code>+ * (</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>2</code></td>
+<td>push</td>
+<td><code>[3, 4, 2]</code></td>
+<td><code>+ * (</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>-</code></td>
+<td>push</td>
+<td><code>[3, 4, 2]</code></td>
+<td><code>+ * ( -</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>1</code></td>
+<td>push</td>
+<td><code>[3, 4, 2, 1]</code></td>
+<td><code>+ * ( -</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>)</code></td>
+<td>apply <code>-</code></td>
+<td><code>[3, 4, 1]</code></td>
+<td><code>+ *</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">end</td>
+<td>apply <code>*</code></td>
+<td><code>[3, 4]</code></td>
+<td><code>+</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">end</td>
+<td>apply <code>+</code></td>
+<td><code>[7]</code></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Result:</strong> <code>7</code> ✓ (<code>3 + 4*(2-1) = 3 + 4 = 7</code>)</p>
+<p><strong>Cost.</strong> O(n) time, O(n) space.</p>
+<hr />
+<h2 id="worked-example-45-circular-queue-trace">Worked example 4.5 — Circular queue trace<a class="headerlink" href="#worked-example-45-circular-queue-trace" title="Permanent link">&para;</a></h2>
+<p><strong>Setup:</strong> <code>capacity = 3</code>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Operation</th>
+<th><code>data</code> (index 0..2)</th>
+<th style="text-align: center;"><code>front</code></th>
+<th style="text-align: center;"><code>size</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">enqueue(1)</td>
+<td><code>[1, _, _]</code></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">enqueue(2)</td>
+<td><code>[1, 2, _]</code></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">enqueue(3)</td>
+<td><code>[1, 2, 3]</code></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3 (full)</td>
+</tr>
+<tr>
+<td style="text-align: center;">dequeue() → 1</td>
+<td><code>[_, 2, 3]</code></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">enqueue(4)</td>
+<td><code>[4, 2, 3]</code> (wrapped: index <code>(1+2) % 3 = 0</code>)</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: center;">enqueue(5)</td>
+<td><strong>throw</strong>: size == capacity</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">dequeue() → 2</td>
+<td><code>[4, _, 3]</code></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">enqueue(5)</td>
+<td><code>[4, 5, 3]</code> (index <code>(2+2) % 3 = 1</code>)</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The wrap-around</strong> is what lets us reuse positions 0 and 1 without shifting. <strong>Without wrap</strong>, we'd hit the "array full" condition at position 3 even though only 2 elements exist.</p>
+<hr />
+<h2 id="worked-example-46-queue-used-for-bfs-preview">Worked example 4.6 — Queue used for BFS (preview)<a class="headerlink" href="#worked-example-46-queue-used-for-bfs-preview" title="Permanent link">&para;</a></h2>
+<p><strong>Queue-based BFS</strong> on a tree/graph is the canonical <strong>queue application</strong>. Each node is enqueued when discovered; dequeued when processed.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">bfs</span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">root</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="n">Queue</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">    </span><span class="n">q</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">q</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">        </span><span class="n">Node</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="na">remove</span><span class="p">();</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">value</span><span class="p">);</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">left</span><span class="w">  </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">left</span><span class="p">);</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">right</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">right</span><span class="p">);</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Why a queue?</strong> BFS visits nodes in <strong>level order</strong> — root, then all its children, then all grandchildren, etc. A queue is FIFO, so nodes are processed in the order discovered. A stack would give <strong>DFS</strong> instead (LIFO — dive deep first).</p>
+<p><strong>Cost.</strong> O(n) time per traversal, O(w) space where w = max width of tree. Chapter 7 covers graph BFS fully.</p>
+<hr />
+<h2 id="48-comparison-table">4.8 Comparison table<a class="headerlink" href="#48-comparison-table" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Stack</th>
+<th>Queue</th>
+<th>Deque</th>
+<th>Priority queue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Order</td>
+<td>LIFO</td>
+<td>FIFO</td>
+<td>Both ends</td>
+<td>Priority</td>
+</tr>
+<tr>
+<td>Push/enqueue</td>
+<td>O(1)</td>
+<td>O(1)</td>
+<td>O(1) at each end</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td>Pop/dequeue</td>
+<td>O(1)</td>
+<td>O(1)</td>
+<td>O(1) at each end</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td>Peek</td>
+<td>O(1)</td>
+<td>O(1)</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Implementation</td>
+<td>Array / list</td>
+<td>Circular array / list</td>
+<td>List or array</td>
+<td>Binary heap</td>
+</tr>
+<tr>
+<td>Example applications</td>
+<td>Undo, DFS, parsing</td>
+<td>BFS, scheduling, buffers</td>
+<td>Sliding window</td>
+<td>Dijkstra</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="chapter-summary">Chapter summary<a class="headerlink" href="#chapter-summary" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Stack</strong> is LIFO — push, pop, peek at one end. <strong>O(1)</strong> operations.</li>
+<li><strong>Array stack</strong> (amortised O(1)) is faster than linked-list stack due to cache locality; linked-list stack is O(1) <strong>worst case</strong> (no resize).</li>
+<li><strong>Balanced parentheses</strong> and <strong>postfix evaluation</strong> are the two canonical stack applications — O(n) time each.</li>
+<li><strong>Infix to postfix</strong> via shunting-yard algorithm — O(n) time.</li>
+<li>The <strong>function call stack</strong> is a physical implementation of the stack ADT — recursion depth = stack depth.</li>
+<li><strong>Queue</strong> is FIFO — enqueue at rear, dequeue at front. <strong>O(1)</strong> operations.</li>
+<li><strong>Circular array</strong> queue wraps <code>front</code> and <code>size</code> modulo capacity — no shifting, no waste.</li>
+<li><strong>Linked-list queue</strong> with <code>head</code> and <code>tail</code> — O(1) at both ends.</li>
+<li><strong>Deque</strong> — O(1) at both ends; Java's <code>ArrayDeque</code> is the standard implementation.</li>
+<li><strong>Priority queue</strong> returns the highest-priority element — implemented with a <strong>binary heap</strong> (Chapter 5).</li>
+</ol>
+<hr />
+<h2 id="quiz">Quiz<a class="headerlink" href="#quiz" title="Permanent link">&para;</a></h2>
+<h3 id="a-multiple-choice">A. Multiple choice<a class="headerlink" href="#a-multiple-choice" title="Permanent link">&para;</a></h3>
+<ol>
+<li>A stack operates on which principle?</li>
+</ol>
+<p>(a) FIFO (b) LIFO (c) Priority (d) Random</p>
+<ol>
+<li>Push and pop on an <strong>array-based</strong> stack are:</li>
+</ol>
+<p>(a) O(1) each (b) O(log n) each (c) O(n) each (d) O(n²) each</p>
+<ol>
+<li>Postfix expression <code>"5 3 2 * +"</code> evaluates to:</li>
+</ol>
+<p>(a) 16 (b) 11 (c) 10 (d) 25</p>
+<ol>
+<li>Balanced parentheses detection uses a stack because:</li>
+</ol>
+<p>(a) brackets are LIFO-nested (b) it's the only option (c) it uses less memory
+   (d) it's faster than a queue</p>
+<ol>
+<li>A <strong>circular queue</strong> avoids the "array full" bug by:</li>
+</ol>
+<p>(a) shifting elements (b) wrapping indices modulo capacity (c) using a linked list
+   (d) always keeping the array half empty</p>
+<ol>
+<li>Enqueue and dequeue on a <strong>circular array</strong> queue are:</li>
+</ol>
+<p>(a) O(1) each (b) O(log n) each (c) O(n) each (d) O(n²) each</p>
+<ol>
+<li>In a linked-list queue, <strong>enqueue at tail</strong> requires:</li>
+</ol>
+<p>(a) walking to the end (b) a tail pointer for O(1) (c) a head pointer only (d) a doubly-linked list</p>
+<ol>
+<li><code>ArrayDeque</code> in Java is:</li>
+</ol>
+<p>(a) array-based (b) linked-list based (c) hash-based (d) tree-based</p>
+<ol>
+<li><code>"a + b * c"</code> in postfix is:</li>
+</ol>
+<p>(a) <code>a b c * +</code> (b) <code>a b + c *</code> (c) <code>+ a * b c</code> (d) <code>a b * c +</code></p>
+<ol>
+<li>
+<p>A queue is used for <strong>BFS</strong> because:</p>
+<p>(a) it dives deep (b) it processes nodes in discovery order (c) it's faster than a stack
+(d) it uses less memory</p>
+</li>
+<li>
+<p>In the two-stack infix evaluator, the two stacks hold:</p>
+<p>(a) operands and results (b) numbers and operators (c) values and pointers (d) inputs and outputs</p>
+</li>
+<li>
+<p><strong>Priority queue</strong> is typically implemented with:</p>
+<p>(a) array (b) binary heap (c) hash table (d) stack</p>
+</li>
+</ol>
+<h3 id="b-fill-in-the-blank">B. Fill in the blank<a class="headerlink" href="#b-fill-in-the-blank" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>A stack operates on <strong>_____</strong> (Last In, First Out).</p>
+</li>
+<li>
+<p>A queue operates on <strong>_____</strong> (First In, First Out).</p>
+</li>
+<li>
+<p>Push on a dynamic array stack is <strong>O(_____)</strong> amortised.</p>
+</li>
+<li>
+<p>The <strong>postfix</strong> expression <code>"3 4 +"</code> evaluates to <strong>_____</strong>.</p>
+</li>
+<li>
+<p>Balanced parentheses uses the stack's <strong>_____</strong> property.</p>
+</li>
+<li>
+<p>A circular queue wraps indices with the modulo of <strong>_____</strong> (the array's size).</p>
+</li>
+<li>
+<p>Dequeue from a linked-list queue with a tail pointer costs <strong>O(_____)</strong>.</p>
+</li>
+<li>
+<p><code>"a b + c *"</code> in infix is <strong>_____</strong>.</p>
+</li>
+<li>
+<p>The <strong>shunting-yard</strong> algorithm converts <strong>_____</strong> to postfix.</p>
+</li>
+<li>
+<p><code>ArrayDeque</code> in Java is preferred over <code>Stack</code> because it's <strong>_____</strong> -friendly.</p>
+</li>
+</ol>
+<h3 id="c-define-explain">C. Define / explain<a class="headerlink" href="#c-define-explain" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>State the <strong>stack ADT</strong> — its operations and their complexity.</p>
+</li>
+<li>
+<p>Explain why <strong>postfix evaluation</strong> is simpler than infix evaluation — what algorithm does infix require that postfix doesn't?</p>
+</li>
+<li>
+<p>Implement a <strong>balanced parentheses</strong> checker in pseudocode. Why is a stack the right choice?</p>
+</li>
+<li>
+<p>Describe the <strong>circular queue</strong> wrap-around logic. Draw a diagram of enqueue/dequeue wrapping.</p>
+</li>
+<li>
+<p>Explain why <strong><code>size</code></strong> is a better state variable than tracking <code>front</code> and <code>rear</code> independently for a circular queue.</p>
+</li>
+<li>
+<p>Compare <strong>array-based</strong> and <strong>linked-list</strong> stacks on: worst-case push, memory per element, cache locality.</p>
+</li>
+<li>
+<p>Describe the <strong>two-stack infix evaluator</strong>. What does each stack contain?</p>
+</li>
+<li>
+<p>Explain why <strong>BFS</strong> uses a queue and <strong>DFS</strong> uses a stack (or recursion). What property of the graph traversal does each data structure give?</p>
+</li>
+<li>
+<p>What is a <strong>deque</strong>? Give two applications.</p>
+</li>
+<li>
+<p>Explain the difference between a <strong>queue</strong> and a <strong>priority queue</strong>. When would you prefer a priority queue?</p>
+</li>
+</ol>
+<hr />
+<h2 id="answer-key">Answer key<a class="headerlink" href="#answer-key" title="Permanent link">&para;</a></h2>
+<details class="success">
+<summary>A. Multiple choice</summary>
+<ol>
+<li><strong>(b)</strong> LIFO.</li>
+<li><strong>(a)</strong> O(1).</li>
+<li><strong>(b)</strong> 11 (<code>5 + 3*2 = 11</code>).</li>
+<li><strong>(a)</strong> LIFO-nested.</li>
+<li><strong>(b)</strong> wrap indices.</li>
+<li><strong>(a)</strong> O(1).</li>
+<li><strong>(b)</strong> tail pointer.</li>
+<li><strong>(a)</strong> array-based.</li>
+<li><strong>(a)</strong> <code>a b c * +</code>.</li>
+<li><strong>(b)</strong> discovery order.</li>
+<li><strong>(b)</strong> numbers and operators.</li>
+<li><strong>(b)</strong> binary heap.</li>
+</ol>
+</details>
+<details class="success">
+<summary>B. Fill in the blank</summary>
+<ol>
+<li>LIFO</li>
+<li>FIFO</li>
+<li><span class="arithmatex">\(1\)</span></li>
+<li>7</li>
+<li>LIFO</li>
+<li>capacity</li>
+<li><span class="arithmatex">\(1\)</span></li>
+<li><code>(a + b) * c</code></li>
+<li>infix</li>
+<li>cache</li>
+</ol>
+</details>
+<details class="success">
+<summary>C. Define / explain — model answers</summary>
+<ol>
+<li><em>Stack ADT:</em> operations <code>push(x)</code>, <code>pop()</code>, <code>peek()</code>, <code>isEmpty()</code>, <code>size()</code>. All must be O(1). LIFO ordering: last element pushed is first element popped. Implementation is either array-backed (amortised O(1)) or linked-list-backed (strict O(1)).</li>
+<li><em>Postfix vs. infix evaluation:</em> postfix processes tokens left-to-right — push operands, pop for operators. No precedence rules, no parentheses. <em>Infix</em> requires either two passes (convert to postfix first) or two stacks (operators and operands, with precedence rules and parenthesised sub-expressions). The postfix representation <em>embeds</em> precedence and grouping structurally; infix forces the evaluator to reconstruct them.</li>
+<li><em>Balanced parentheses pseudocode:</em> for each character: if opening bracket, push. If closing, pop and check it matches. At end, stack must be empty. Return true iff no mismatch and empty at end. <em>Why a stack:</em> the most recently opened bracket must be closed first — that's LIFO. Any other structure (queue, list, hash) would give wrong answers because they don't respect nesting order.</li>
+<li><em>Circular queue:</em> maintain <code>front</code> (index of oldest element) and <code>size</code> (element count). <code>enqueue(x)</code> writes at <code>(front + size) % capacity</code>, then <code>size++</code>. <code>dequeue()</code> reads <code>data[front]</code>, then <code>front = (front + 1) % capacity</code> and <code>size--</code>. <em>Diagram:</em> as <code>front</code> and <code>size</code> advance past the end, they wrap to index 0 — the array is treated as a ring. No element moves.</li>
+<li><em>Why <code>size</code> beats <code>front</code>+<code>rear</code>:</em> if you track <code>front</code> and <code>rear</code> as two independent indices, the condition <code>front == rear</code> is ambiguous — it's both "empty" (initial state) and "full" (wrapped around). Resolving this requires either a waste-one-slot convention (store at most capacity-1 elements) or an extra <code>size</code> variable anyway. Tracking <code>size</code> directly makes both <code>isEmpty</code> and <code>isFull</code> trivial and unambiguous — no discarded slot, no extra flags.</li>
+<li><em>Array vs. linked-list stack:</em> (i) worst-case push — array O(n) on resize, linked-list O(1); (ii) memory per element — array 4 bytes (int), linked-list 16 bytes (value + next pointer, 64-bit); (iii) cache locality — array has 10–100× better cache hit rate for sequential push/pop. <em>Practical choice:</em> array stack unless strict O(1) worst case is required (real-time systems).</li>
+<li><em>Two-stack infix evaluator:</em> one stack holds <strong>operands</strong> (numbers), the other holds <strong>operators</strong> (and parentheses). When an operator arrives, pop and apply operators of higher-or-equal precedence; when <code>)</code> is seen, pop and apply until <code>(</code>; at the end, apply all remaining operators. Result: one number on the operand stack.</li>
+<li><em>BFS uses a queue; DFS uses a stack (or recursion):</em> BFS must process nodes in <strong>breadth-first</strong> order — nearest first, then next-nearest. A FIFO queue naturally produces this: enqueue all children of a dequeued node; they get processed after all currently queued nodes. DFS must go deep first — LIFO stack or recursion naturally pushes the "next child" onto the front of the processing order. <em>Property:</em> BFS gives shortest-path distance in unweighted graphs; DFS gives structural properties (cycles, topological order).</li>
+<li><em>Deque (double-ended queue):</em> O(1) insert and remove at both ends. Operations: <code>addFirst</code>, <code>addLast</code>, <code>removeFirst</code>, <code>removeLast</code>, <code>peekFirst</code>, <code>peekLast</code>. <em>Applications:</em> (i) <strong>sliding-window maximum</strong> — monotonic deque tracks candidates; (ii) <strong>palindrome check</strong> — compare from both ends inward.</li>
+<li><em>Queue vs. priority queue:</em> a queue processes elements in <strong>FIFO</strong> order; a priority queue processes elements in <strong>priority</strong> order — highest (or lowest) priority first, regardless of insertion order. <em>Prefer priority queue when:</em> the ordering that matters is priority, not arrival time — e.g., Dijkstra's algorithm (process nearest unexplored node first), task scheduling by priority, event simulation (earliest event first), Huffman coding (merge two smallest first).</li>
+</ol>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Weiss</strong>, Chapter 3 (Lists, Stacks, Queues).</li>
+<li><strong>Lafore</strong>, Chapters 4–5 (Stacks and Queues).</li>
+<li><strong>CLRS</strong>, Section 10.1 (Stacks and queues).</li>
+<li><strong>Open Data Structures</strong>, Chapters 4–5 (Stacks and Queues) — rigorous treatment with all variations.</li>
+<li><strong>Sedgewick &amp; Wayne</strong>, Section 1.3 — with visualisations.</li>
+<li><strong>VisuAlgo</strong> — <a href="https://visualgo.net/">visualgo.net</a> — animated stack/queue operations and application demos.</li>
+<li><strong>Joel Spolsky</strong>, "The Law of Leaky Abstractions" — <a href="https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/">joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/</a> — relevant for the array vs. linked-list trade-off.</li>
+</ul>
+<hr />
+<h2 id="suggested-tutorial-problems">Suggested tutorial problems<a class="headerlink" href="#suggested-tutorial-problems" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>Stack trace.</strong> Push <code>1, 2, 3</code>, pop twice, push <code>4, 5</code>, pop once. Trace the stack after each operation. What is the final top?</p>
+</li>
+<li>
+<p><strong>Postfix evaluation.</strong> Evaluate <code>"4 5 + 6 2 - * 3 +"</code> step by step. What is the result?</p>
+</li>
+<li>
+<p><strong>Balanced parentheses.</strong> Check <code>"(()"</code>, <code>"()[]{}"</code>, <code>"([{}])"</code>, <code>"([)]"</code>. Which are balanced?</p>
+</li>
+<li>
+<p><strong>Infix to postfix.</strong> Convert <code>"(A + B) * (C - D)"</code> to postfix using the shunting-yard algorithm. Trace the operator stack at each step.</p>
+</li>
+<li>
+<p><strong>Circular queue, hand-traced.</strong> Start with capacity 4, empty. Trace: enqueue 1, 2, 3; dequeue; enqueue 4, 5; dequeue; enqueue 6. Show <code>data</code>, <code>front</code>, <code>size</code> after each operation.</p>
+</li>
+<li>
+<p><strong>Two-stack infix.</strong> Evaluate <code>"10 + 20 * (30 - 15)"</code> using the two-stack method. Show the stacks after each step.</p>
+</li>
+<li>
+<p><strong>Undo/redo.</strong> Design an undo/redo system for a simple text editor using two stacks. Draw the state after: type "abc", undo, undo, redo, type "d".</p>
+</li>
+<li>
+<p><strong>Palindrome check with deque.</strong> Given a string, use a deque to check palindrome in O(n) time, O(n) space. Trace on <code>"racecar"</code>.</p>
+</li>
+<li>
+<p><strong>Sliding window maximum.</strong> Given <code>[1, 3, -1, -3, 5, 3, 6, 7]</code> and <code>k = 3</code>, use a monotonic deque to find the max in each window. Trace the deque state at each step.</p>
+</li>
+<li>
+<p><strong>Recursion depth.</strong> Write a recursive function that counts down from n to 0. At n = 100,000, does it crash? Why? Rewrite it iteratively with an explicit stack. Compare memory usage.</p>
+</li>
+<li>
+<p><strong>Queue used for scheduling.</strong> Simulate a simple round-robin scheduler: three processes with execution times 5, 3, 8 ms; time quantum 2 ms. Show the order of completion.</p>
+</li>
+<li>
+<p><strong>Comparison.</strong> For an application that does 10⁶ push operations and 10⁶ pop operations, would you choose an array stack or a linked-list stack? Justify with analysis.</p>
+</li>
+<li>
+<p><strong>BFS with a queue.</strong> On a binary tree with root at 1, children 2, 3; grandchildren 4, 5, 6, 7 — trace BFS using a queue. What order are nodes visited in?</p>
+</li>
+<li>
+<p><strong>Queue with two stacks.</strong> Implement a FIFO queue using two LIFO stacks (in-stack and out-stack). What is the amortised cost of enqueue and dequeue?</p>
+</li>
+<li>
+<p><strong>Valid parentheses with wildcard.</strong> Given a string containing <code>(</code>, <code>)</code>, and <code>*</code> (wildcard that can be <code>(</code>, <code>)</code>, or empty), determine if there's any valid assignment. (Hint: two-stack or greedy approach.)</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

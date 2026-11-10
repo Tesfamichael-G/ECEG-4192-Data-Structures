@@ -1,0 +1,3379 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BSc Electrical Engineering (Computer) · Semester VII · Module Data Storage and Analysis">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+        <link rel="canonical" href="https://tesfamichael-g.github.io/ECEG-4192-Data-Structures/chapters/06-hash-tables/">
+      
+      
+        <link rel="prev" href="../05-trees/">
+      
+      
+        <link rel="next" href="../07-graphs/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>6. Hash Tables - ECEG-4192 — Data Structures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-6-hash-tables" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-header__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECEG-4192 — Data Structures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              6. Hash Tables
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../syllabus.md" class="md-tabs__link">
+        
+  
+    
+  
+  Syllabus
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../schedule.md" class="md-tabs__link">
+        
+  
+    
+  
+  Schedule
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../slides/index.md" class="md-tabs__link">
+          
+  
+    
+  
+  Slides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../solutions/" class="md-tabs__link">
+          
+  
+    
+  
+  Solutions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-nav__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    ECEG-4192 — Data Structures
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../syllabus.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syllabus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schedule
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction & Analysis of Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Linked Lists
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Stacks and Queues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Trees
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    6. Hash Tables
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    6. Hash Tables
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#61-the-hash-table-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 The hash table idea
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1 The hash table idea">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#611-the-gap" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1.1 The gap
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#612-the-core-insight" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1.2 The core insight
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#613-the-cost-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1.3 The cost guarantee
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#62-hash-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 Hash functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 Hash functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#621-properties-of-a-good-hash-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2.1 Properties of a good hash function
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#622-the-division-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2.2 The division method
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#623-the-multiplication-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2.3 The multiplication method
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#624-universal-hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2.4 Universal hashing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-61-division-method-collisions-depend-on-m" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 6.1 — Division method, collisions depend on m
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-62-string-hashing-via-polynomial" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 6.2 — String hashing via polynomial
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-63-adversarial-input-defeats-a-fixed-hash" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 6.3 — Adversarial input defeats a fixed hash
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#63-separate-chaining" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3 Separate chaining
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3 Separate chaining">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#631-the-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3.1 The idea
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#632-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3.2 Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#633-cost-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3.3 Cost analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#634-why-alpha-le-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3.4 Why \(\alpha \le 1\)?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-64-separate-chaining-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 6.4 — Separate chaining trace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#64-open-addressing" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4 Open addressing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.4 Open addressing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#641-the-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4.1 The idea
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#642-linear-probing" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4.2 Linear probing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#643-quadratic-probing" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4.3 Quadratic probing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#644-double-hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4.4 Double hashing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#645-deletion-tombstones" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4.5 Deletion — tombstones
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-65-linear-probing-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 6.5 — Linear probing trace
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-66-quadratic-probing-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 6.6 — Quadratic probing trace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#65-load-factor-and-rehashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.5 Load factor and rehashing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.5 Load factor and rehashing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#651-load-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.5.1 Load factor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#652-expected-probe-counts-theoretical" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.5.2 Expected probe counts (theoretical)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#653-rehashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.5.3 Rehashing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#66-java-and-python-implementations" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.6 Java and Python implementations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.6 Java and Python implementations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#661-javas-hashmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.6.1 Java's HashMap
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#662-pythons-dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.6.2 Python's dict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#663-what-to-use-in-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.6.3 What to use in production
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#67-hash-tables-vs-balanced-bsts" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.7 Hash tables vs. balanced BSTs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-67-when-does-hashing-beat-binary-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 6.7 — When does hashing beat binary search?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Worked example 6.7 — When does hashing beat binary search?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-68-two-sum-problem-with-a-hash-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 6.8 — Two-sum problem with a hash set
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quiz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quiz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-multiple-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      A. Multiple choice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-fill-in-the-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      B. Fill in the blank
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-define-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      C. Define / explain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Answer key
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suggested-tutorial-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Suggested tutorial problems
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Graphs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. Sorting Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Slides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/index.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../solutions/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Solutions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#61-the-hash-table-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 The hash table idea
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1 The hash table idea">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#611-the-gap" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1.1 The gap
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#612-the-core-insight" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1.2 The core insight
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#613-the-cost-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1.3 The cost guarantee
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#62-hash-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 Hash functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 Hash functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#621-properties-of-a-good-hash-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2.1 Properties of a good hash function
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#622-the-division-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2.2 The division method
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#623-the-multiplication-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2.3 The multiplication method
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#624-universal-hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2.4 Universal hashing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-61-division-method-collisions-depend-on-m" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 6.1 — Division method, collisions depend on m
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-62-string-hashing-via-polynomial" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 6.2 — String hashing via polynomial
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-63-adversarial-input-defeats-a-fixed-hash" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 6.3 — Adversarial input defeats a fixed hash
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#63-separate-chaining" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3 Separate chaining
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3 Separate chaining">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#631-the-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3.1 The idea
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#632-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3.2 Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#633-cost-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3.3 Cost analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#634-why-alpha-le-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3.4 Why \(\alpha \le 1\)?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-64-separate-chaining-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 6.4 — Separate chaining trace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#64-open-addressing" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4 Open addressing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.4 Open addressing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#641-the-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4.1 The idea
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#642-linear-probing" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4.2 Linear probing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#643-quadratic-probing" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4.3 Quadratic probing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#644-double-hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4.4 Double hashing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#645-deletion-tombstones" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4.5 Deletion — tombstones
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-65-linear-probing-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 6.5 — Linear probing trace
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-66-quadratic-probing-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 6.6 — Quadratic probing trace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#65-load-factor-and-rehashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.5 Load factor and rehashing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.5 Load factor and rehashing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#651-load-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.5.1 Load factor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#652-expected-probe-counts-theoretical" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.5.2 Expected probe counts (theoretical)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#653-rehashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.5.3 Rehashing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#66-java-and-python-implementations" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.6 Java and Python implementations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.6 Java and Python implementations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#661-javas-hashmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.6.1 Java's HashMap
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#662-pythons-dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.6.2 Python's dict
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#663-what-to-use-in-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.6.3 What to use in production
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#67-hash-tables-vs-balanced-bsts" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.7 Hash tables vs. balanced BSTs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-67-when-does-hashing-beat-binary-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 6.7 — When does hashing beat binary search?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Worked example 6.7 — When does hashing beat binary search?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-68-two-sum-problem-with-a-hash-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 6.8 — Two-sum problem with a hash set
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quiz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quiz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-multiple-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      A. Multiple choice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-fill-in-the-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      B. Fill in the blank
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-define-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      C. Define / explain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Answer key
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suggested-tutorial-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Suggested tutorial problems
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="chapter-6-hash-tables">Chapter 6 — Hash Tables<a class="headerlink" href="#chapter-6-hash-tables" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">Chapter at a glance</p>
+<p><strong>Contact hours:</strong> 2 lecture + 1 tutorial + 2 lab · <strong>Home study:</strong> ~5 h</p>
+<p><strong>Coverage (syllabus):</strong> hashing · hash functions · collisions · open addressing ·
+separate chaining.</p>
+</div>
+<hr />
+<h2 id="learning-outcomes">Learning outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Explain the <strong>hash table idea</strong> — mapping keys to array indices via a hash function.</li>
+<li>Describe the properties of a <strong>good hash function</strong> (deterministic, uniform, fast).</li>
+<li>Resolve collisions using <strong>separate chaining</strong> — linked lists at each bucket.</li>
+<li>Resolve collisions using <strong>open addressing</strong> — linear probing, quadratic probing, double hashing.</li>
+<li>Compute and reason about the <strong>load factor</strong> and its effect on performance.</li>
+<li>Analyse the <strong>average-case O(1)</strong> and <strong>worst-case O(n)</strong> costs of hash tables.</li>
+<li>Handle <strong>deletion</strong> correctly in open addressing (tombstones).</li>
+<li>Implement hash tables in Java and Python.</li>
+<li>Recognise common pitfalls (bad hash functions, adversarial inputs, integer overflow in hashing).</li>
+<li>Choose between hash tables, balanced BSTs, and arrays for a given problem.</li>
+</ol>
+<hr />
+<h2 id="61-the-hash-table-idea">6.1 The hash table idea<a class="headerlink" href="#61-the-hash-table-idea" title="Permanent link">&para;</a></h2>
+<h3 id="611-the-gap">6.1.1 The gap<a class="headerlink" href="#611-the-gap" title="Permanent link">&para;</a></h3>
+<p>Arrays give <strong>O(1) access by index</strong> — but indices are 0, 1, 2, … Keys are usually not small integers. If you have a set of <code>{name, email}</code> pairs and want <code>get("Alice")</code> in O(1), arrays won't work directly.</p>
+<p>The idea: <strong>map the key to an array index via a hash function</strong>, and store the value at that index.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>key "Alice" → hash(key) → 42 → store value at array[42]
+</span></code></pre></div>
+<p>Retrieval: same computation → same index → O(1) lookup.</p>
+<h3 id="612-the-core-insight">6.1.2 The core insight<a class="headerlink" href="#612-the-core-insight" title="Permanent link">&para;</a></h3>
+<p>A <strong>hash function</strong> converts an arbitrary key (string, object, integer) into an <strong>array index</strong> in a bounded range <code>[0, m - 1]</code>, where <code>m</code> is the table size:</p>
+<div class="arithmatex">\[
+\boxed{\;h : \text{Keys} \to [0, m-1]\;}
+\]</div>
+<p>Because the input range (all possible keys) is much larger than the output range (<code>m</code> slots), <strong>collisions are inevitable</strong> — two different keys hashing to the same index.</p>
+<h3 id="613-the-cost-guarantee">6.1.3 The cost guarantee<a class="headerlink" href="#613-the-cost-guarantee" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Best / average case:</strong> O(1) for insert, lookup, delete — because hash + index is a constant number of operations.</li>
+<li><strong>Worst case:</strong> O(n) — if all keys collide, the table degenerates to a linked list.</li>
+</ul>
+<p>The goal of hash table design is to make the <strong>average case O(1)</strong> under realistic assumptions (random keys, good hash function, load factor bounded).</p>
+<hr />
+<h2 id="62-hash-functions">6.2 Hash functions<a class="headerlink" href="#62-hash-functions" title="Permanent link">&para;</a></h2>
+<h3 id="621-properties-of-a-good-hash-function">6.2.1 Properties of a good hash function<a class="headerlink" href="#621-properties-of-a-good-hash-function" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Deterministic</strong></td>
+<td><code>h(k)</code> returns the same value every time</td>
+</tr>
+<tr>
+<td><strong>Uniform</strong></td>
+<td>Each index is equally likely to be produced (for random inputs)</td>
+</tr>
+<tr>
+<td><strong>Fast</strong></td>
+<td>O(1) to compute, with a small constant</td>
+</tr>
+<tr>
+<td><strong>Avalanche</strong></td>
+<td>A small change in input produces a large change in output</td>
+</tr>
+<tr>
+<td><strong>Bounded</strong></td>
+<td>Returns index in <code>[0, m-1]</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="622-the-division-method">6.2.2 The division method<a class="headerlink" href="#622-the-division-method" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+\boxed{\;h(k) = k \bmod m\;}
+\]</div>
+<p><strong>Rules:</strong>
+- <strong><code>m</code> should be prime</strong> — avoids patterns in input keys causing systematic collisions.
+- <strong><code>m</code> should not be a power of 2</strong> — for integer keys, <code>k mod 2^p</code> just takes the low <code>p</code> bits, discarding the rest; if inputs share low bits, collisions explode.
+- <strong>Good choice:</strong> <code>m</code> a prime far from any power of 2, e.g., 97, 199, 4093.</p>
+<h3 id="623-the-multiplication-method">6.2.3 The multiplication method<a class="headerlink" href="#623-the-multiplication-method" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+\boxed{\;h(k) = \lfloor m \cdot (k \cdot A \bmod 1) \rfloor, \quad 0 &lt; A &lt; 1.\;}
+\]</div>
+<p><strong>Recommended <code>A</code></strong> (Knuth): <span class="arithmatex">\(A \approx (\sqrt 5 - 1)/2 \approx 0.6180339887\)</span>.</p>
+<p><strong>Why it works:</strong> multiplication by <code>A</code>, keep the fractional part, scale by <code>m</code>. Result is in <code>[0, m)</code>. <strong>Less sensitive to <code>m</code>'s value</strong> than the division method — often used when <code>m</code> is a power of 2 for speed.</p>
+<p><strong>When to use:</strong> integer keys where you want <code>m</code> to be a power of 2 (for bit-shift efficiency).</p>
+<h3 id="624-universal-hashing">6.2.4 Universal hashing<a class="headerlink" href="#624-universal-hashing" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> any <em>fixed</em> hash function can be defeated by an adversary who knows it — e.g., if <code>h(k) = k mod 97</code> and the adversary controls the input, they can send all keys as <code>97 · i</code> and defeat the table.</p>
+<p><strong>Solution:</strong> choose the hash function <strong>randomly at runtime</strong> from a <strong>universal family</strong>. An adversary who doesn't know which hash function is active can't predict collisions.</p>
+<p><strong>Example family:</strong></p>
+<div class="arithmatex">\[
+\boxed{\;h_{a,b}(k) = ((a \cdot k + b) \bmod p) \bmod m\;}
+\]</div>
+<p>where <code>p</code> is a prime larger than the largest key, and <code>a, b</code> are chosen uniformly at random at startup. Any two distinct keys collide with probability ≤ 1/m.</p>
+<h3 id="worked-example-61-division-method-collisions-depend-on-m">Worked example 6.1 — Division method, collisions depend on <code>m</code><a class="headerlink" href="#worked-example-61-division-method-collisions-depend-on-m" title="Permanent link">&para;</a></h3>
+<p><strong>Keys:</strong> <code>{10, 20, 30, 40, 50}</code>.</p>
+<p><strong>Table size <code>m = 10</code>:</strong> <code>h(k) = k mod 10</code> → <code>{0, 0, 0, 0, 0}</code> — <strong>all collide</strong> at index 0. Terrible.</p>
+<p><strong>Table size <code>m = 7</code>:</strong> <code>h(k) = k mod 7</code> → <code>{3, 6, 2, 5, 1}</code> — <strong>all distinct</strong>. Good.</p>
+<p><strong>Table size <code>m = 11</code>:</strong> <code>h(k) = k mod 11</code> → <code>{10, 9, 8, 7, 6}</code> — <strong>all distinct</strong>. Good.</p>
+<p><strong>The lesson:</strong> for these keys (all multiples of 10), <code>m = 10</code> is the worst possible choice. <strong>Prime <code>m</code> avoids this trap</strong> because it doesn't share factors with the keys' common divisor.</p>
+<h3 id="worked-example-62-string-hashing-via-polynomial">Worked example 6.2 — String hashing via polynomial<a class="headerlink" href="#worked-example-62-string-hashing-via-polynomial" title="Permanent link">&para;</a></h3>
+<p><strong>Polynomial rolling hash:</strong></p>
+<div class="arithmatex">\[
+\boxed{\;h(s) = \left(\sum_{i=0}^{n-1} s[i] \cdot p^i\right) \bmod m\;}
+\]</div>
+<p>where <code>p</code> is a small prime (typically 31 or 131) and <code>s[i]</code> is the ASCII code of character <code>i</code>.</p>
+<p><strong>Example:</strong> <code>s = "cat"</code>, ASCII 99, 97, 116. <code>p = 31</code>, <code>m = 1009</code>.</p>
+<div class="arithmatex">\[
+h = (99 + 97 \cdot 31 + 116 \cdot 31^2) \bmod 1009.
+\]</div>
+<p>Compute <code>31^2 = 961</code>:
+- <code>99 · 1 = 99</code>
+- <code>97 · 31 = 3007</code>
+- <code>116 · 961 = 111,476</code></p>
+<p>Sum = <code>114,582</code>. <code>114,582 mod 1009 = ?</code></p>
+<p><code>1009 · 113 = 114,017</code>. <code>114,582 - 114,017 = 565</code>. So <code>h("cat") = 565</code>.</p>
+<p><strong>Why <code>p = 31</code>?</strong> Good distribution for English strings; small enough to avoid overflow in 32-bit ints (with modular reduction per term). Java's <code>String.hashCode()</code> uses <code>p = 31</code> for this reason.</p>
+<h3 id="worked-example-63-adversarial-input-defeats-a-fixed-hash">Worked example 6.3 — Adversarial input defeats a fixed hash<a class="headerlink" href="#worked-example-63-adversarial-input-defeats-a-fixed-hash" title="Permanent link">&para;</a></h3>
+<p><strong>Setup:</strong> <code>h(k) = k mod 1009</code>. An adversary sends keys <code>{1009, 2018, 3027, 4036, ...}</code> — all multiples of 1009.</p>
+<p><strong>Every key hashes to 0.</strong> All n keys collide at bucket 0 → every operation is O(n).</p>
+<p><strong>Defense:</strong> universal hashing (6.2.4) — the adversary can't predict the modulus because it's chosen randomly at runtime.</p>
+<p><strong>Real-world attack:</strong> in 2011, a "HashDoS" attack hit several web frameworks by sending form data with many colliding keys. Server CPU was exhausted on hash lookups. The fix was to switch to randomized hashing.</p>
+<hr />
+<h2 id="63-separate-chaining">6.3 Separate chaining<a class="headerlink" href="#63-separate-chaining" title="Permanent link">&para;</a></h2>
+<h3 id="631-the-idea">6.3.1 The idea<a class="headerlink" href="#631-the-idea" title="Permanent link">&para;</a></h3>
+<p>Each slot in the table is a <strong>linked list</strong>. Colliding elements are stored in the same list.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Table:
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>[0] → null
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>[1] → ("Alice", 25) → ("Bob", 30) → null
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>[2] → null
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>[3] → ("Carol", 40) → null
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>[4] → ("Dave", 50) → ("Eve", 60) → ("Frank", 35) → null
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>[5] → null
+</span></code></pre></div>
+<h3 id="632-operations">6.3.2 Operations<a class="headerlink" href="#632-operations" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kd">class</span> <span class="nc">ChainedHashTable</span><span class="o">&lt;</span><span class="n">K</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="kd">class</span> <span class="nc">Node</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">        </span><span class="n">K</span><span class="w"> </span><span class="n">key</span><span class="p">;</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="n">next</span><span class="p">;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">        </span><span class="n">Node</span><span class="p">(</span><span class="n">K</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="p">;</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Node</span><span class="o">[]</span><span class="w"> </span><span class="n">buckets</span><span class="p">;</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">;</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="n">ChainedHashTable</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">capacity</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">        </span><span class="n">buckets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="o">[</span><span class="n">capacity</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">        </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">hash</span><span class="p">(</span><span class="n">K</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">floorMod</span><span class="p">(</span><span class="n">key</span><span class="p">.</span><span class="na">hashCode</span><span class="p">(),</span><span class="w"> </span><span class="n">buckets</span><span class="p">.</span><span class="na">length</span><span class="p">);</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">put</span><span class="p">(</span><span class="n">K</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hash</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buckets</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="na">next</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">.</span><span class="na">key</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">key</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="w">        </span><span class="n">Node</span><span class="w"> </span><span class="n">newNode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span>
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="w">        </span><span class="n">newNode</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buckets</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="w">        </span><span class="n">buckets</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newNode</span><span class="p">;</span>
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="w">        </span><span class="n">size</span><span class="o">++</span><span class="p">;</span>
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">buckets</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.75</span><span class="p">)</span><span class="w"> </span><span class="n">resize</span><span class="p">(</span><span class="n">buckets</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>
+</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="w">    </span><span class="n">V</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="n">K</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hash</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buckets</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="na">next</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="p">.</span><span class="na">key</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">key</span><span class="p">))</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="na">value</span><span class="p">;</span>
+</span><span id="__span-2-34"><a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-2-35"><a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+</span><span id="__span-2-36"><a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-37"><a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a>
+</span><span id="__span-2-38"><a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a><span class="w">    </span><span class="n">V</span><span class="w"> </span><span class="nf">remove</span><span class="p">(</span><span class="n">K</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-39"><a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hash</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+</span><span id="__span-2-40"><a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a><span class="w">        </span><span class="n">Node</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buckets</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+</span><span id="__span-2-41"><a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">cur</span><span class="p">.</span><span class="na">key</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">key</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-42"><a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a><span class="w">            </span><span class="n">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">;</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-2-43"><a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-2-44"><a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+</span><span id="__span-2-45"><a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">prev</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="n">buckets</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-2-46"><a id="__codelineno-2-46" name="__codelineno-2-46" href="#__codelineno-2-46"></a><span class="w">        </span><span class="k">else</span><span class="w">              </span><span class="n">prev</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-2-47"><a id="__codelineno-2-47" name="__codelineno-2-47" href="#__codelineno-2-47"></a><span class="w">        </span><span class="n">size</span><span class="o">--</span><span class="p">;</span>
+</span><span id="__span-2-48"><a id="__codelineno-2-48" name="__codelineno-2-48" href="#__codelineno-2-48"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">value</span><span class="p">;</span>
+</span><span id="__span-2-49"><a id="__codelineno-2-49" name="__codelineno-2-49" href="#__codelineno-2-49"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-50"><a id="__codelineno-2-50" name="__codelineno-2-50" href="#__codelineno-2-50"></a>
+</span><span id="__span-2-51"><a id="__codelineno-2-51" name="__codelineno-2-51" href="#__codelineno-2-51"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">resize</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">newCap</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-52"><a id="__codelineno-2-52" name="__codelineno-2-52" href="#__codelineno-2-52"></a><span class="w">        </span><span class="n">Node</span><span class="o">[]</span><span class="w"> </span><span class="n">old</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buckets</span><span class="p">;</span>
+</span><span id="__span-2-53"><a id="__codelineno-2-53" name="__codelineno-2-53" href="#__codelineno-2-53"></a><span class="w">        </span><span class="n">buckets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="o">[</span><span class="n">newCap</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-2-54"><a id="__codelineno-2-54" name="__codelineno-2-54" href="#__codelineno-2-54"></a><span class="w">        </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-2-55"><a id="__codelineno-2-55" name="__codelineno-2-55" href="#__codelineno-2-55"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">old</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-56"><a id="__codelineno-2-56" name="__codelineno-2-56" href="#__codelineno-2-56"></a><span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">)</span><span class="w"> </span><span class="n">put</span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">key</span><span class="p">,</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">value</span><span class="p">);</span>
+</span><span id="__span-2-57"><a id="__codelineno-2-57" name="__codelineno-2-57" href="#__codelineno-2-57"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-2-58"><a id="__codelineno-2-58" name="__codelineno-2-58" href="#__codelineno-2-58"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-59"><a id="__codelineno-2-59" name="__codelineno-2-59" href="#__codelineno-2-59"></a><span class="p">}</span>
+</span></code></pre></div>
+<h3 id="633-cost-analysis">6.3.3 Cost analysis<a class="headerlink" href="#633-cost-analysis" title="Permanent link">&para;</a></h3>
+<p>Let <code>n</code> = number of elements, <code>m</code> = table size, <strong>load factor</strong> <span class="arithmatex">\(\alpha = n/m\)</span>.</p>
+<p><strong>Average case (uniform hashing):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th style="text-align: center;">Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>put</code></td>
+<td style="text-align: center;">O(1 + α) — hash + walk the list</td>
+</tr>
+<tr>
+<td><code>get</code></td>
+<td style="text-align: center;">O(1 + α) — hash + walk the list</td>
+</tr>
+<tr>
+<td><code>remove</code></td>
+<td style="text-align: center;">O(1 + α)</td>
+</tr>
+<tr>
+<td><code>resize</code></td>
+<td style="text-align: center;">O(n) when triggered — amortised O(1)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Worst case (all keys collide):</strong> O(n) per operation — the table is one big list.</p>
+<p><strong>Practical rule:</strong> keep <span class="arithmatex">\(\alpha \le 1\)</span> (typically 0.75) → average O(1) with high probability.</p>
+<h3 id="634-why-alpha-le-1">6.3.4 Why <span class="arithmatex">\(\alpha \le 1\)</span>?<a class="headerlink" href="#634-why-alpha-le-1" title="Permanent link">&para;</a></h3>
+<p>Under uniform hashing, the expected length of a chain is exactly <span class="arithmatex">\(\alpha\)</span>. For <span class="arithmatex">\(\alpha = 0.75\)</span>:
+- Expected chain length per lookup ≈ 0.75.
+- Total expected comparisons per lookup ≈ <code>1 + α ≈ 1.75</code> — <strong>constant</strong>.</p>
+<p>At <span class="arithmatex">\(\alpha = 10\)</span>:
+- Expected chain length = 10.
+- Total ≈ 11 comparisons — 10× worse than <span class="arithmatex">\(\alpha = 0.75\)</span>.</p>
+<p><strong>Resize before <span class="arithmatex">\(\alpha\)</span> exceeds 0.75</strong> to keep O(1) average.</p>
+<h3 id="worked-example-64-separate-chaining-trace">Worked example 6.4 — Separate chaining trace<a class="headerlink" href="#worked-example-64-separate-chaining-trace" title="Permanent link">&para;</a></h3>
+<p><strong>Setup:</strong> <code>m = 5</code>, keys inserted in order: <code>{15, 11, 27, 8, 12}</code>, <code>h(k) = k mod 5</code>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Step</th>
+<th style="text-align: center;">Insert key</th>
+<th style="text-align: center;"><code>h(k)</code></th>
+<th>Bucket 0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">0</td>
+<td><strong>15</strong></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">1</td>
+<td>15</td>
+<td><strong>11</strong></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">27</td>
+<td style="text-align: center;">2</td>
+<td>15</td>
+<td>11</td>
+<td><strong>27</strong></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">3</td>
+<td>15</td>
+<td>11</td>
+<td>27</td>
+<td><strong>8</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">2</td>
+<td>15</td>
+<td>11</td>
+<td><strong>27 → 12</strong></td>
+<td>8</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key 12 collides with 27 at bucket 2.</strong> Inserted at the front of the chain: <code>27 → 12</code>.</p>
+<p><strong>Lookup 12:</strong> <code>h(12) = 2</code> → walk bucket 2: <code>27</code> (≠ 12) → <code>12</code> ✓ — 2 comparisons.</p>
+<p><strong>Lookup 8:</strong> <code>h(8) = 3</code> → bucket 3: <code>8</code> ✓ — 1 comparison.</p>
+<p><strong>Cost.</strong> 5 inserts, average ~1.4 comparisons each. <strong>O(1) average.</strong> ✓</p>
+<hr />
+<h2 id="64-open-addressing">6.4 Open addressing<a class="headerlink" href="#64-open-addressing" title="Permanent link">&para;</a></h2>
+<h3 id="641-the-idea">6.4.1 The idea<a class="headerlink" href="#641-the-idea" title="Permanent link">&para;</a></h3>
+<p>Instead of linked lists, <strong>store everything directly in the array</strong>. On collision, <strong>probe</strong> other slots in a deterministic sequence until an empty one is found.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Slots:  [ 0 ][ 1 ][ 2 ][ 3 ][ 4 ]
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Insert 15 → slot 0 (empty)  ✓
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Insert 11 → slot 1 (empty)  ✓
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Insert 27 → slot 2 (empty)  ✓
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>Insert 8  → slot 3 (empty)  ✓
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>Insert 12 → slot 2 (occupied by 27) → probe slot 3 (occupied by 8) → probe slot 4 (empty)  ✓
+</span></code></pre></div>
+<p><strong>No pointers per element</strong> — the table is a flat array. <strong>Excellent cache locality</strong> — potentially much faster than chaining in practice.</p>
+<p><strong>The catch:</strong> lookup must <strong>reproduce the probe sequence</strong> to find elements. And <strong>deletion is tricky</strong> (§6.4.5).</p>
+<h3 id="642-linear-probing">6.4.2 Linear probing<a class="headerlink" href="#642-linear-probing" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+\boxed{\;h(k, i) = (h(k) + i) \bmod m, \quad i = 0, 1, 2, \ldots\;}
+\]</div>
+<p><strong>Simplest sequence:</strong> try <code>h(k)</code>, then <code>h(k)+1</code>, then <code>h(k)+2</code>, … wrapping around.</p>
+<p><strong>Problem — clustering.</strong> Once multiple consecutive slots are filled, any new key whose hash lands in the cluster must traverse the entire cluster. Long clusters grow longer — <strong>primary clustering</strong> — quickly degrading to O(n) average.</p>
+<h3 id="643-quadratic-probing">6.4.3 Quadratic probing<a class="headerlink" href="#643-quadratic-probing" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+\boxed{\;h(k, i) = (h(k) + c_1 i + c_2 i^2) \bmod m, \quad i = 0, 1, 2, \ldots\;}
+\]</div>
+<p>Common choice: <span class="arithmatex">\(c_1 = 0, c_2 = 1\)</span> → <code>h(k, i) = (h(k) + i²) mod m</code>.</p>
+<p><strong>Reduces primary clustering</strong> — probe sequence jumps more widely.</p>
+<p><strong>Problem — secondary clustering.</strong> All keys with the same initial hash <code>h(k)</code> follow the same probe sequence, so they still collide repeatedly.</p>
+<p><strong>Catch:</strong> quadratic probing may not visit all slots for arbitrary <code>m</code>. For <code>m</code> prime and <span class="arithmatex">\(\alpha &lt; 0.5\)</span>, it visits at least half the table — usually sufficient.</p>
+<h3 id="644-double-hashing">6.4.4 Double hashing<a class="headerlink" href="#644-double-hashing" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+\boxed{\;h(k, i) = (h_1(k) + i \cdot h_2(k)) \bmod m, \quad i = 0, 1, 2, \ldots\;}
+\]</div>
+<p><strong>Second hash function <code>h_2(k)</code></strong> determines the step size for key <code>k</code>. Keys with the same <code>h_1</code> but different <code>h_2</code> follow <strong>different probe sequences</strong> — no clustering at all.</p>
+<p><strong>Good choices:</strong>
+- <code>h_1(k) = k mod m</code>
+- <code>h_2(k) = 1 + (k mod m')</code> where <code>m'</code> is slightly smaller than <code>m</code> (often <code>m' = m - 1</code> or a prime).</p>
+<p><strong>The <code>+1</code> is critical</strong> — if <code>h_2(k) = 0</code>, the probe sequence is <code>h_1(k), h_1(k), h_1(k), …</code> — infinite loop. Adding 1 forces <code>h_2(k) ≥ 1</code>.</p>
+<p><strong>Requirement:</strong> <code>h_2(k)</code> must be <strong>relatively prime to <code>m</code></strong> — then the probe sequence visits all slots.</p>
+<p><strong>Best of the three</strong> — no clustering, uniform probing. <strong>Cost: two hash computations per probe.</strong></p>
+<h3 id="645-deletion-tombstones">6.4.5 Deletion — tombstones<a class="headerlink" href="#645-deletion-tombstones" title="Permanent link">&para;</a></h3>
+<p><strong>The problem:</strong> suppose you have entries at slots <code>[5]</code>, <code>[6]</code>, <code>[7]</code> (all from collisions on the same initial hash). Now delete <code>[6]</code>. If you simply set <code>[6]</code> to empty, a lookup for <code>[7]</code> will probe <code>[5]</code>, then <code>[6]</code> (empty!) — and conclude <code>[7]</code> doesn't exist, <strong>even though it does</strong>.</p>
+<p><strong>Solution: tombstones.</strong> Mark deleted slots with a special <code>DELETED</code> marker. Lookup continues past tombstones; insertion can reuse them.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kd">enum</span><span class="w"> </span><span class="n">SlotState</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">EMPTY</span><span class="p">,</span><span class="w"> </span><span class="n">OCCUPIED</span><span class="p">,</span><span class="w"> </span><span class="n">DELETED</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kd">class</span> <span class="nc">TombstoneHashTable</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">keys</span><span class="p">;</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="w"> </span><span class="n">values</span><span class="p">;</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">SlotState</span><span class="o">[]</span><span class="w"> </span><span class="n">state</span><span class="p">;</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">;</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="n">TombstoneHashTable</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">capacity</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">        </span><span class="n">keys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">capacity</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">        </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[</span><span class="n">capacity</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">        </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SlotState</span><span class="o">[</span><span class="n">capacity</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">        </span><span class="n">java</span><span class="p">.</span><span class="na">util</span><span class="p">.</span><span class="na">Arrays</span><span class="p">.</span><span class="na">fill</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="n">SlotState</span><span class="p">.</span><span class="na">EMPTY</span><span class="p">);</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">put</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">floorMod</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">keys</span><span class="p">.</span><span class="na">length</span><span class="p">);</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">firstDeleted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">probe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">probe</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">keys</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">probe</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">probe</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">keys</span><span class="p">.</span><span class="na">length</span><span class="p">;</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SlotState</span><span class="p">.</span><span class="na">OCCUPIED</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">keys</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">values</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SlotState</span><span class="p">.</span><span class="na">DELETED</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">firstDeleted</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">firstDeleted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">idx</span><span class="p">;</span>
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="w">                </span><span class="c1">// EMPTY: insert here (or at firstDeleted if any)</span>
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">ins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">firstDeleted</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">firstDeleted</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">idx</span><span class="p">;</span>
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="w">                </span><span class="n">keys</span><span class="o">[</span><span class="n">ins</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">key</span><span class="p">;</span>
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="w">                </span><span class="n">values</span><span class="o">[</span><span class="n">ins</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="w">                </span><span class="n">state</span><span class="o">[</span><span class="n">ins</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SlotState</span><span class="p">.</span><span class="na">OCCUPIED</span><span class="p">;</span>
+</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="w">                </span><span class="n">size</span><span class="o">++</span><span class="p">;</span>
+</span><span id="__span-4-32"><a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="w">                </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-4-33"><a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-4-34"><a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-4-35"><a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-36"><a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a>
+</span><span id="__span-4-37"><a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="w">    </span><span class="n">Object</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-38"><a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">floorMod</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">keys</span><span class="p">.</span><span class="na">length</span><span class="p">);</span>
+</span><span id="__span-4-39"><a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">probe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">probe</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">keys</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">probe</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-40"><a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">probe</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">keys</span><span class="p">.</span><span class="na">length</span><span class="p">;</span>
+</span><span id="__span-4-41"><a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SlotState</span><span class="p">.</span><span class="na">EMPTY</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">   </span><span class="c1">// stop only on EMPTY</span>
+</span><span id="__span-4-42"><a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SlotState</span><span class="p">.</span><span class="na">OCCUPIED</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">keys</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">values</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-4-43"><a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-4-44"><a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+</span><span id="__span-4-45"><a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-46"><a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a>
+</span><span id="__span-4-47"><a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">remove</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-48"><a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">floorMod</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">keys</span><span class="p">.</span><span class="na">length</span><span class="p">);</span>
+</span><span id="__span-4-49"><a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">probe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">probe</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">keys</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">probe</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-50"><a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">probe</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">keys</span><span class="p">.</span><span class="na">length</span><span class="p">;</span>
+</span><span id="__span-4-51"><a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SlotState</span><span class="p">.</span><span class="na">EMPTY</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-4-52"><a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SlotState</span><span class="p">.</span><span class="na">OCCUPIED</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">keys</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-53"><a id="__codelineno-4-53" name="__codelineno-4-53" href="#__codelineno-4-53"></a><span class="w">                </span><span class="n">state</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SlotState</span><span class="p">.</span><span class="na">DELETED</span><span class="p">;</span>
+</span><span id="__span-4-54"><a id="__codelineno-4-54" name="__codelineno-4-54" href="#__codelineno-4-54"></a><span class="w">                </span><span class="n">size</span><span class="o">--</span><span class="p">;</span>
+</span><span id="__span-4-55"><a id="__codelineno-4-55" name="__codelineno-4-55" href="#__codelineno-4-55"></a><span class="w">                </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-4-56"><a id="__codelineno-4-56" name="__codelineno-4-56" href="#__codelineno-4-56"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-4-57"><a id="__codelineno-4-57" name="__codelineno-4-57" href="#__codelineno-4-57"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-4-58"><a id="__codelineno-4-58" name="__codelineno-4-58" href="#__codelineno-4-58"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-59"><a id="__codelineno-4-59" name="__codelineno-4-59" href="#__codelineno-4-59"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>The key rules:</strong></p>
+<ul>
+<li><strong>Lookup stops only on EMPTY</strong>, never on DELETED.</li>
+<li><strong>Insert reuses DELETED slots</strong> (record the first one seen).</li>
+<li><strong>Long runs of tombstones degrade performance</strong> — a rehash (resize) sweeps them away.</li>
+</ul>
+<h3 id="worked-example-65-linear-probing-trace">Worked example 6.5 — Linear probing trace<a class="headerlink" href="#worked-example-65-linear-probing-trace" title="Permanent link">&para;</a></h3>
+<p><strong>Setup:</strong> <code>m = 7</code>, insert keys <code>{10, 20, 15, 7, 22, 1}</code>, <code>h(k) = k mod 7</code>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Insert</th>
+<th style="text-align: center;"><code>h(k)</code></th>
+<th>Probe sequence</th>
+<th style="text-align: center;">Final slot</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">3</td>
+<td>3</td>
+<td style="text-align: center;"><strong>3</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">6</td>
+<td>6</td>
+<td style="text-align: center;"><strong>6</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">1</td>
+<td>1</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">0</td>
+<td>0</td>
+<td style="text-align: center;"><strong>0</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">22</td>
+<td style="text-align: center;">1</td>
+<td>1 (occupied by 15), 2 (empty)</td>
+<td style="text-align: center;"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td>1 (15), 2 (22), 3 (10), 4 (empty)</td>
+<td style="text-align: center;"><strong>4</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table after all inserts:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Slot</th>
+<th style="text-align: center;">0</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">2</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">4</th>
+<th style="text-align: center;">5</th>
+<th style="text-align: center;">6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Key</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">22</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">20</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lookup 1:</strong> <code>h(1) = 1</code> → probe slots 1 (15), 2 (22), 3 (10), 4 (1) ✓ — <strong>4 probes</strong>.</p>
+<p><strong>The cluster formed at slots 1–4 is the "primary clustering" problem in action.</strong> With just 6 inserts, a lookup touches 4 slots. As the table fills, clusters merge and lookups degrade fast.</p>
+<h3 id="worked-example-66-quadratic-probing-trace">Worked example 6.6 — Quadratic probing trace<a class="headerlink" href="#worked-example-66-quadratic-probing-trace" title="Permanent link">&para;</a></h3>
+<p><strong>Setup:</strong> <code>m = 7</code>, insert keys <code>{10, 20, 15, 7, 22, 1}</code>, same hash function, quadratic probing: <code>h(k, i) = (h(k) + i²) mod 7</code>.</p>
+<p><strong>Probe sequences for the offending keys:</strong></p>
+<ul>
+<li>Key 22, <code>h = 1</code>: probes 1, 2 (=1+1), 5 (=1+4), 3 (=1+9), 4 (=1+16), 6 (=1+25), 0 (=1+36).</li>
+<li>Key 1, <code>h = 1</code>: probes 1, 2, 5, 3, 4, 6, 0 — <strong>same sequence</strong> (secondary clustering).</li>
+</ul>
+<p><strong>Trace:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Insert</th>
+<th style="text-align: center;"><code>h(k)</code></th>
+<th>Probe sequence</th>
+<th style="text-align: center;">Final slot</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">3</td>
+<td>3</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">6</td>
+<td>6</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">1</td>
+<td>1</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">0</td>
+<td>0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: center;">22</td>
+<td style="text-align: center;">1</td>
+<td>1 (15), 2 (empty)</td>
+<td style="text-align: center;"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td>1 (15), 2 (22), 5 (empty)</td>
+<td style="text-align: center;"><strong>5</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Notice the difference:</strong> key 1 lands at slot 5 (not 4) because the probe sequence for keys hashing to 1 is <code>1, 2, 5, 3, 4, 6, 0</code> — a <strong>different sequence than linear probing</strong>.</p>
+<p><strong>Advantage:</strong> key 1 skipped over slots 3 and 4 (which were occupied but far from <code>h=1</code>), reaching empty slot 5 in 3 probes. <strong>No primary clustering</strong> — the cluster at slot 1 didn't get any worse.</p>
+<p><strong>Disadvantage:</strong> secondary clustering remains — any new key with <code>h(k) = 1</code> will follow the same sequence.</p>
+<hr />
+<h2 id="65-load-factor-and-rehashing">6.5 Load factor and rehashing<a class="headerlink" href="#65-load-factor-and-rehashing" title="Permanent link">&para;</a></h2>
+<h3 id="651-load-factor">6.5.1 Load factor<a class="headerlink" href="#651-load-factor" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+\boxed{\;\alpha = \frac{n}{m}\;}
+\]</div>
+<p>where <code>n</code> = number of stored elements, <code>m</code> = table size.</p>
+<p><strong>Critical for both methods:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Max α before resize</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Separate chaining</td>
+<td>~0.75–1.0</td>
+</tr>
+<tr>
+<td>Linear probing</td>
+<td>~0.5</td>
+</tr>
+<tr>
+<td>Quadratic probing</td>
+<td>~0.5</td>
+</tr>
+<tr>
+<td>Double hashing</td>
+<td>~0.75</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Linear probing degrades faster</strong> — at α = 0.5, expected probe count is ~2.5; at α = 0.9, it's ~50. <strong>For open addressing, resize aggressively.</strong></p>
+<h3 id="652-expected-probe-counts-theoretical">6.5.2 Expected probe counts (theoretical)<a class="headerlink" href="#652-expected-probe-counts-theoretical" title="Permanent link">&para;</a></h3>
+<p>Under uniform hashing:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: center;">Expected probes (successful lookup)</th>
+<th style="text-align: center;">Expected probes (unsuccessful)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Separate chaining</td>
+<td style="text-align: center;">1 + α/2</td>
+<td style="text-align: center;">α</td>
+</tr>
+<tr>
+<td>Linear probing</td>
+<td style="text-align: center;">½ · (1 + 1/(1-α))</td>
+<td style="text-align: center;">½ · (1 + 1/(1-α)²)</td>
+</tr>
+<tr>
+<td>Quadratic probing / double hashing</td>
+<td style="text-align: center;">-ln(1-α) / α</td>
+<td style="text-align: center;">1/(1-α)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The takeaway:</strong> all methods are O(1) as long as <strong>α is bounded away from 1</strong>. For linear probing, α &lt; 0.5 keeps the average lookup under 3 probes.</p>
+<h3 id="653-rehashing">6.5.3 Rehashing<a class="headerlink" href="#653-rehashing" title="Permanent link">&para;</a></h3>
+<p>When α exceeds the threshold:</p>
+<ol>
+<li><strong>Allocate a new table</strong> of double the size.</li>
+<li><strong>Reinsert every element</strong> — recompute hash, insert fresh.</li>
+</ol>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">rehash</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">newCap</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">oldKeys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">keys</span><span class="p">;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="n">Object</span><span class="o">[]</span><span class="w"> </span><span class="n">oldValues</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">values</span><span class="p">;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="n">keys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">newCap</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[</span><span class="n">newCap</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="n">java</span><span class="p">.</span><span class="na">util</span><span class="p">.</span><span class="na">Arrays</span><span class="p">.</span><span class="na">fill</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="n">SlotState</span><span class="p">.</span><span class="na">EMPTY</span><span class="p">);</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="c1">// state array must be reallocated to newCap</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SlotState</span><span class="o">[</span><span class="n">newCap</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="n">java</span><span class="p">.</span><span class="na">util</span><span class="p">.</span><span class="na">Arrays</span><span class="p">.</span><span class="na">fill</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="n">SlotState</span><span class="p">.</span><span class="na">EMPTY</span><span class="p">);</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">oldKeys</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">oldStates</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SlotState</span><span class="p">.</span><span class="na">OCCUPIED</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">            </span><span class="n">put</span><span class="p">(</span><span class="n">oldKeys</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">oldValues</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">);</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost:</strong> O(n) — one full reinsertion pass.</p>
+<p><strong>Amortised cost:</strong> O(1) per operation — because the table doubles on each rehash, the total rehash cost over all operations is O(n), giving O(1) amortised per insertion (same doubling analysis as Chapter 2).</p>
+<p><strong>Prime table sizes.</strong> For the division-method hash, doubling a prime gives a non-prime — rehash to the <strong>next prime</strong> instead of exactly double. Many libraries ship a table of "next prime" values.</p>
+<hr />
+<h2 id="66-java-and-python-implementations">6.6 Java and Python implementations<a class="headerlink" href="#66-java-and-python-implementations" title="Permanent link">&para;</a></h2>
+<h3 id="661-javas-hashmap">6.6.1 Java's <code>HashMap</code><a class="headerlink" href="#661-javas-hashmap" title="Permanent link">&para;</a></h3>
+<p>Java's <code>HashMap</code> uses <strong>separate chaining</strong>, converting chains to red-black trees (Chapter 5) when a bucket exceeds 8 nodes. This hybrid gives O(log n) worst case rather than O(n) — a defence against adversarial inputs.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">"Alice"</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">);</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">map</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">"Alice"</span><span class="p">);</span><span class="w">           </span><span class="c1">// 25</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">map</span><span class="p">.</span><span class="na">containsKey</span><span class="p">(</span><span class="s">"Bob"</span><span class="p">);</span><span class="w">     </span><span class="c1">// false</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">map</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="s">"Alice"</span><span class="p">);</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">map</span><span class="p">.</span><span class="na">getOrDefault</span><span class="p">(</span><span class="s">"Charlie"</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w">  </span><span class="c1">// 0</span>
+</span></code></pre></div>
+<h3 id="662-pythons-dict">6.6.2 Python's <code>dict</code><a class="headerlink" href="#662-pythons-dict" title="Permanent link">&para;</a></h3>
+<p>Python's <code>dict</code> uses <strong>open addressing with a custom probing scheme</strong> and preserves <strong>insertion order</strong> (since Python 3.7). Average O(1) for <code>get</code>, <code>set</code>, <code>del</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">d</span><span class="p">[</span><span class="s2">"Alice"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">25</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"Alice"</span><span class="p">)</span>              <span class="c1"># 25</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="s2">"Bob"</span> <span class="ow">in</span> <span class="n">d</span>                  <span class="c1"># False</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="s2">"Alice"</span><span class="p">]</span>
+</span></code></pre></div>
+<p><strong>Python's <code>hash()</code></strong> — <code>hash(key)</code> — the built-in hash function is used by <code>dict</code> and <code>set</code>. Custom classes can define <code>__hash__</code> and <code>__eq__</code> for custom hashing.</p>
+<h3 id="663-what-to-use-in-production">6.6.3 What to use in production<a class="headerlink" href="#663-what-to-use-in-production" title="Permanent link">&para;</a></h3>
+<p><strong>Always use the language's built-in hash table</strong> unless you need custom behaviour (e.g., deterministic ordering, custom hash).</p>
+<ul>
+<li><strong>Java:</strong> <code>HashMap</code>, <code>LinkedHashMap</code> (preserves insertion order), <code>ConcurrentHashMap</code> (thread-safe).</li>
+<li><strong>Python:</strong> <code>dict</code>, <code>collections.OrderedDict</code> (equivalent to <code>dict</code> since 3.7), <code>collections.Counter</code>.</li>
+<li><strong>C++:</strong> <code>std::unordered_map</code>, <code>std::unordered_set</code>.</li>
+</ul>
+<p><strong>Rolling your own</strong> is educational (this chapter) but error-prone in production.</p>
+<hr />
+<h2 id="67-hash-tables-vs-balanced-bsts">6.7 Hash tables vs. balanced BSTs<a class="headerlink" href="#67-hash-tables-vs-balanced-bsts" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Hash table</th>
+<th>Balanced BST (AVL / RB)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Lookup</strong></td>
+<td>O(1) average, O(n) worst</td>
+<td><strong>O(log n) guaranteed</strong></td>
+</tr>
+<tr>
+<td><strong>Insert</strong></td>
+<td>O(1) average</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td><strong>Delete</strong></td>
+<td>O(1) average</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td><strong>Sorted iteration</strong></td>
+<td><strong>not supported</strong></td>
+<td><strong>O(n) — in-order</strong></td>
+</tr>
+<tr>
+<td><strong>Range query</strong></td>
+<td>not supported</td>
+<td>O(log n + k)</td>
+</tr>
+<tr>
+<td><strong>Predecessor / successor</strong></td>
+<td>not supported</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td><strong>Min / max</strong></td>
+<td>not supported</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td><strong>Worst-case bound</strong></td>
+<td>O(n) if all collide</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td><strong>Memory</strong></td>
+<td>moderate (array + chains)</td>
+<td>higher (pointers)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>How to choose:</strong></p>
+<ul>
+<li><strong>Need ordered operations (range, sorted iteration, min/max)</strong> → <strong>balanced BST</strong> (or <code>TreeMap</code> in Java, sorted containers).</li>
+<li><strong>Only need lookup/insert/delete</strong> → <strong>hash table</strong> (faster in practice).</li>
+<li><strong>Adversarial input</strong> → hash table with <strong>randomised hashing</strong> (universal hashing), or balanced BST for guaranteed bounds.</li>
+<li><strong>Small number of elements (&lt; 50)</strong> → array with linear search may be faster (avoid the constant overhead).</li>
+</ul>
+<hr />
+<h2 id="worked-example-67-when-does-hashing-beat-binary-search">Worked example 6.7 — When does hashing beat binary search?<a class="headerlink" href="#worked-example-67-when-does-hashing-beat-binary-search" title="Permanent link">&para;</a></h2>
+<p><strong>Setup:</strong> A dataset of <code>n = 1000</code> records, each identified by an integer key. Two approaches:</p>
+<p><strong>Approach 1 — Hash table.</strong> <code>m = 1500</code>, α ≈ 0.67. Average successful lookup ≈ <code>1 + α/2 ≈ 1.33</code> comparisons.</p>
+<p><strong>Approach 2 — Sorted array + binary search.</strong> <code>⌈log₂ 1000⌉ = 10</code> comparisons.</p>
+<p><strong>Hash table wins by ~8× on comparison count.</strong></p>
+<p><strong>But:</strong></p>
+<ul>
+<li><strong>Cache effects.</strong> A hash lookup touches a random slot → cache miss. Binary search touches 10 slots, all in the first few cache lines (since data is contiguous). <strong>On small n, binary search may be faster in wall-clock.</strong></li>
+<li><strong>Sorted array supports range queries.</strong> Hash table doesn't.</li>
+<li><strong>For sorted-insertion workloads</strong>, a hash table requires no sorting cost — but a sorted array does.</li>
+</ul>
+<p><strong>Rule:</strong> for <strong>pure equality lookups</strong> on large <code>n</code> (&gt; 10⁴), hash table wins. For <strong>ordered queries</strong> or <strong>small n</strong>, balanced BST or sorted array.</p>
+<h3 id="worked-example-68-two-sum-problem-with-a-hash-set">Worked example 6.8 — Two-sum problem with a hash set<a class="headerlink" href="#worked-example-68-two-sum-problem-with-a-hash-set" title="Permanent link">&para;</a></h3>
+<p><strong>Problem.</strong> Given an array and a target <code>T</code>, find two elements summing to <code>T</code>.</p>
+<p><strong>Brute force:</strong> O(n²).</p>
+<p><strong>Sorted array + two-pointer:</strong> O(n log n) sort + O(n) scan.</p>
+<p><strong>Hash set approach:</strong> O(n) expected.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kt">boolean</span><span class="w"> </span><span class="nf">hasTwoSum</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">seen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">seen</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="n">target</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">        </span><span class="n">seen</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Why O(n):</strong> each element <code>x</code> requires one hash lookup (O(1)) and one hash insert (O(1)). Total: 2n hash operations.</p>
+<p><strong>The hash table lets us check "have we seen <code>target - x</code>?" in O(1) instead of O(n).</strong> This is a classic example of trading space for time — the hash set uses O(n) extra space to avoid O(n) scans.</p>
+<p><strong>Compare with sorted-array approach:</strong> O(n log n) total, no extra space beyond sorting in place. <strong>Trade-off:</strong> hash set is faster (O(n) vs. O(n log n)) but uses O(n) memory.</p>
+<hr />
+<h2 id="chapter-summary">Chapter summary<a class="headerlink" href="#chapter-summary" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Hash tables</strong> map keys to array indices via a hash function — <strong>O(1) average-case</strong> insert, lookup, delete.</li>
+<li><strong>Good hash functions</strong> are deterministic, uniform, fast, and have avalanche behaviour.</li>
+<li>The <strong>division method</strong> <code>h(k) = k mod m</code> requires <code>m</code> prime and not a power of 2.</li>
+<li><strong>String hashing</strong> uses polynomial rolling hashes (Java uses <code>p = 31</code>).</li>
+<li><strong>Separate chaining</strong> stores collisions in linked lists; <strong>O(1 + α)</strong> average per operation.</li>
+<li><strong>Open addressing</strong> stores collisions in the same array, probing alternatives — <strong>no pointer overhead</strong> but needs careful deletion (tombstones).</li>
+<li><strong>Linear probing</strong> suffers <strong>primary clustering</strong>; <strong>quadratic probing</strong> reduces it; <strong>double hashing</strong> eliminates it.</li>
+<li><strong>Tombstones</strong> (<code>DELETED</code> markers) enable deletion in open addressing — lookup stops only on EMPTY.</li>
+<li>Keep the <strong>load factor below 0.5–0.75</strong>; rehash (double size, reinsert) when it exceeds this.</li>
+<li><strong>Hash tables excel at lookup by key</strong> but cannot answer ordered queries — <strong>balanced BSTs (AVL) are the choice for ordered operations</strong>.</li>
+</ol>
+<hr />
+<h2 id="quiz">Quiz<a class="headerlink" href="#quiz" title="Permanent link">&para;</a></h2>
+<h3 id="a-multiple-choice">A. Multiple choice<a class="headerlink" href="#a-multiple-choice" title="Permanent link">&para;</a></h3>
+<ol>
+<li>A hash table's average-case lookup time is:</li>
+</ol>
+<p>(a) O(1) (b) O(log n) (c) O(n) (d) O(n log n)</p>
+<ol>
+<li>Its worst-case lookup is:</li>
+</ol>
+<p>(a) O(1) (b) O(log n) (c) O(n) (d) O(n²)</p>
+<ol>
+<li>For <code>h(k) = k mod m</code>, <code>m</code> should be:</li>
+</ol>
+<p>(a) a power of 2 (b) <strong>prime</strong> (c) even (d) equal to <code>n</code></p>
+<ol>
+<li>Separate chaining resolves collisions using:</li>
+</ol>
+<p>(a) open addresses (b) <strong>linked lists at each bucket</strong> (c) probing (d) rehashing</p>
+<ol>
+<li>Linear probing is affected by:</li>
+</ol>
+<p>(a) <strong>primary clustering</strong> (b) secondary clustering (c) tombstones (d) adversarial input</p>
+<ol>
+<li>Double hashing eliminates:</li>
+</ol>
+<p>(a) primary only (b) secondary only (c) <strong>both primary and secondary clustering</strong> (d) nothing</p>
+<ol>
+<li>Deletion in open addressing uses:</li>
+</ol>
+<p>(a) null values (b) <strong>tombstones</strong> (c) linked lists (d) rescaling</p>
+<ol>
+<li>Load factor α should be kept below roughly:</li>
+</ol>
+<p>(a) 0.1 (b) <strong>0.5–0.75</strong> (c) 1.5 (d) 3</p>
+<ol>
+<li>Rehashing during insertion has what amortised cost per operation?</li>
+</ol>
+<p>(a) O(1) (b) O(log n) (c) O(n) (d) O(n log n)</p>
+<ol>
+<li>
+<p>Which cannot be done efficiently on a hash table?</p>
+<p>(a) insert (b) lookup (c) <strong>range query</strong> (d) delete</p>
+</li>
+<li>
+<p>Which defense prevents an adversary from crafting all-colliding inputs?</p>
+<p>(a) red-black tree at each bucket (b) <strong>randomised hashing</strong> (c) larger <code>m</code>
+(d) fewer elements</p>
+</li>
+<li>
+<p>Java's <code>HashMap</code> converts long chains to:</p>
+<p>(a) arrays (b) stacks (c) <strong>red-black trees</strong> (d) graphs</p>
+</li>
+</ol>
+<h3 id="b-fill-in-the-blank">B. Fill in the blank<a class="headerlink" href="#b-fill-in-the-blank" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>A hash function maps keys to indices in the range <strong>[0, _____</strong> - 1].</p>
+</li>
+<li>
+<p>Two keys hashing to the same index produce a <strong>_____</strong>.</p>
+</li>
+<li>
+<p>The division method computes `h(k) = k mod _____**.</p>
+</li>
+<li>
+<p>For the division method, <code>m</code> should be a <strong>_____</strong>.</p>
+</li>
+<li>
+<p>Java's <code>String.hashCode()</code> uses polynomial hashing with `p = _____**.</p>
+</li>
+<li>
+<p>In <strong>separate chaining</strong>, each bucket holds a <strong>_____</strong>.</p>
+</li>
+<li>
+<p>In <strong>open addressing</strong>, collisions are stored in the same <strong>_____</strong>.</p>
+</li>
+<li>
+<p><strong>Linear probing</strong> suffers from <strong>_____</strong> clustering.</p>
+</li>
+<li>
+<p><strong>Double hashing</strong> uses a second hash function to determine the <strong>_____</strong> between probes.</p>
+</li>
+<li>
+<p>Deleted slots in open addressing are marked with a <strong>_____</strong>.</p>
+</li>
+</ol>
+<h3 id="c-define-explain">C. Define / explain<a class="headerlink" href="#c-define-explain" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Explain the <strong>hash table idea</strong>. Why can we achieve O(1) lookup in the average case?</p>
+</li>
+<li>
+<p>State the properties of a <strong>good hash function</strong>. Why is prime <code>m</code> important for the division method?</p>
+</li>
+<li>
+<p>Describe <strong>separate chaining</strong> and its cost analysis in terms of load factor <code>α</code>.</p>
+</li>
+<li>
+<p>Describe <strong>open addressing</strong>. What is the <strong>critical difference</strong> from chaining in terms of memory and cache?</p>
+</li>
+<li>
+<p>Compare <strong>linear probing, quadratic probing, and double hashing</strong>. Which clustering problem does each have or solve?</p>
+</li>
+<li>
+<p>Explain the <strong>tombstone problem</strong> in open addressing. Why can't we simply set deleted slots to EMPTY?</p>
+</li>
+<li>
+<p>What is <strong>universal hashing</strong>? Give the definition of a universal family and explain why it defends against adversarial input.</p>
+</li>
+<li>
+<p>When should you use a <strong>hash table</strong> vs. a <strong>balanced BST</strong>? Give three criteria.</p>
+</li>
+<li>
+<p>Describe the <strong>polynomial rolling hash</strong> for strings. Why <code>p = 31</code>?</p>
+</li>
+<li>
+<p>Explain how a hash <strong>set</strong> can solve the <strong>two-sum problem</strong> in O(n). What is the space cost?</p>
+</li>
+</ol>
+<hr />
+<h2 id="answer-key">Answer key<a class="headerlink" href="#answer-key" title="Permanent link">&para;</a></h2>
+<details class="success">
+<summary>A. Multiple choice</summary>
+<ol>
+<li><strong>(a)</strong> O(1) average.</li>
+<li><strong>(c)</strong> O(n) worst case.</li>
+<li><strong>(b)</strong> prime.</li>
+<li><strong>(b)</strong> linked lists at each bucket.</li>
+<li><strong>(a)</strong> primary clustering.</li>
+<li><strong>(c)</strong> both primary and secondary.</li>
+<li><strong>(b)</strong> tombstones.</li>
+<li><strong>(b)</strong> 0.5–0.75.</li>
+<li><strong>(a)</strong> O(1) amortised.</li>
+<li><strong>(c)</strong> range query.</li>
+<li><strong>(b)</strong> randomised hashing.</li>
+<li><strong>(c)</strong> red-black trees.</li>
+</ol>
+</details>
+<details class="success">
+<summary>B. Fill in the blank</summary>
+<ol>
+<li><span class="arithmatex">\(m\)</span></li>
+<li>collision</li>
+<li><span class="arithmatex">\(m\)</span></li>
+<li>prime</li>
+<li>31</li>
+<li>linked list</li>
+<li>array</li>
+<li>primary</li>
+<li>step (or interval)</li>
+<li>tombstone</li>
+</ol>
+</details>
+<details class="success">
+<summary>C. Define / explain — model answers</summary>
+<ol>
+<li><em>Hash table idea:</em> a hash function <code>h(k)</code> maps each key to an array index; storing and retrieving is then a constant-time array access at that index. <em>Why O(1) average:</em> under uniform hashing, each lookup lands on a bucket with expected load α = n/m. If α is bounded (e.g., 0.75), the expected number of comparisons is ~1 + α/2 — a <strong>constant</strong>. So average case is O(1). Worst case is O(n) if all keys collide, but with good hash + bounded α this is astronomically unlikely.</li>
+<li><em>Properties:</em> deterministic, uniform over <code>[0, m-1]</code>, fast to compute (O(1) with small constant), avalanche (small input change → large output change). <em>Why prime <code>m</code>:</em> if <code>m</code> has nontrivial factors, keys that share those factors all hash to multiples of those factors, creating systematic collisions. Example: <code>m = 10</code>, keys <code>{10, 20, 30}</code> — all multiples of 10 — all land at index 0. Prime <code>m</code> has no nontrivial factors, so no such pattern arises.</li>
+<li><em>Separate chaining:</em> each table slot is a linked list. On collision, append (or prepend) to the list. Cost: <code>O(1 + α)</code> where α = n/m is the load factor. Under uniform hashing, expected chain length = α; expected comparisons per lookup ≈ 1 + α/2. Keep α ≤ 0.75 → constant cost per operation. Resize (double) when α exceeds threshold.</li>
+<li><em>Open addressing:</em> all keys stored <strong>directly in the array</strong>; on collision, probe a deterministic sequence of alternative indices. <em>Memory/cache:</em> no per-element pointers → half the memory of chaining. Excellent cache locality because the whole table is contiguous. <em>Trade-off:</em> deletion requires tombstones; performance degrades faster as α grows (linear probing at α = 0.9 is 50 probes per lookup).</li>
+<li><em>Linear probing:</em> <code>h(k, i) = (h(k) + i) mod m</code> — simplest, but suffers <strong>primary clustering</strong> (runs of occupied slots grow). <em>Quadratic probing:</em> <code>h(k, i) = (h(k) + c₁i + c₂i²) mod m</code> — breaks primary clustering, but suffers <strong>secondary clustering</strong> (same initial hash → same probe sequence). <em>Double hashing:</em> <code>h(k, i) = (h₁(k) + i·h₂(k)) mod m</code> — no clustering at all, since different keys with the same <code>h₁</code> have different probe sequences (determined by <code>h₂</code>). Best performance, but requires <strong>two hash computations</strong> per probe.</li>
+<li><em>Tombstone problem:</em> suppose keys <code>{10, 27, 8}</code> all hash to slot 3. Using linear probing: slot 3 = 10, slot 4 = 27, slot 5 = 8. Now delete slot 4 (27). If we set slot 4 = EMPTY, a lookup for 8 will probe slot 3 (10, no), then slot 4 (EMPTY → stop) → <strong>returns "not found"</strong>, even though 8 is at slot 5. <em>Solution:</em> set slot 4 = DELETED (tombstone). Lookup continues past DELETED slots; insertion can reuse them. <em>Consequence:</em> long tombstone chains degrade performance — periodically rehash to sweep them.</li>
+<li><em>Universal hashing:</em> a family <code>H</code> of hash functions such that for any two distinct keys <code>k₁ ≠ k₂</code>, the probability (over random choice of <code>h ∈ H</code>) that <code>h(k₁) = h(k₂)</code> is at most <code>1/m</code>. <em>Definition family:</em> <code>h_{a,b}(k) = ((a·k + b) mod p) mod m</code> for <code>p</code> prime, <code>a, b</code> chosen uniformly at random (with <code>a ≠ 0</code>). <em>Defends against adversarial input:</em> the adversary doesn't know which hash function is active, so they cannot craft all-colliding inputs. Even if they send keys with a predicted pattern, the random choice of <code>a, b</code> means the expected number of collisions is bounded by α. This is the standard defence against HashDoS attacks.</li>
+<li><em>Hash vs. balanced BST:</em> (i) <strong>Ordered operations</strong> (range, min/max, predecessor) → BST (hash tables can't answer these efficiently). (ii) <strong>Worst-case guarantee</strong> — BST gives O(log n) worst case, hash table O(n) worst case → BST for adversarial input (or hash with universal hashing). (iii) <strong>Insertion-order preservation</strong> (e.g., LRU tracking) → BST with a custom key, or a separate linked list. For <strong>pure unordered lookup</strong> on large datasets, hash table wins in average practice.</li>
+<li><em>Polynomial rolling hash:</em> <code>h(s) = (Σ s[i] · p^i) mod m</code>. Each character is weighted by a power of <code>p</code>. <em>Why <code>p = 31</code>:</em> (i) small enough that arithmetic stays in machine integers; (ii) prime, so no divisor-related pattern in the output; (iii) for English text, gives good distribution — adjacent strings (differing in one character) produce very different hashes. <code>p = 131</code> is also common (better for long strings). Java's <code>String.hashCode()</code> uses 31.</li>
+<li><em>Two-sum with a hash set:</em> iterate through the array once. For each element <code>x</code>, check if <code>(target − x)</code> is already in the set (O(1)); if yes, return true; otherwise insert <code>x</code> into the set. Total: 2n hash operations = <strong>O(n)</strong> time. <em>Space:</em> O(n) for the set. <em>Trade-off:</em> beats the sorted-array approach's O(n log n) time but uses O(n) extra memory.</li>
+</ol>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>CLRS</strong>, Chapter 11 (Hash Tables) — the definitive treatment; universal hashing in detail.</li>
+<li><strong>Weiss</strong>, Chapter 5 (Hashing).</li>
+<li><strong>Lafore</strong>, Chapter 11 (Hash Tables).</li>
+<li><strong>Sedgewick &amp; Wayne</strong>, Chapter 3.4 (Hash Tables).</li>
+<li><strong>Open Data Structures</strong>, Chapter 5 (Hash Tables) — with rigorous analysis of open addressing.</li>
+<li><strong>Knuth</strong>, <em>The Art of Computer Programming</em>, Volume 3 (Sorting and Searching) — Section 6.4 (Hashing) — the classic.</li>
+<li><strong>Joel Spolsky</strong>, "The Law of Leaky Abstractions" — <a href="https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/">joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/</a> — relevant for understanding why hash tables fail in adversarial settings.</li>
+<li><strong>"HashDoS"</strong>: <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4461">cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4461</a> — the class of attacks that motivated universal hashing in production.</li>
+</ul>
+<hr />
+<h2 id="suggested-tutorial-problems">Suggested tutorial problems<a class="headerlink" href="#suggested-tutorial-problems" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>Division method, <code>m</code> choice.</strong> Insert <code>{3, 6, 9, 12, 15}</code> into tables of size 4, 5, and 7 with <code>h(k) = k mod m</code>. Count the number of collisions in each. Which <code>m</code> is best? Why?</p>
+</li>
+<li>
+<p><strong>Multiplication method.</strong> Compute <code>h(k) = ⌊m · (k · 0.618 mod 1)⌋</code> for <code>m = 16</code> and keys <code>1, 2, 3, 4, 5</code>. Plot the distribution of 100 random keys.</p>
+</li>
+<li>
+<p><strong>String hash.</strong> Compute polynomial hash of <code>"dog"</code> with <code>p = 31</code> and <code>m = 101</code>. Then <code>"god"</code> — do they differ?</p>
+</li>
+<li>
+<p><strong>Chaining trace.</strong> With <code>m = 5</code>, insert keys <code>{12, 17, 22, 27, 32, 37}</code> using <code>h(k) = k mod 5</code>. Draw the chained table. What is the maximum chain length?</p>
+</li>
+<li>
+<p><strong>Linear probing trace.</strong> Same keys, same hash, using linear probing with <code>m = 7</code>. Show the table after each insert. What is the maximum probe count?</p>
+</li>
+<li>
+<p><strong>Quadratic probing trace.</strong> Same as problem 5 but with quadratic probing. Show the table.</p>
+</li>
+<li>
+<p><strong>Double hashing.</strong> For <code>m = 11</code>, <code>h₁(k) = k mod 11</code>, <code>h₂(k) = 1 + (k mod 10)</code>, insert keys <code>{22, 33, 44, 55, 66}</code>. Show each key's probe sequence.</p>
+</li>
+<li>
+<p><strong>Tombstone trace.</strong> Insert keys <code>{10, 20, 30}</code> into <code>m = 5</code> table with linear probing. Delete 20. Now look up 30 — how many probes? Now delete 10 and look up 30 — how many probes?</p>
+</li>
+<li>
+<p><strong>Load factor.</strong> At α = 0.5 with linear probing, how many probes on average for successful and unsuccessful lookups?</p>
+</li>
+<li>
+<p><strong>Amortised rehashing.</strong> Insert 1000 elements into a hash table starting with size 2, doubling whenever α &gt; 0.75. Compute the total number of rehash steps and the amortised cost per insert.</p>
+</li>
+<li>
+<p><strong>Universal hashing.</strong> Let <code>p = 1009</code>, <code>m = 20</code>. Choose <code>a = 17</code>, <code>b = 43</code>. Compute <code>h(50)</code>, <code>h(150)</code>, <code>h(250)</code>. Are these keys likely to collide under this hash? What about under <code>h(k) = k mod 20</code>?</p>
+</li>
+<li>
+<p><strong>Two-sum.</strong> Given <code>[3, 5, 2, 7, 11, 15]</code> and target <code>9</code>, use a hash set to find a pair. Trace each step.</p>
+</li>
+<li>
+<p><strong>Longest substring without repeating characters.</strong> Given a string, find the longest substring without repeating characters. Use a sliding window with a hash map (char → last index). O(n) time, O(min(n, alphabet_size)) space.</p>
+</li>
+<li>
+<p><strong>Group anagrams.</strong> Given a list of strings, group anagrams together. Use a hash map from sorted-string → list of anagrams.</p>
+</li>
+<li>
+<p><strong>Subarray sum equals K.</strong> Given an array of integers and <code>K</code>, count the number of contiguous subarrays summing to <code>K</code>. Use a hash map of prefix sums.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2252 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BSc Electrical Engineering (Computer) · Semester VII · Module Data Storage and Analysis">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+        <link rel="canonical" href="https://tesfamichael-g.github.io/ECEG-4192-Data-Structures/solutions/04-stacks-queues/">
+      
+      
+        <link rel="prev" href="../03-linked-lists/">
+      
+      
+        <link rel="next" href="../05-trees/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>Chapter 4 - ECEG-4192 — Data Structures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#solutions-to-chapter-4-stacks-queues" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-header__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECEG-4192 — Data Structures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 4
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../syllabus.md" class="md-tabs__link">
+        
+  
+    
+  
+  Syllabus
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../schedule.md" class="md-tabs__link">
+        
+  
+    
+  
+  Schedule
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapters/01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../slides/index.md" class="md-tabs__link">
+          
+  
+    
+  
+  Slides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+    
+  
+  Solutions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-nav__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    ECEG-4192 — Data Structures
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../syllabus.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syllabus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schedule
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction & Analysis of Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Linked Lists
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Stacks and Queues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Trees
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Hash Tables
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Graphs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. Sorting Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Slides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/index.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Solutions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Chapter 4
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-stack-trace-push-123-pop-2-push-45-pop-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Stack trace — push 1,2,3; pop ×2; push 4,5; pop ×1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-postfix-evaluation-4-5-6-2-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Postfix evaluation — "4 5 + 6 2 - * 3 +"
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-balanced-parentheses" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Balanced parentheses
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-infix-postfix-for-a-b-c-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Infix → postfix for "(A + B) * (C - D)"
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-circular-queue-trace-capacity-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Circular queue trace — capacity 4
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-two-stack-infix-10-20-30-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Two-stack infix — "10 + 20 * (30 - 15)"
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-undoredo" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Undo/redo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-palindrome-with-deque-racecar" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Palindrome with deque — "racecar"
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-sliding-window-maximum-13-1-35367-k3" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Sliding window maximum — [1,3,-1,-3,5,3,6,7], k=3
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-recursion-depth-count-down-from-n" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Recursion depth — count-down from n
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-round-robin-scheduler" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Round-robin scheduler
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-array-stack-vs-linked-list-stack-for-106-push-106-pop" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Array stack vs. linked-list stack for 10⁶ push + 10⁶ pop
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-bfs-on-a-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. BFS on a tree
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-queue-from-two-stacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      14. Queue from two stacks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-wildcard-valid-parentheses" class="md-nav__link">
+    <span class="md-ellipsis">
+      15. Wildcard valid parentheses
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-stack-trace-push-123-pop-2-push-45-pop-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Stack trace — push 1,2,3; pop ×2; push 4,5; pop ×1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-postfix-evaluation-4-5-6-2-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Postfix evaluation — "4 5 + 6 2 - * 3 +"
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-balanced-parentheses" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Balanced parentheses
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-infix-postfix-for-a-b-c-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Infix → postfix for "(A + B) * (C - D)"
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-circular-queue-trace-capacity-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Circular queue trace — capacity 4
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-two-stack-infix-10-20-30-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Two-stack infix — "10 + 20 * (30 - 15)"
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-undoredo" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Undo/redo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-palindrome-with-deque-racecar" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Palindrome with deque — "racecar"
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-sliding-window-maximum-13-1-35367-k3" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Sliding window maximum — [1,3,-1,-3,5,3,6,7], k=3
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-recursion-depth-count-down-from-n" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Recursion depth — count-down from n
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-round-robin-scheduler" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Round-robin scheduler
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-array-stack-vs-linked-list-stack-for-106-push-106-pop" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Array stack vs. linked-list stack for 10⁶ push + 10⁶ pop
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-bfs-on-a-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. BFS on a tree
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-queue-from-two-stacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      14. Queue from two stacks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-wildcard-valid-parentheses" class="md-nav__link">
+    <span class="md-ellipsis">
+      15. Wildcard valid parentheses
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="solutions-to-chapter-4-stacks-queues">Solutions to Chapter 4 — Stacks &amp; Queues<a class="headerlink" href="#solutions-to-chapter-4-stacks-queues" title="Permanent link">&para;</a></h1>
+<p><a href="../../chapters/04-stacks-queues/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.78 19.03a.75.75 0 0 1-1.06 0l-6.25-6.25a.75.75 0 0 1 0-1.06l6.25-6.25a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L5.81 11.5h14.44a.75.75 0 0 1 0 1.5H5.81l4.97 4.97a.75.75 0 0 1 0 1.06Z"/></svg></span> Back to Chapter 4</a></p>
+<hr />
+<h2 id="1-stack-trace-push-123-pop-2-push-45-pop-1">1. Stack trace — push 1,2,3; pop ×2; push 4,5; pop ×1<a class="headerlink" href="#1-stack-trace-push-123-pop-2-push-45-pop-1" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Stack (top on right)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>push 1</td>
+<td>[1]</td>
+</tr>
+<tr>
+<td>push 2</td>
+<td>[1, 2]</td>
+</tr>
+<tr>
+<td>push 3</td>
+<td>[1, 2, 3]</td>
+</tr>
+<tr>
+<td>pop → 3</td>
+<td>[1, 2]</td>
+</tr>
+<tr>
+<td>pop → 2</td>
+<td>[1]</td>
+</tr>
+<tr>
+<td>push 4</td>
+<td>[1, 4]</td>
+</tr>
+<tr>
+<td>push 5</td>
+<td>[1, 4, 5]</td>
+</tr>
+<tr>
+<td>pop → 5</td>
+<td>[1, 4]</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Final top = 4.</strong></p>
+<hr />
+<h2 id="2-postfix-evaluation-4-5-6-2-3">2. Postfix evaluation — <code>"4 5 + 6 2 - * 3 +"</code><a class="headerlink" href="#2-postfix-evaluation-4-5-6-2-3" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Token</th>
+<th>Action</th>
+<th>Stack</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">4</td>
+<td>push</td>
+<td>[4]</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>push</td>
+<td>[4, 5]</td>
+</tr>
+<tr>
+<td style="text-align: center;">+</td>
+<td>pop 5, 4; push 9</td>
+<td>[9]</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td>push</td>
+<td>[9, 6]</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>push</td>
+<td>[9, 6, 2]</td>
+</tr>
+<tr>
+<td style="text-align: center;">−</td>
+<td>pop 2, 6; push 4</td>
+<td>[9, 4]</td>
+</tr>
+<tr>
+<td style="text-align: center;">*</td>
+<td>pop 4, 9; push 36</td>
+<td>[36]</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>push</td>
+<td>[36, 3]</td>
+</tr>
+<tr>
+<td style="text-align: center;">+</td>
+<td>pop 3, 36; push 39</td>
+<td>[39]</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Result: 39</strong> ✓</p>
+<p>Check: <code>(4+5) × (6−2) + 3 = 9 × 4 + 3 = 39</code>. ✓</p>
+<hr />
+<h2 id="3-balanced-parentheses">3. Balanced parentheses<a class="headerlink" href="#3-balanced-parentheses" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th style="text-align: center;">Balanced?</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>"(()"</code></td>
+<td style="text-align: center;">✗</td>
+<td>Stack not empty at end (2 opens, 1 close)</td>
+</tr>
+<tr>
+<td><code>"()[]{}"</code></td>
+<td style="text-align: center;">✓</td>
+<td>All matched</td>
+</tr>
+<tr>
+<td><code>"([{}])"</code></td>
+<td style="text-align: center;">✓</td>
+<td>Nested correctly</td>
+</tr>
+<tr>
+<td><code>"([)]"</code></td>
+<td style="text-align: center;">✗</td>
+<td>Mismatch: <code>)</code> pops <code>[</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-infix-postfix-for-a-b-c-d">4. Infix → postfix for <code>"(A + B) * (C - D)"</code><a class="headerlink" href="#4-infix-postfix-for-a-b-c-d" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Token</th>
+<th>Output</th>
+<th>Operator stack</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>(</code></td>
+<td>—</td>
+<td><code>(</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>A</code></td>
+<td>A</td>
+<td><code>(</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>+</code></td>
+<td>A</td>
+<td><code>( +</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>B</code></td>
+<td>A B</td>
+<td><code>( +</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>)</code></td>
+<td>A B +</td>
+<td>— (pop <code>+</code>, then <code>(</code>)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>*</code></td>
+<td>A B +</td>
+<td><code>*</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>(</code></td>
+<td>A B +</td>
+<td><code>* (</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>C</code></td>
+<td>A B + C</td>
+<td><code>* (</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>-</code></td>
+<td>A B + C</td>
+<td><code>* ( -</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>D</code></td>
+<td>A B + C D</td>
+<td><code>* ( -</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>)</code></td>
+<td>A B + C D -</td>
+<td><code>*</code> (pop <code>-</code>, <code>(</code>)</td>
+</tr>
+<tr>
+<td style="text-align: center;">end</td>
+<td>A B + C D - *</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Postfix: <code>A B + C D - *</code></strong> ✓</p>
+<hr />
+<h2 id="5-circular-queue-trace-capacity-4">5. Circular queue trace — capacity 4<a class="headerlink" href="#5-circular-queue-trace-capacity-4" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Operation</th>
+<th>data [0..3]</th>
+<th style="text-align: center;">front</th>
+<th style="text-align: center;">size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">enqueue 1</td>
+<td>[1,<em>,</em>,_]</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">enqueue 2</td>
+<td>[1,2,<em>,</em>]</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">enqueue 3</td>
+<td>[1,2,3,_]</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: center;">dequeue → 1</td>
+<td>[<em>,2,3,</em>]</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">enqueue 4</td>
+<td>[_,2,3,4]</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: center;">enqueue 5</td>
+<td>[5,2,3,4] (wrap!)</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td style="text-align: center;">dequeue → 2</td>
+<td>[5,_,3,4]</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: center;">enqueue 6</td>
+<td>[5,6,3,4] (wrap!)</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">4</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Wrap points:</strong> enqueue 5 wraps to index 0; enqueue 6 wraps to index 1.</p>
+<hr />
+<h2 id="6-two-stack-infix-10-20-30-15">6. Two-stack infix — <code>"10 + 20 * (30 - 15)"</code><a class="headerlink" href="#6-two-stack-infix-10-20-30-15" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Token</th>
+<th>Num stack</th>
+<th>Op stack</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">10</td>
+<td>[10]</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">+</td>
+<td>[10]</td>
+<td><code>+</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">20</td>
+<td>[10, 20]</td>
+<td><code>+</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">*</td>
+<td>[10, 20]</td>
+<td><code>+ *</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">(</td>
+<td>[10, 20]</td>
+<td><code>+ * (</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">30</td>
+<td>[10, 20, 30]</td>
+<td><code>+ * (</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">−</td>
+<td>[10, 20, 30]</td>
+<td><code>+ * ( −</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td>[10, 20, 30, 15]</td>
+<td><code>+ * ( −</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">)</td>
+<td>[10, 20, 15]</td>
+<td><code>+ *</code> (apply −, pop <code>(</code>)</td>
+</tr>
+<tr>
+<td style="text-align: center;">end: apply *</td>
+<td>[10, 300]</td>
+<td><code>+</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">end: apply +</td>
+<td>[310]</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Result: 310</strong> ✓</p>
+<p>Check: <code>10 + 20 × (30 − 15) = 10 + 20 × 15 = 310</code>. ✓</p>
+<hr />
+<h2 id="7-undoredo">7. Undo/redo<a class="headerlink" href="#7-undoredo" title="Permanent link">&para;</a></h2>
+<p>Start: text = "", undoStack = [], redoStack = [].</p>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>text</th>
+<th style="text-align: center;">undoStack</th>
+<th style="text-align: center;">redoStack</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type "abc"</td>
+<td>"abc"</td>
+<td style="text-align: center;">[""]</td>
+<td style="text-align: center;">[]</td>
+</tr>
+<tr>
+<td>undo</td>
+<td>""</td>
+<td style="text-align: center;">[]</td>
+<td style="text-align: center;">["abc"]</td>
+</tr>
+<tr>
+<td>undo</td>
+<td>"" (no-op)</td>
+<td style="text-align: center;">[]</td>
+<td style="text-align: center;">["abc"]</td>
+</tr>
+<tr>
+<td>redo</td>
+<td>"abc"</td>
+<td style="text-align: center;">[""]</td>
+<td style="text-align: center;">[]</td>
+</tr>
+<tr>
+<td>type "d"</td>
+<td>"abcd"</td>
+<td style="text-align: center;">["", "abc"]</td>
+<td style="text-align: center;">[] (cleared)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-palindrome-with-deque-racecar">8. Palindrome with deque — <code>"racecar"</code><a class="headerlink" href="#8-palindrome-with-deque-racecar" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Remove first <code>'r'</code>, last <code>'r'</code> → equal. Remaining: <code>"aceca"</code>.</li>
+<li>Remove <code>'a'</code>, <code>'a'</code> → equal. <code>"cec"</code>.</li>
+<li>Remove <code>'c'</code>, <code>'c'</code> → equal. <code>"e"</code>.</li>
+<li>Single element → done.</li>
+</ul>
+<p><strong>Palindrome</strong> ✓. <strong>O(n) time, O(n) space</strong> (deque holds up to n).</p>
+<hr />
+<h2 id="9-sliding-window-maximum-13-1-35367-k3">9. Sliding window maximum — <code>[1,3,-1,-3,5,3,6,7]</code>, k=3<a class="headerlink" href="#9-sliding-window-maximum-13-1-35367-k3" title="Permanent link">&para;</a></h2>
+<p>Monotonic deque (decreasing order):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Window</th>
+<th>Deque (indices)</th>
+<th style="text-align: center;">Max</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[1,3,-1]</td>
+<td>[3, -1] (indices 1, 2)</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: center;">[3,-1,-3]</td>
+<td>[3, -1, -3] (1,2,3)</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: center;">[-1,-3,5]</td>
+<td>[5] (index 4)</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td style="text-align: center;">[-3,5,3]</td>
+<td>[5, 3] (4,5)</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td style="text-align: center;">[5,3,6]</td>
+<td>[6] (index 6)</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: center;">[3,6,7]</td>
+<td>[7] (index 7)</td>
+<td style="text-align: center;">7</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Output: [3, 3, 5, 5, 6, 7]</strong> ✓</p>
+<hr />
+<h2 id="10-recursion-depth-count-down-from-n">10. Recursion depth — count-down from n<a class="headerlink" href="#10-recursion-depth-count-down-from-n" title="Permanent link">&para;</a></h2>
+<p>At <code>n = 100,000</code>: <strong>crashes</strong> with <code>StackOverflowError</code> — call stack has a fixed size (~1 MB); each frame is ~100 bytes; 10⁵ frames × 100 bytes = 10 MB &gt; 1 MB.</p>
+<p><strong>Iterative rewrite:</strong></p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">countDown</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"> </span><span class="n">n</span><span class="o">--</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Memory:</strong> O(1) — a single loop. <strong>Speed:</strong> microseconds vs. crash.</p>
+<hr />
+<h2 id="11-round-robin-scheduler">11. Round-robin scheduler<a class="headerlink" href="#11-round-robin-scheduler" title="Permanent link">&para;</a></h2>
+<p>Processes P1 (5ms), P2 (3ms), P3 (8ms). Quantum 2ms.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Turn</th>
+<th>Process</th>
+<th>Remaining</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>P1 (2ms)</td>
+<td>P1=3</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>P2 (2ms)</td>
+<td>P2=1</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>P3 (2ms)</td>
+<td>P3=6</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>P1 (2ms)</td>
+<td>P1=1</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>P2 (1ms → done)</td>
+<td>P2=0</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td>P3 (2ms)</td>
+<td>P3=4</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td>P1 (1ms → done)</td>
+<td>P1=0</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td>P3 (2ms)</td>
+<td>P3=2</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td>P3 (2ms → done)</td>
+<td>P3=0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Completion order:</strong> P2, P1, P3.</p>
+<hr />
+<h2 id="12-array-stack-vs-linked-list-stack-for-106-push-106-pop">12. Array stack vs. linked-list stack for 10⁶ push + 10⁶ pop<a class="headerlink" href="#12-array-stack-vs-linked-list-stack-for-106-push-106-pop" title="Permanent link">&para;</a></h2>
+<p><strong>Array stack</strong> preferred — amortised O(1), excellent cache locality (all <code>push</code>es touch the same cache line region), ~2-3 ns per operation.</p>
+<p><strong>Linked-list stack</strong> — O(1) worst case but each push is a heap allocation (~20-30 ns), each pop deallocates. Cache misses per operation.</p>
+<p><strong>Winner: array stack</strong> for typical workloads.</p>
+<hr />
+<h2 id="13-bfs-on-a-tree">13. BFS on a tree<a class="headerlink" href="#13-bfs-on-a-tree" title="Permanent link">&para;</a></h2>
+<p>Root=1, children 2,3; grandchildren 4,5 (from 2), 6,7 (from 3).</p>
+<p><strong>BFS order:</strong> 1, 2, 3, 4, 5, 6, 7 — <strong>level by level</strong>. ✓</p>
+<hr />
+<h2 id="14-queue-from-two-stacks">14. Queue from two stacks<a class="headerlink" href="#14-queue-from-two-stacks" title="Permanent link">&para;</a></h2>
+<p>Two stacks: <code>in_stack</code> (enqueue target) and <code>out_stack</code> (dequeue target).</p>
+<ul>
+<li><strong>enqueue(x):</strong> push onto <code>in_stack</code>. O(1).</li>
+<li><strong>dequeue():</strong> if <code>out_stack</code> is empty, pop all from <code>in_stack</code> and push onto <code>out_stack</code>; then pop from <code>out_stack</code>.</li>
+</ul>
+<p><strong>Amortised cost:</strong> each element is pushed to <code>in_stack</code> once, transferred to <code>out_stack</code> once, popped from <code>out_stack</code> once. Total 3 pushes/pops per element = <strong>O(1) amortised</strong>.</p>
+<hr />
+<h2 id="15-wildcard-valid-parentheses">15. Wildcard valid parentheses<a class="headerlink" href="#15-wildcard-valid-parentheses" title="Permanent link">&para;</a></h2>
+<p><code>(</code> <code>)</code> <code>*</code> (wildcard = <code>(</code>, <code>)</code>, or empty).</p>
+<p><strong>Greedy (two-pass) approach:</strong>
+1. Left-to-right: treat <code>*</code> as <code>(</code> and <code>)</code>. Track <code>low</code> (min unmatched opens) and <code>high</code> (max unmatched opens). If <code>high &lt; 0</code>, return false.
+2. After the pass, if <code>low == 0</code>, return true.</p>
+<p><strong>O(n) time, O(1) space.</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

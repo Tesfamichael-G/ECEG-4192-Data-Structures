@@ -1,0 +1,3068 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BSc Electrical Engineering (Computer) · Semester VII · Module Data Storage and Analysis">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+        <link rel="canonical" href="https://tesfamichael-g.github.io/ECEG-4192-Data-Structures/chapters/02-arrays/">
+      
+      
+        <link rel="prev" href="../01-introduction/">
+      
+      
+        <link rel="next" href="../03-linked-lists/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>2. Arrays - ECEG-4192 — Data Structures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-2-arrays" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-header__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECEG-4192 — Data Structures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. Arrays
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../syllabus.md" class="md-tabs__link">
+        
+  
+    
+  
+  Syllabus
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../schedule.md" class="md-tabs__link">
+        
+  
+    
+  
+  Schedule
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../slides/index.md" class="md-tabs__link">
+          
+  
+    
+  
+  Slides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../solutions/" class="md-tabs__link">
+          
+  
+    
+  
+  Solutions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-nav__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    ECEG-4192 — Data Structures
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../syllabus.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syllabus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schedule
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction & Analysis of Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    2. Arrays
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    2. Arrays
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-the-memory-model-why-arrays-are-fast" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 The memory model — why arrays are fast
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 The memory model — why arrays are fast">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211-contiguous-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1.1 Contiguous memory
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-cache-locality-the-hidden-superpower" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1.2 Cache locality — the hidden superpower
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#213-bounds-checking-and-why-it-costs-almost-nothing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1.3 Bounds checking (and why it costs almost nothing)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-static-arrays-operations-and-costs" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Static arrays — operations and costs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 Static arrays — operations and costs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221-traverse" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.1 Traverse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222-search-linear-scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.2 Search — linear scan
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#223-search-binary-search-on-sorted-arrays" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.3 Search — binary search (on sorted arrays)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#224-the-full-cost-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.4 The full cost table
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-dynamic-arrays-resizing-and-amortised-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 Dynamic arrays — resizing and amortised analysis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 Dynamic arrays — resizing and amortised analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#231-the-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3.1 The idea
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#232-amortised-analysis-why-doubling-wins" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3.2 Amortised analysis — why doubling wins
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#233-why-not-grow-by-3-or-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3.3 Why not grow by 3× or 10×?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#234-shrinking" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3.4 Shrinking
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-insert-and-delete-the-shifting-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4 Insert and delete — the shifting cost
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 Insert and delete — the shifting cost">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#241-insert-at-position-p" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4.1 Insert at position p
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#242-delete-at-position-p" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4.2 Delete at position p
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-21-proving-ai-is-o1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.1 — Proving a[i] is O(1)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-22-insert-at-position-p-in-a-dynamic-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.2 — Insert at position p in a dynamic array
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-23-amortised-cost-of-add-with-doubling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.3 — Amortised cost of add with doubling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-24-why-growing-by-1-is-on2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.4 — Why growing by +1 is O(n²)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-25-binary-search-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.5 — Binary search trace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-26-reverse-an-array-in-place" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.6 — Reverse an array in place
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-27-rotate-an-array-by-k-positions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.7 — Rotate an array by k positions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-28-two-pointer-sum-in-a-sorted-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.8 — Two-pointer sum in a sorted array
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-29-traversing-a-2d-array-row-major-vs-column-major" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.9 — Traversing a 2D array: row-major vs. column-major
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25-when-arrays-are-the-right-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.5 When arrays are the right choice
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quiz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quiz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-multiple-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      A. Multiple choice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-fill-in-the-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      B. Fill in the blank
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-define-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      C. Define / explain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Answer key
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suggested-tutorial-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Suggested tutorial problems
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Linked Lists
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Stacks and Queues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Trees
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Hash Tables
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Graphs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. Sorting Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Slides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/index.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../solutions/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Solutions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-the-memory-model-why-arrays-are-fast" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 The memory model — why arrays are fast
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 The memory model — why arrays are fast">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211-contiguous-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1.1 Contiguous memory
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-cache-locality-the-hidden-superpower" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1.2 Cache locality — the hidden superpower
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#213-bounds-checking-and-why-it-costs-almost-nothing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1.3 Bounds checking (and why it costs almost nothing)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-static-arrays-operations-and-costs" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Static arrays — operations and costs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 Static arrays — operations and costs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221-traverse" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.1 Traverse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222-search-linear-scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.2 Search — linear scan
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#223-search-binary-search-on-sorted-arrays" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.3 Search — binary search (on sorted arrays)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#224-the-full-cost-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.4 The full cost table
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-dynamic-arrays-resizing-and-amortised-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 Dynamic arrays — resizing and amortised analysis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 Dynamic arrays — resizing and amortised analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#231-the-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3.1 The idea
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#232-amortised-analysis-why-doubling-wins" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3.2 Amortised analysis — why doubling wins
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#233-why-not-grow-by-3-or-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3.3 Why not grow by 3× or 10×?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#234-shrinking" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3.4 Shrinking
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-insert-and-delete-the-shifting-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4 Insert and delete — the shifting cost
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 Insert and delete — the shifting cost">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#241-insert-at-position-p" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4.1 Insert at position p
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#242-delete-at-position-p" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4.2 Delete at position p
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-21-proving-ai-is-o1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.1 — Proving a[i] is O(1)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-22-insert-at-position-p-in-a-dynamic-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.2 — Insert at position p in a dynamic array
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-23-amortised-cost-of-add-with-doubling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.3 — Amortised cost of add with doubling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-24-why-growing-by-1-is-on2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.4 — Why growing by +1 is O(n²)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-25-binary-search-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.5 — Binary search trace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-26-reverse-an-array-in-place" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.6 — Reverse an array in place
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-27-rotate-an-array-by-k-positions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.7 — Rotate an array by k positions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-28-two-pointer-sum-in-a-sorted-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.8 — Two-pointer sum in a sorted array
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-29-traversing-a-2d-array-row-major-vs-column-major" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.9 — Traversing a 2D array: row-major vs. column-major
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25-when-arrays-are-the-right-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.5 When arrays are the right choice
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quiz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quiz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-multiple-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      A. Multiple choice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-fill-in-the-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      B. Fill in the blank
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-define-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      C. Define / explain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Answer key
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suggested-tutorial-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Suggested tutorial problems
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="chapter-2-arrays">Chapter 2 — Arrays<a class="headerlink" href="#chapter-2-arrays" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">Chapter at a glance</p>
+<p><strong>Contact hours:</strong> 2 lecture + 1 tutorial + 2 lab · <strong>Home study:</strong> ~5 h</p>
+<p><strong>Coverage (syllabus):</strong> memory allocation · operations in arrays.</p>
+</div>
+<hr />
+<h2 id="learning-outcomes">Learning outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Explain the <strong>contiguous memory model</strong> that underlies arrays.</li>
+<li>Derive the <strong>indexing arithmetic</strong> that makes <code>array[i]</code> O(1).</li>
+<li>Write and analyse the cost of <strong>insert</strong>, <strong>delete</strong>, <strong>search</strong>, and <strong>traverse</strong> operations on static arrays.</li>
+<li>Explain <strong>dynamic arrays</strong> and the <strong>amortised analysis</strong> of doubling expansion.</li>
+<li>Compare <strong>linear search</strong> to <strong>binary search</strong> with Big-O proof.</li>
+<li>Handle <strong>2D arrays</strong> and understand <strong>row-major</strong> versus <strong>column-major</strong> traversal costs.</li>
+<li>Recognise problems where arrays are the right data structure and where they are not.</li>
+</ol>
+<hr />
+<h2 id="21-the-memory-model-why-arrays-are-fast">2.1 The memory model — why arrays are fast<a class="headerlink" href="#21-the-memory-model-why-arrays-are-fast" title="Permanent link">&para;</a></h2>
+<h3 id="211-contiguous-memory">2.1.1 Contiguous memory<a class="headerlink" href="#211-contiguous-memory" title="Permanent link">&para;</a></h3>
+<p>An <strong>array</strong> stores its elements in <strong>consecutive memory cells</strong>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Memory address:   1000    1004    1008    1012    1016    1020
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Element:         [ a0 ]  [ a1 ]  [ a2 ]  [ a3 ]  [ a4 ]  [ a5 ]
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Index:             0       1       2       3       4       5
+</span></code></pre></div>
+<p>If the array starts at address <strong>B</strong> and each element takes <strong>w</strong> bytes (w = 4 for <code>int</code> on most systems, w = 8 for <code>long</code> / <code>double</code>), then the element at index <code>i</code> lives at:</p>
+<div class="arithmatex">\[
+\boxed{\;\text{address}(a_i) = B + i \cdot w\;}
+\]</div>
+<p>This is the <strong>entire reason</strong> arrays are fast. Given <code>i</code>, the CPU computes one multiplication and one addition — <strong>a couple of CPU cycles</strong> — and gets the address. No scanning, no pointer chasing.</p>
+<h3 id="212-cache-locality-the-hidden-superpower">2.1.2 Cache locality — the hidden superpower<a class="headerlink" href="#212-cache-locality-the-hidden-superpower" title="Permanent link">&para;</a></h3>
+<p>Modern CPUs read memory in <strong>cache lines</strong> (typically 64 bytes). When you access <code>a[i]</code>, the CPU fetches the entire line containing it — which contains <strong>16 consecutive ints</strong> (64 / 4).</p>
+<p>So when you access <code>a[i]</code>, <code>a[i+1]</code>, <code>a[i+2]</code>, … in a loop, <strong>15 of the next 15 accesses hit cache</strong> and cost almost nothing.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Access a[0]: misses cache, fetches 16 ints → cache hit for a[1]..a[15]
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Access a[16]: misses cache, fetches next 16 ints → cache hit for a[17]..a[31]
+</span></code></pre></div>
+<p><strong>Consequence:</strong> a linear scan of an array is often <strong>10–100× faster</strong> in wall-clock terms than iterating a linked list of the same length — even though both are O(n) — because the linked list's nodes are scattered in memory.</p>
+<p>We'll come back to this when we compare arrays to linked lists (Chapter 3).</p>
+<h3 id="213-bounds-checking-and-why-it-costs-almost-nothing">2.1.3 Bounds checking (and why it costs almost nothing)<a class="headerlink" href="#213-bounds-checking-and-why-it-costs-almost-nothing" title="Permanent link">&para;</a></h3>
+<p>When you write <code>a[i]</code> in Java or Python, the runtime checks <code>0 ≤ i &lt; a.length</code>. If not, it throws <code>ArrayIndexOutOfBoundsException</code> (Java) or <code>IndexError</code> (Python).</p>
+<p>This check takes <strong>one extra branch</strong> — almost free on modern CPUs (branch prediction handles it). But it's worth knowing: in C or C++, <code>a[i]</code> performs <strong>no check</strong>. If <code>i</code> is out of bounds, the program reads (or writes) whatever memory happens to be at <code>B + i*w</code> — <strong>undefined behaviour</strong>.</p>
+<hr />
+<h2 id="22-static-arrays-operations-and-costs">2.2 Static arrays — operations and costs<a class="headerlink" href="#22-static-arrays-operations-and-costs" title="Permanent link">&para;</a></h2>
+<p>A <strong>static array</strong> has a fixed size, declared at creation.</p>
+<h3 id="221-traverse">2.2.1 Traverse<a class="headerlink" href="#221-traverse" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="n">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><span class="arithmatex">\(n\)</span> iterations, each O(1). <strong>Total: O(n).</strong></p>
+<h3 id="222-search-linear-scan">2.2.2 Search — linear scan<a class="headerlink" href="#222-search-linear-scan" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">linearSearch</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Worst case: O(n)</strong> (target is at the end or absent). <strong>Best case: O(1)</strong> (target is first). <strong>Average: O(n)</strong> (uniform distribution).</p>
+<h3 id="223-search-binary-search-on-sorted-arrays">2.2.3 Search — binary search (on sorted arrays)<a class="headerlink" href="#223-search-binary-search-on-sorted-arrays" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">binarySearch</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">lo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">hi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">lo</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">hi</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lo</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">hi</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">lo</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w">   </span><span class="c1">// avoids overflow of (lo+hi)/2</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="o">[</span><span class="n">mid</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">mid</span><span class="p">;</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="o">[</span><span class="n">mid</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="w"> </span><span class="n">lo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">        </span><span class="k">else</span><span class="w">                 </span><span class="n">hi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>The search space <strong>halves</strong> each iteration:</p>
+<ul>
+<li>After 1 iteration: size <span class="arithmatex">\(n/2\)</span></li>
+<li>After 2: <span class="arithmatex">\(n/4\)</span></li>
+<li>After <span class="arithmatex">\(k\)</span>: <span class="arithmatex">\(n / 2^k\)</span></li>
+</ul>
+<p>Stop when <span class="arithmatex">\(n / 2^k &lt; 1\)</span>, i.e., <span class="arithmatex">\(k = \lceil \log_2 n \rceil\)</span>. <strong>Total: O(log n).</strong></p>
+<p><strong>The catch:</strong> binary search requires the array to be <strong>sorted</strong>. Sorting is O(n log n) — you'd pay that cost once if you need many searches.</p>
+<h3 id="224-the-full-cost-table">2.2.4 The full cost table<a class="headerlink" href="#224-the-full-cost-table" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th style="text-align: center;">Best</th>
+<th style="text-align: center;">Average</th>
+<th style="text-align: center;">Worst</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Access <code>a[i]</code></td>
+<td style="text-align: center;">O(1)</td>
+<td style="text-align: center;">O(1)</td>
+<td style="text-align: center;">O(1)</td>
+</tr>
+<tr>
+<td>Traverse</td>
+<td style="text-align: center;">O(n)</td>
+<td style="text-align: center;">O(n)</td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td>Linear search</td>
+<td style="text-align: center;">O(1)</td>
+<td style="text-align: center;">O(n)</td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td>Binary search (sorted)</td>
+<td style="text-align: center;">O(1)</td>
+<td style="text-align: center;">O(log n)</td>
+<td style="text-align: center;">O(log n)</td>
+</tr>
+<tr>
+<td>Insert at end (static)</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>not supported</strong> (array is full)</td>
+</tr>
+<tr>
+<td>Insert at position <code>p</code></td>
+<td style="text-align: center;">O(1) (if <code>p = n</code>)</td>
+<td style="text-align: center;">O(n)</td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td>Delete at position <code>p</code></td>
+<td style="text-align: center;">O(1) (if <code>p = n-1</code>)</td>
+<td style="text-align: center;">O(n)</td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+</tbody>
+</table>
+<p>The "insert at end" that <strong>isn't supported</strong> for static arrays is a real limitation. That's what dynamic arrays fix (§2.3).</p>
+<hr />
+<h2 id="23-dynamic-arrays-resizing-and-amortised-analysis">2.3 Dynamic arrays — resizing and amortised analysis<a class="headerlink" href="#23-dynamic-arrays-resizing-and-amortised-analysis" title="Permanent link">&para;</a></h2>
+<h3 id="231-the-idea">2.3.1 The idea<a class="headerlink" href="#231-the-idea" title="Permanent link">&para;</a></h3>
+<p>A <strong>dynamic array</strong> (Java <code>ArrayList</code>, Python <code>list</code>, C++ <code>std::vector</code>) hides a static array inside, with two extra fields:</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kd">class</span> <span class="nc">DynamicArray</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">;</span><span class="w">     </span><span class="c1">// how many elements actually in use</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">DynamicArray</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">        </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">;</span><span class="w">   </span><span class="c1">// start small</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">        </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="na">length</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">            </span><span class="n">resize</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w">   </span><span class="c1">// double the capacity</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">        </span><span class="n">data</span><span class="o">[</span><span class="n">size</span><span class="o">++]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">resize</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">newCap</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">newData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">newCap</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">arraycopy</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">newData</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">);</span><span class="w">   </span><span class="c1">// O(n) copy</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">        </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newData</span><span class="p">;</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>The <code>add</code> operation is <strong>O(1) most of the time</strong> — but occasionally O(n) when the internal array is full and needs doubling.</p>
+<h3 id="232-amortised-analysis-why-doubling-wins">2.3.2 Amortised analysis — why doubling wins<a class="headerlink" href="#232-amortised-analysis-why-doubling-wins" title="Permanent link">&para;</a></h3>
+<p>The key question: <strong>is <code>add</code> really O(1)?</strong></p>
+<p>Naively: no. Some calls take O(n) — those that resize. The <strong>worst case per call is O(n)</strong>.</p>
+<p>But <strong>amortised over a sequence of many calls</strong>, the average cost per <code>add</code> is <strong>O(1)</strong>. Here's the proof.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Amortised cost of <code>add</code> (doubling strategy)</p>
+<p>Suppose we do <span class="arithmatex">\(n\)</span> additions starting from an empty dynamic array of capacity 1. Resizes happen at sizes <span class="arithmatex">\(1, 2, 4, 8, \ldots\)</span> — i.e., at sizes <span class="arithmatex">\(1, 2, 4, \ldots, 2^k\)</span> where <span class="arithmatex">\(2^k \le n\)</span>.</p>
+<p>Total cost of all resizes:
+$$
+1 + 2 + 4 + \cdots + 2^k = 2^{k+1} - 1 &lt; 2n.
+$$</p>
+<p>Total cost of all <span class="arithmatex">\(n\)</span> insertions (each O(1)): <span class="arithmatex">\(n\)</span>.</p>
+<p><strong>Total cost:</strong> less than <span class="arithmatex">\(n + 2n = 3n = O(n)\)</span>.</p>
+<p><strong>Amortised cost per <code>add</code>:</strong> <span class="arithmatex">\(3n / n = O(1)\)</span>. ✓</p>
+</div>
+<p>The geometric series <span class="arithmatex">\(\sum 2^i = 2^{k+1} - 1\)</span> is the key insight — the sum of all doubles is less than <strong>twice</strong> the last one. Doubling is what makes this work; if you grew by <strong>+1 each time</strong> (incrementing capacity), the cost would be <span class="arithmatex">\(1 + 2 + 3 + \ldots + n = O(n^2)\)</span> → O(n) amortised — <strong>no better than a linked list without tail pointer.</strong></p>
+<h3 id="233-why-not-grow-by-3-or-10">2.3.3 Why not grow by 3× or 10×?<a class="headerlink" href="#233-why-not-grow-by-3-or-10" title="Permanent link">&para;</a></h3>
+<p>You can — but <strong>doubling is the sweet spot</strong>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Growth factor</th>
+<th style="text-align: center;">Amortised <code>add</code></th>
+<th style="text-align: center;">Space wasted</th>
+<th style="text-align: center;">Worst-case <code>add</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">+1 (increment)</td>
+<td style="text-align: center;">O(n)</td>
+<td style="text-align: center;">minimal</td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td style="text-align: center;">×1.5</td>
+<td style="text-align: center;">O(1)</td>
+<td style="text-align: center;">≤ 33%</td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>×2</strong></td>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+<td style="text-align: center;"><strong>≤ 50%</strong></td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td style="text-align: center;">×3</td>
+<td style="text-align: center;">O(1)</td>
+<td style="text-align: center;">≤ 67%</td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td style="text-align: center;">×10</td>
+<td style="text-align: center;">O(1)</td>
+<td style="text-align: center;">≤ 90%</td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+</tbody>
+</table>
+<p>Growth factor 2 has a clean trade-off: amortised O(1), at most 50% wasted capacity. Anything ≥ 2 gives O(1); smaller gives more space efficiency at the cost of more frequent resizes.</p>
+<h3 id="234-shrinking">2.3.4 Shrinking<a class="headerlink" href="#234-shrinking" title="Permanent link">&para;</a></h3>
+<p>If you <code>add</code> a million elements, then <code>remove</code> most of them, the internal array stays at a million — <strong>wasting 4 MB of memory for an empty array</strong>.</p>
+<p>The <strong>shrinking strategy</strong>: when <code>size</code> drops below <code>capacity / 4</code>, halve the capacity.</p>
+<p><strong>Why <code>capacity / 4</code> and not <code>capacity / 2</code>?</strong> If you shrink at exactly half, then adding one more element triggers an immediate resize <strong>back up</strong>. Alternating add/remove would cause <strong>thrashing</strong> — every operation resizes. Using <code>capacity / 4</code> gives a buffer: shrink only when the array is comfortably empty.</p>
+<hr />
+<h2 id="24-insert-and-delete-the-shifting-cost">2.4 Insert and delete — the shifting cost<a class="headerlink" href="#24-insert-and-delete-the-shifting-cost" title="Permanent link">&para;</a></h2>
+<p>For a <strong>static array</strong> (or the internal array of a dynamic array), insert/delete at a position <code>p</code> requires shifting.</p>
+<h3 id="241-insert-at-position-p">2.4.1 Insert at position <code>p</code><a class="headerlink" href="#241-insert-at-position-p" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">// Assumes size &lt; data.length</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kt">void</span><span class="w"> </span><span class="nf">insertAt</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">p</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">        </span><span class="n">data</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="o">]</span><span class="p">;</span><span class="w">   </span><span class="c1">// shift right</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="n">data</span><span class="o">[</span><span class="n">p</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Shifts:</strong> elements at positions <code>p, p+1, …, size-1</code> move right — that's <code>size - p</code> shifts.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><code>p</code></th>
+<th style="text-align: center;">Shifts</th>
+<th style="text-align: center;">Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0 (front)</td>
+<td style="text-align: center;"><code>size</code></td>
+<td style="text-align: center;"><strong>O(n)</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>size/2</code> (middle)</td>
+<td style="text-align: center;"><code>size/2</code></td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>size</code> (end)</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Worst case: O(n)</strong> (insert at front). <strong>Best case: O(1)</strong> (insert at end — append).</p>
+<h3 id="242-delete-at-position-p">2.4.2 Delete at position <code>p</code><a class="headerlink" href="#242-delete-at-position-p" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">deleteAt</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">        </span><span class="n">data</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="o">]</span><span class="p">;</span><span class="w">   </span><span class="c1">// shift left</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Shifts:</strong> elements at <code>p+1, …, size-1</code> move left — that's <code>size - 1 - p</code> shifts.</p>
+<p>Same cost structure as insert: O(n) worst case, O(1) when deleting the last element.</p>
+<div class="admonition warning">
+<p class="admonition-title">Common mistake</p>
+<p>Deleting the <strong>first</strong> element is the <strong>most expensive</strong> (all <code>n-1</code> shift). Deleting the <strong>last</strong> is free. If your algorithm repeatedly deletes from the front, <strong>use a queue or linked list instead</strong> — not an array.</p>
+</div>
+<hr />
+<h2 id="worked-example-21-proving-ai-is-o1">Worked example 2.1 — Proving <code>a[i]</code> is O(1)<a class="headerlink" href="#worked-example-21-proving-ai-is-o1" title="Permanent link">&para;</a></h2>
+<p><strong>Claim.</strong> Accessing <code>a[i]</code> on an array takes O(1) time.</p>
+<p><strong>Proof.</strong> The address of <code>a[i]</code> is <span class="arithmatex">\(B + i \cdot w\)</span>, where <span class="arithmatex">\(B\)</span> is the base address and <span class="arithmatex">\(w\)</span> is the element width. Computing this address requires:</p>
+<ol>
+<li>One multiplication: <span class="arithmatex">\(i \cdot w\)</span> — a single CPU instruction.</li>
+<li>One addition: <span class="arithmatex">\(B + i \cdot w\)</span> — a single CPU instruction.</li>
+<li>One memory load from that address — a single CPU instruction.</li>
+</ol>
+<p>Total: <strong>3 primitive operations</strong>, independent of <span class="arithmatex">\(i\)</span> and of the array length. Therefore, O(1). ∎</p>
+<p><strong>Contrast with linked list.</strong> Accessing the <span class="arithmatex">\(i\)</span>-th element of a linked list requires following <span class="arithmatex">\(i\)</span> <code>next</code> pointers — O(i) time, O(n) worst case. This is the entire reason arrays are preferred when access by index is frequent.</p>
+<hr />
+<h2 id="worked-example-22-insert-at-position-p-in-a-dynamic-array">Worked example 2.2 — Insert at position <code>p</code> in a dynamic array<a class="headerlink" href="#worked-example-22-insert-at-position-p-in-a-dynamic-array" title="Permanent link">&para;</a></h2>
+<p><strong>Setup.</strong> An array of size 8 with capacity 8 (full). Insert the value <code>x</code> at position <code>p = 3</code>.</p>
+<p><strong>Step-by-step trace.</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Before:
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Index:   0   1   2   3   4   5   6   7
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Value: [10, 20, 30, 40, 50, 60, 70, 80]
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Size = 8, Capacity = 8   → full, must resize first.
+</span></code></pre></div>
+<p><strong>Step 1 — Resize</strong> (double to capacity 16, copy 8 elements — O(n)). Now capacity = 16.</p>
+<p><strong>Step 2 — Shift right</strong> from <code>size-1 = 7</code> down to <code>p = 3</code>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>After shift:
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>Index:   0   1   2   3   4   5   6   7   8
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>Value: [10, 20, 30, 40, 40, 50, 60, 70, 80]
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>                     ↑
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>                     positions 3..7 shifted right
+</span></code></pre></div>
+<p>Wait — that's not right. Let me re-trace.</p>
+<p>Correct shift (from i = 8 down to i = 4):
+- <code>data[8] = data[7]</code> → 80 at index 8
+- <code>data[7] = data[6]</code> → 70 at index 7
+- <code>data[6] = data[5]</code> → 60 at index 6
+- <code>data[5] = data[4]</code> → 50 at index 5
+- <code>data[4] = data[3]</code> → 40 at index 4</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>After shift:
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Index:   0   1   2   3   4   5   6   7   8
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>Value: [10, 20, 30, 40, 40, 50, 60, 70, 80]
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>                     ↑
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>                     index 3 is now overwritable
+</span></code></pre></div>
+<p><strong>Step 3 — Insert</strong> <code>x = 35</code> at index 3:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>After insert:
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>Index:   0   1   2   3   4   5   6   7   8
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>Value: [10, 20, 30, 35, 40, 50, 60, 70, 80]
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>Size = 9, Capacity = 16
+</span></code></pre></div>
+<p><strong>Cost.</strong> Resize = O(n) copy (8 elements); shift = 5 = <code>size - p</code> operations; insert = 1 write. <strong>Total: O(n).</strong></p>
+<hr />
+<h2 id="worked-example-23-amortised-cost-of-add-with-doubling">Worked example 2.3 — Amortised cost of <code>add</code> with doubling<a class="headerlink" href="#worked-example-23-amortised-cost-of-add-with-doubling" title="Permanent link">&para;</a></h2>
+<p><strong>Setup.</strong> Start with capacity 1, empty. Insert 17 elements one at a time. Track the total number of element copies.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Insert #</th>
+<th style="text-align: center;">Size before</th>
+<th style="text-align: center;">Capacity</th>
+<th>Action</th>
+<th style="text-align: right;">Copies this step</th>
+<th style="text-align: right;">Total copies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td>append (no resize)</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td><strong>resize to 2</strong></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td><strong>resize to 4</strong></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td>append</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td><strong>resize to 8</strong></td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr>
+<td style="text-align: center;">6–9</td>
+<td style="text-align: center;">5–8</td>
+<td style="text-align: center;">8</td>
+<td>append</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">8</td>
+<td><strong>resize to 16</strong></td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr>
+<td style="text-align: center;">11–17</td>
+<td style="text-align: center;">9–16</td>
+<td style="text-align: center;">16</td>
+<td>append</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">15</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total copies for 17 insertions: 15.</strong></p>
+<p><strong>Amortised copies per insertion:</strong> <span class="arithmatex">\(15 / 17 &lt; 1\)</span> — <strong>constant</strong>, less than 1 per insertion.</p>
+<p>The general pattern: inserting <span class="arithmatex">\(n\)</span> elements into a doubling dynamic array copies at most <span class="arithmatex">\(2n - 1\)</span> elements total. Per insertion: <span class="arithmatex">\(&lt; 2\)</span>. <strong>O(1) amortised.</strong> ✓</p>
+<hr />
+<h2 id="worked-example-24-why-growing-by-1-is-on2">Worked example 2.4 — Why growing by +1 is O(n²)<a class="headerlink" href="#worked-example-24-why-growing-by-1-is-on2" title="Permanent link">&para;</a></h2>
+<p><strong>Setup.</strong> Start with capacity 1, empty. Insert <span class="arithmatex">\(n\)</span> elements, but <strong>each resize grows capacity by 1</strong> (worst-case strategy).</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Insert #</th>
+<th style="text-align: center;">Size before</th>
+<th style="text-align: center;">Capacity</th>
+<th style="text-align: right;">Copies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td style="text-align: center;">...</td>
+<td style="text-align: center;">...</td>
+<td style="text-align: center;">...</td>
+<td style="text-align: right;">...</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="arithmatex">\(n\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(n-1\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(n-1\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(n-1\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Total copies: <span class="arithmatex">\(0 + 1 + 2 + \cdots + (n-1) = \frac{n(n-1)}{2} = \Theta(n^2)\)</span>.</p>
+<p><strong>Amortised cost per insert:</strong> <span class="arithmatex">\(\Theta(n^2) / n = \Theta(n)\)</span> — <strong>per insert, quadratic in the worst case</strong>.</p>
+<p><strong>Contrast with doubling:</strong> doubling gave total copies <span class="arithmatex">\(&lt; 2n\)</span> (linear); +1 gives <span class="arithmatex">\(n^2/2\)</span> (quadratic). <strong>The growth factor is the difference between linear and quadratic overall cost.</strong></p>
+<hr />
+<h2 id="worked-example-25-binary-search-trace">Worked example 2.5 — Binary search trace<a class="headerlink" href="#worked-example-25-binary-search-trace" title="Permanent link">&para;</a></h2>
+<p>Search for <code>42</code> in <code>[2, 5, 8, 12, 16, 23, 38, 42, 56, 72, 91]</code> (sorted, n = 11).</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Iteration</th>
+<th style="text-align: center;"><code>lo</code></th>
+<th style="text-align: center;"><code>hi</code></th>
+<th style="text-align: center;"><code>mid</code></th>
+<th style="text-align: center;"><code>a[mid]</code></th>
+<th>Compare</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">23</td>
+<td>42 &gt; 23 → <code>lo = 6</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">56</td>
+<td>42 &lt; 56 → <code>hi = 7</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">38</td>
+<td>42 &gt; 38 → <code>lo = 7</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">42</td>
+<td><strong>found at index 7</strong> ✓</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Iterations: 4.</strong> Theory: <span class="arithmatex">\(\lceil \log_2 11 \rceil = 4\)</span>. ✓</p>
+<p><strong>Comparison with linear search.</strong> Linear search for <code>42</code> would take <strong>8 iterations</strong> (indices 0 through 7). Binary search took <strong>4</strong>. At <span class="arithmatex">\(n = 10^6\)</span>, binary search takes ~20 iterations; linear search takes up to a million. <strong>The gap is astronomical.</strong></p>
+<hr />
+<h2 id="worked-example-26-reverse-an-array-in-place">Worked example 2.6 — Reverse an array in place<a class="headerlink" href="#worked-example-26-reverse-an-array-in-place" title="Permanent link">&para;</a></h2>
+<p><strong>Goal.</strong> Reverse <code>[1, 2, 3, 4, 5]</code> → <code>[5, 4, 3, 2, 1]</code> using O(1) auxiliary space.</p>
+<p><strong>Algorithm — two-pointer swap.</strong></p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">reverse</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">left</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">right</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">left</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">        </span><span class="n">a</span><span class="o">[</span><span class="n">left</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">right</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">        </span><span class="n">a</span><span class="o">[</span><span class="n">right</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">        </span><span class="n">left</span><span class="o">++</span><span class="p">;</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">        </span><span class="n">right</span><span class="o">--</span><span class="p">;</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Trace on <code>[1, 2, 3, 4, 5]</code>:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Step</th>
+<th style="text-align: center;"><code>left</code></th>
+<th style="text-align: center;"><code>right</code></th>
+<th>Array</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">4</td>
+<td><code>[1, 2, 3, 4, 5]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">3</td>
+<td><code>[5, 2, 3, 4, 1]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td><code>[5, 4, 3, 2, 1]</code> — <code>left == right</code>, stop</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Cost.</strong> <span class="arithmatex">\(\lfloor n/2 \rfloor\)</span> swaps, each O(1). <strong>Time: O(n).</strong> <strong>Auxiliary space: O(1).</strong></p>
+<p><strong>Contrast — out-of-place reversal</strong> using a new array would also be O(n) time but O(n) space. <strong>In-place is strictly better</strong> if you can modify the input.</p>
+<p>Python version (same idea, more concise):</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">reverse</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">:</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>        <span class="n">a</span><span class="p">[</span><span class="n">left</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">right</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">right</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">left</span><span class="p">]</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>        <span class="n">left</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>        <span class="n">right</span> <span class="o">-=</span> <span class="mi">1</span>
+</span></code></pre></div>
+<hr />
+<h2 id="worked-example-27-rotate-an-array-by-k-positions">Worked example 2.7 — Rotate an array by <code>k</code> positions<a class="headerlink" href="#worked-example-27-rotate-an-array-by-k-positions" title="Permanent link">&para;</a></h2>
+<p><strong>Goal.</strong> Rotate <code>[1, 2, 3, 4, 5, 6, 7]</code> right by <code>k = 3</code> → <code>[5, 6, 7, 1, 2, 3, 4]</code>.</p>
+<p><strong>Approach 1 (naive).</strong> Shift each element by <code>k</code> positions, one element at a time. <span class="arithmatex">\(\Theta(n \cdot k)\)</span> — quadratic if <code>k</code> is large.</p>
+<p><strong>Approach 2 (using auxiliary array).</strong> Copy elements to their new positions in a new array, then copy back. <strong>O(n) time, O(n) space.</strong></p>
+<p><strong>Approach 3 (in-place, O(1) space).</strong> The <strong>"reverse three times"</strong> trick:</p>
+<ol>
+<li>Reverse the whole array: <code>[7, 6, 5, 4, 3, 2, 1]</code></li>
+<li>Reverse the first <code>k</code> elements: <code>[5, 6, 7, 4, 3, 2, 1]</code></li>
+<li>Reverse the remaining <code>n-k</code> elements: <code>[5, 6, 7, 1, 2, 3, 4]</code></li>
+</ol>
+<p>Wait — step 2 reverses the <strong>first k</strong> (indices 0..k-1 = 0..2), giving <code>[5, 6, 7, ...]</code>. ✓</p>
+<p>Step 3 reverses <strong>the rest</strong> (indices k..n-1 = 3..6), giving <code>[..., 1, 2, 3, 4]</code>. ✓</p>
+<p>Combined: <code>[5, 6, 7, 1, 2, 3, 4]</code> — correct! ✓</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">rotate</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="na">length</span><span class="p">;</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w">              </span><span class="c1">// handle k &gt; n</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">    </span><span class="n">reverse</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">    </span><span class="n">reverse</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">    </span><span class="n">reverse</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="p">}</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="kt">void</span><span class="w"> </span><span class="nf">reverse</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">from</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="kd">to</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">from</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="kd">to</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">from</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">from</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="kd">to</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="kd">to</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="w">        </span><span class="n">from</span><span class="o">++</span><span class="p">;</span><span class="w"> </span><span class="kd">to</span><span class="o">--</span><span class="p">;</span>
+</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost.</strong> Three reversals, each O(n). <strong>Total: O(n) time, O(1) space.</strong> This is the <strong>optimal</strong> solution — beats the auxiliary-array approach on space.</p>
+<hr />
+<h2 id="worked-example-28-two-pointer-sum-in-a-sorted-array">Worked example 2.8 — Two-pointer sum in a sorted array<a class="headerlink" href="#worked-example-28-two-pointer-sum-in-a-sorted-array" title="Permanent link">&para;</a></h2>
+<p><strong>Problem.</strong> Given a <strong>sorted</strong> array and a target <code>T</code>, find two elements that sum to <code>T</code>.</p>
+<p><strong>Brute force.</strong> Two nested loops: O(n²).</p>
+<p><strong>Two-pointer (sorted array).</strong></p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kt">boolean</span><span class="w"> </span><span class="nf">hasTwoSum</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">left</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">right</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">left</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">right</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">sum</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">T</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">sum</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">T</span><span class="p">)</span><span class="w"> </span><span class="n">left</span><span class="o">++</span><span class="p">;</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">        </span><span class="k">else</span><span class="w">         </span><span class="n">right</span><span class="o">--</span><span class="p">;</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Why it works.</strong> Because the array is <strong>sorted</strong>:</p>
+<ul>
+<li>If <code>sum &lt; T</code>: the current pair is too small. Increase <code>left</code> (larger element).</li>
+<li>If <code>sum &gt; T</code>: the current pair is too large. Decrease <code>right</code> (smaller element).</li>
+</ul>
+<p><strong>Correctness argument.</strong> Suppose the true pair is <code>(a[i], a[j])</code> with <code>i &lt; j</code>. At any iteration, either:</p>
+<ul>
+<li><code>left &lt; i</code> or <code>right &gt; j</code>: the algorithm hasn't reached the pair yet, but the sum tells it which direction to go — and the pair will eventually be reached.</li>
+<li>If the algorithm ever sets <code>left &gt; i</code> (i.e., passed <code>i</code>), then the previous step must have had <code>a[left] + a[right] &lt; T</code>, meaning even with the largest possible <code>right</code>, <code>left</code> was too small — so <code>left = i</code> would have been a solution candidate. Contradiction.</li>
+</ul>
+<p>So the algorithm never skips the pair.</p>
+<p><strong>Cost.</strong> <code>left</code> and <code>right</code> move toward each other at most <span class="arithmatex">\(n\)</span> total steps. <strong>O(n) time, O(1) space.</strong></p>
+<p><strong>Contrast.</strong> Brute force is O(n²). Two-pointer is O(n). <strong>The sorted precondition enables the linear algorithm.</strong></p>
+<hr />
+<h2 id="worked-example-29-traversing-a-2d-array-row-major-vs-column-major">Worked example 2.9 — Traversing a 2D array: row-major vs. column-major<a class="headerlink" href="#worked-example-29-traversing-a-2d-array-row-major-vs-column-major" title="Permanent link">&para;</a></h2>
+<p><strong>Setup.</strong> An array <code>int[][] matrix</code> of size <span class="arithmatex">\(n \times n\)</span>. Two traversals:</p>
+<p><strong>Row-major</strong> (outer loop over rows):
+<div class="language-java highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">        </span><span class="n">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">matrix</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="p">;</span>
+</span></code></pre></div></p>
+<p><strong>Column-major</strong> (outer loop over columns):
+<div class="language-java highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">        </span><span class="n">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">matrix</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="p">;</span>
+</span></code></pre></div></p>
+<p><strong>Big-O: both are O(n²).</strong> Same iteration count.</p>
+<p><strong>Wall-clock: row-major is often 2–5× faster.</strong></p>
+<p><strong>Why?</strong> Java (like C, C++, Python's NumPy) stores 2D arrays in <strong>row-major order</strong> — element <code>matrix[i][j]</code> is at address <span class="arithmatex">\(B + (i \cdot n + j) \cdot w\)</span>.</p>
+<p>Row-major traversal visits consecutive addresses → excellent cache behaviour.
+Column-major traversal jumps by <code>n * w</code> between accesses → poor cache behaviour (each access misses).</p>
+<p><strong>The Big-O is the same, but the constant is different</strong> — exactly the "constants matter" lesson from Chapter 1.</p>
+<p><strong>Python (NumPy) is the same:</strong> NumPy is row-major by default, so iterating over rows is faster than iterating over columns.</p>
+<hr />
+<h2 id="25-when-arrays-are-the-right-choice">2.5 When arrays are the right choice<a class="headerlink" href="#25-when-arrays-are-the-right-choice" title="Permanent link">&para;</a></h2>
+<p>Arrays excel at:</p>
+<ul>
+<li><strong>Random access by index</strong> — O(1) per access; no other structure does better.</li>
+<li><strong>Dense iteration</strong> — visiting every element is cache-friendly and fast.</li>
+<li><strong>Fixed-size collections</strong> — if you know the size, arrays are the simplest and most efficient.</li>
+<li><strong>Storing data that needs sorting</strong> — arrays are the natural home for sort algorithms.</li>
+</ul>
+<p>Arrays are the wrong choice when:</p>
+<ul>
+<li><strong>Frequent insertions or deletions</strong> in the middle or front — O(n) each shift.</li>
+<li><strong>Size unknown and highly variable</strong> — dynamic arrays amortise well but still resize occasionally.</li>
+<li><strong>Very sparse data</strong> — a dense array would waste memory.</li>
+</ul>
+<p>The next chapters show the alternatives — linked lists for flexible size and cheap insertion at the front, hash tables for fast lookup, trees for ordered data.</p>
+<hr />
+<h2 id="chapter-summary">Chapter summary<a class="headerlink" href="#chapter-summary" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Arrays store elements <strong>contiguously</strong>; the address of <code>a[i]</code> is <code>B + i*w</code>, computable in <strong>O(1)</strong>.</li>
+<li><strong>Cache locality</strong> makes arrays ~10–100× faster than pointers in wall-clock terms for linear scans.</li>
+<li><strong>Static arrays</strong> support O(1) access and O(n) insert/delete at interior positions (shifting cost).</li>
+<li><strong>Binary search</strong> on a sorted array is <strong>O(log n)</strong> — but requires the array to be sorted.</li>
+<li><strong>Dynamic arrays</strong> grow by doubling; <strong>amortised <code>add</code> cost is O(1)</strong> because the sum of resize copies is &lt; 2n.</li>
+<li>Growing by <strong>+1</strong> instead of doubling gives <strong>O(n) amortised</strong> — a factor-of-n penalty.</li>
+<li><strong>Shrinking</strong> should happen at <code>capacity/4</code>, not <code>capacity/2</code>, to avoid thrashing.</li>
+<li><strong>In-place</strong> operations (reverse, rotate) can achieve O(1) auxiliary space.</li>
+<li><strong>Two-pointer</strong> techniques exploit sortedness for O(n) algorithms where brute force is O(n²).</li>
+<li><strong>Row-major traversal</strong> of a 2D array is faster than column-major in row-major languages — same Big-O, better constants.</li>
+</ol>
+<hr />
+<h2 id="quiz">Quiz<a class="headerlink" href="#quiz" title="Permanent link">&para;</a></h2>
+<h3 id="a-multiple-choice">A. Multiple choice<a class="headerlink" href="#a-multiple-choice" title="Permanent link">&para;</a></h3>
+<ol>
+<li><code>a[i]</code> is O(1) because:</li>
+</ol>
+<p>(a) arrays are immutable (b) the address is computable with a fixed number of operations
+   (c) arrays are always sorted (d) Python caches results</p>
+<ol>
+<li>Inserting at the <strong>front</strong> of an n-element array takes:</li>
+</ol>
+<p>(a) O(1) (b) O(log n) (c) O(n) (d) O(n²)</p>
+<ol>
+<li>Binary search requires:</li>
+</ol>
+<p>(a) the array to be unsorted (b) the array to be sorted (c) the array to contain only integers
+   (d) the array to have an even length</p>
+<ol>
+<li>Adding <code>n</code> elements to a dynamic array with <strong>doubling</strong> has total cost:</li>
+</ol>
+<p>(a) O(n) (b) O(n log n) (c) O(n²) (d) O(2ⁿ)</p>
+<ol>
+<li>Adding <code>n</code> elements to a dynamic array growing by <strong>+1</strong> has total cost:</li>
+</ol>
+<p>(a) O(n) (b) O(n log n) (c) O(n²) (d) O(2ⁿ)</p>
+<ol>
+<li>Amortised cost of one <code>add</code> with doubling is:</li>
+</ol>
+<p>(a) O(1) (b) O(log n) (c) O(n) (d) O(n²)</p>
+<ol>
+<li>Rotating an array by <code>k</code> positions in place (reverse-three-times trick) has cost:</li>
+</ol>
+<p>(a) O(n) time, O(1) space (b) O(n log n) time, O(n) space
+   (c) O(n²) time, O(1) space (d) O(n) time, O(n) space</p>
+<ol>
+<li>Row-major traversal of a 2D array in Java is faster than column-major because:</li>
+</ol>
+<p>(a) row-major uses less memory (b) rows have fewer elements (c) cache locality is better
+   (d) row-major uses a different algorithm</p>
+<ol>
+<li>Auxiliary space of an in-place array reversal is:</li>
+</ol>
+<p>(a) O(1) (b) O(log n) (c) O(n) (d) O(n²)</p>
+<ol>
+<li>
+<p>Shrinking a dynamic array should trigger at:</p>
+<p>(a) <code>size == capacity / 2</code> (b) <code>size == capacity / 4</code> (c) <code>size == 0</code> (d) never</p>
+</li>
+<li>
+<p>Two-pointer sum in a <strong>sorted</strong> array is:</p>
+<p>(a) O(1) (b) O(log n) (c) O(n) (d) O(n²)</p>
+</li>
+<li>
+<p>A static array of size 100 is full. Trying to <code>add</code> a 101st element:</p>
+<p>(a) silently drops it (b) throws an error or corrupts memory
+(c) grows automatically (d) queues it internally</p>
+</li>
+</ol>
+<h3 id="b-fill-in-the-blank">B. Fill in the blank<a class="headerlink" href="#b-fill-in-the-blank" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>An element at index <code>i</code> in an array with base <code>B</code> and width <code>w</code> is at address <strong>_____</strong>.</p>
+</li>
+<li>
+<p>Binary search on a sorted array of size <code>n</code> runs in <strong>O(_____)</strong>.</p>
+</li>
+<li>
+<p>Inserting at the <strong>end</strong> of a static array (if not full) costs <strong>O(_____)</strong>.</p>
+</li>
+<li>
+<p>Dynamic arrays grown by <strong>doubling</strong> have total copies $&lt; $____ for <code>n</code> insertions.</p>
+</li>
+<li>
+<p>The amortised cost of <code>add</code> with doubling is <strong>O(_____)</strong>.</p>
+</li>
+<li>
+<p>An in-place reversal of an array uses <strong>O(_____)</strong> auxiliary space.</p>
+</li>
+<li>
+<p>Rotating an array in place uses the <strong>_____</strong> three-times trick.</p>
+</li>
+<li>
+<p>Row-major traversal of <code>matrix[i][j]</code> in Java accesses consecutive <strong>_____</strong>.</p>
+</li>
+<li>
+<p>The two-pointer sum trick requires the array to be <strong>_____</strong>.</p>
+</li>
+<li>
+<p>Shrinking a dynamic array at <code>capacity/4</code> avoids <strong>_____</strong> (repeated resize).</p>
+</li>
+</ol>
+<h3 id="c-define-explain">C. Define / explain<a class="headerlink" href="#c-define-explain" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Explain why <code>a[i]</code> is O(1) using the address arithmetic formula. Contrast with a linked list's <code>get(i)</code>.</p>
+</li>
+<li>
+<p>Describe the <strong>cache locality advantage</strong> of arrays over linked lists. Why is it not visible in Big-O analysis?</p>
+</li>
+<li>
+<p>Derive the <strong>amortised cost</strong> of <code>add</code> with doubling, showing that <code>n</code> insertions copy &lt; 2n elements total.</p>
+</li>
+<li>
+<p>Explain why growing by +1 gives <strong>O(n) amortised</strong> instead of O(1). Show the total-copies calculation.</p>
+</li>
+<li>
+<p>Compare the cost of <code>insert at position p</code> for <code>p = 0</code>, <code>p = n/2</code>, and <code>p = n</code> in a static array. Which is cheapest and why?</p>
+</li>
+<li>
+<p>State the <strong>binary search algorithm</strong>. Prove that it runs in O(log n).</p>
+</li>
+<li>
+<p>Describe the <strong>reverse-three-times</strong> algorithm for array rotation. Prove correctness using the rotation equation.</p>
+</li>
+<li>
+<p>Explain the <strong>two-pointer sum</strong> algorithm. Why does it work only on sorted arrays?</p>
+</li>
+<li>
+<p>Explain the difference between <strong>time complexity</strong> and <strong>wall-clock performance</strong> for 2D array traversal. Give an example where Big-O is the same but wall-clock is 5× different.</p>
+</li>
+<li>
+<p>Give three situations where arrays are the <strong>wrong choice</strong> and suggest what data structure would be better.</p>
+</li>
+</ol>
+<hr />
+<h2 id="answer-key">Answer key<a class="headerlink" href="#answer-key" title="Permanent link">&para;</a></h2>
+<details class="success">
+<summary>A. Multiple choice</summary>
+<ol>
+<li><strong>(b)</strong> — fixed number of operations to compute the address.</li>
+<li><strong>(c)</strong> — O(n) shifting.</li>
+<li><strong>(b)</strong> — sorted array required.</li>
+<li><strong>(a)</strong> — O(n) total with doubling.</li>
+<li><strong>(c)</strong> — O(n²) with +1 growth.</li>
+<li><strong>(a)</strong> — O(1) amortised.</li>
+<li><strong>(a)</strong> — O(n) time, O(1) space.</li>
+<li><strong>(c)</strong> — cache locality.</li>
+<li><strong>(a)</strong> — O(1).</li>
+<li><strong>(b)</strong> — <code>capacity/4</code> avoids thrashing.</li>
+<li><strong>(c)</strong> — O(n).</li>
+<li><strong>(b)</strong> — error or corruption (undefined behaviour in C, exception in Java).</li>
+</ol>
+</details>
+<details class="success">
+<summary>B. Fill in the blank</summary>
+<ol>
+<li><span class="arithmatex">\(B + i \cdot w\)</span></li>
+<li><span class="arithmatex">\(\log n\)</span></li>
+<li><span class="arithmatex">\(O(1)\)</span></li>
+<li><span class="arithmatex">\(2n\)</span></li>
+<li><span class="arithmatex">\(O(1)\)</span></li>
+<li><span class="arithmatex">\(O(1)\)</span></li>
+<li>reverse</li>
+<li>addresses (or memory locations)</li>
+<li>sorted</li>
+<li>thrashing</li>
+</ol>
+</details>
+<details class="success">
+<summary>C. Define / explain — model answers</summary>
+<ol>
+<li><em>Address arithmetic:</em> <code>a[i]</code> lives at <code>B + i*w</code>. Computing this takes one multiplication, one addition, one memory load — a <strong>constant number of CPU instructions</strong>, independent of <code>i</code> and <code>n</code>. Therefore O(1). <em>Contrast with linked list:</em> the <span class="arithmatex">\(i\)</span>-th element requires following <span class="arithmatex">\(i\)</span> <code>next</code> pointers, so <code>get(i)</code> is O(i) and worst case O(n). This is why arrays win on random-access workloads.</li>
+<li><em>Cache locality:</em> the CPU fetches 64-byte cache lines containing <strong>16 consecutive ints</strong>. Row-major traversal of an array touches each line once, reusing it 15 times. <em>Linked list:</em> nodes are scattered in memory — each access likely misses cache. <em>Why Big-O misses this:</em> Big-O counts <strong>operations</strong>, not <strong>memory accesses</strong>. Both traversals count <span class="arithmatex">\(n\)</span> operations, but the array traversal only has <span class="arithmatex">\(n/16\)</span> cache misses; the linked list traversal has <span class="arithmatex">\(n\)</span>. <strong>Wall-clock reflects the cache</strong>; Big-O does not.</li>
+<li><em>Amortised analysis with doubling:</em> resizes happen at sizes <span class="arithmatex">\(1, 2, 4, 8, \ldots, 2^k\)</span> where <span class="arithmatex">\(2^k \le n\)</span>. Total copies: <span class="arithmatex">\(1 + 2 + 4 + \ldots + 2^k = 2^{k+1} - 1 &lt; 2n\)</span>. Per-insertion amortised: <span class="arithmatex">\(&lt; 2 = O(1)\)</span>. The key is the <strong>geometric series</strong> — the sum of all doubles is less than 2× the largest.</li>
+<li><em>+1 growth:</em> resizes happen at <strong>every</strong> size <span class="arithmatex">\(1, 2, \ldots, n-1\)</span>, copying <span class="arithmatex">\(1, 2, \ldots, n-1\)</span> elements respectively. Total: <span class="arithmatex">\(1 + 2 + \ldots + n-1 = n(n-1)/2 = O(n^2)\)</span>. Per-insertion amortised: <span class="arithmatex">\(O(n)\)</span>. The sum is <strong>arithmetic</strong>, not geometric — hence quadratic, not linear.</li>
+<li><em>Insert at position <code>p</code>:</em> shifts elements at <code>p, p+1, ..., n-1</code> right, which is <code>n - p</code> shifts. <em>At <code>p = 0</code>:</em> n shifts → O(n) worst case. <em>At <code>p = n/2</code>:</em> n/2 shifts → O(n). <em>At <code>p = n</code>:</em> 0 shifts → <strong>O(1)</strong> best case. <strong>The end is cheapest</strong> because no elements need to shift right — it's just an append. This is why the <code>add</code> operation (append) is the fastest insertion.</li>
+<li><em>Binary search:</em> maintain a search interval <code>[lo, hi]</code>. Compute <code>mid = (lo + hi) / 2</code>. If <code>a[mid] == target</code>, return. If <code>a[mid] &lt; target</code>, the target must be in <code>[mid+1, hi]</code>. If <code>a[mid] &gt; target</code>, in <code>[lo, mid-1]</code>. <em>Proof of O(log n):</em> each iteration <strong>halves</strong> the interval. Starting from size <span class="arithmatex">\(n\)</span>, after <span class="arithmatex">\(k\)</span> iterations the interval has size <span class="arithmatex">\(n / 2^k\)</span>. Stop when size &lt; 1, i.e., <span class="arithmatex">\(k = \lceil \log_2 n \rceil\)</span>. Therefore <span class="arithmatex">\(T(n) = O(\log n)\)</span>.</li>
+<li><em>Reverse-three-times:</em> Let <span class="arithmatex">\(A = UV\)</span> where <span class="arithmatex">\(U\)</span> is the first <span class="arithmatex">\(n-k\)</span> elements and <span class="arithmatex">\(V\)</span> is the last <span class="arithmatex">\(k\)</span>. Rotation is <span class="arithmatex">\((UV)^R\)</span> = <span class="arithmatex">\(VU\)</span>. The trick: reverse all → <span class="arithmatex">\(V^R U^R\)</span>; reverse first <span class="arithmatex">\(k\)</span> → <span class="arithmatex">\(V U^R\)</span>; reverse rest → <span class="arithmatex">\(VU\)</span>. ✓ Correct.</li>
+<li><em>Two-pointer sum:</em> maintain <code>left = 0</code>, <code>right = n-1</code>. Compute <code>sum = a[left] + a[right]</code>. If <code>sum == target</code>, found. If <code>sum &lt; target</code>, <code>left++</code> (need larger element). If <code>sum &gt; target</code>, <code>right--</code> (need smaller). <em>Why sorted required:</em> the direction choice depends on whether <code>a[left]</code> and <code>a[right]</code> are the smallest and largest remaining candidates — true only in a sorted array. If unsorted, <code>a[left]</code> could be anything, so the pointer direction is meaningless. <strong>O(n) time, O(1) space.</strong></li>
+<li><em>Time vs. wall-clock:</em> Big-O counts <strong>operations</strong>, independent of memory hierarchy. <em>Example:</em> row-major vs. column-major traversal of a 1000×1000 matrix both take 10⁶ iterations. But row-major accesses consecutive addresses → good cache → ~5 ms. Column-major accesses strided addresses → cache misses every iteration → ~25 ms. <strong>Same operations, different memory access patterns, 5× wall-clock difference.</strong></li>
+<li><em>Wrong choice of array:</em> (i) <strong>Frequent insertions/deletions in the middle</strong> — every insert/delete is O(n); use a linked list or balanced tree. (ii) <strong>Size highly variable</strong> — resizing is amortised O(1) but still costly; use a linked list for truly unbounded/frequent-variable. (iii) <strong>Sparse data with large gaps</strong> — a dense array wastes memory; use a hash table or sparse representation. (iv) <strong>Frequent lookup by key (not index)</strong> — arrays require O(n) or O(log n) search; use a hash table for O(1) lookup.</li>
+</ol>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Weiss</strong>, <em>Data Structures and Algorithm Analysis</em>, Chapter 3 (Lists, Stacks, Queues) — includes an excellent section on the array vs. linked list trade-off.</li>
+<li><strong>Lafore</strong>, Chapter 2 (Arrays) — basic array operations.</li>
+<li><strong>CLRS</strong>, Section 17.4 (Dynamic tables) — amortised analysis of doubling in rigorous form.</li>
+<li><strong>Sedgewick &amp; Wayne</strong>, <em>Algorithms</em>, Section 1.3 (Bags, Queues, Stacks) — the dynamic-array analysis.</li>
+<li><strong>Joel Spolsky</strong>, "Back to Basics" — <a href="https://www.joelonsoftware.com/2001/12/11/back-to-basics/">joelonsoftware.com/2001/12/11/back-to-basics/</a> — classic essay on the cache advantage of arrays.</li>
+<li><strong>Ulrich Drepper</strong>, "What Every Programmer Should Know About Memory" — <a href="https://people.freebsd.org/~lstewart/articles/cpumemory.pdf">people.freebsd.org/~lstewart/articles/cpumemory.pdf</a> — the definitive reference on why cache locality matters.</li>
+</ul>
+<hr />
+<h2 id="suggested-tutorial-problems">Suggested tutorial problems<a class="headerlink" href="#suggested-tutorial-problems" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>Prove <code>a[i]</code> is O(1).</strong> Write down the address computation and count the primitive operations.</p>
+</li>
+<li>
+<p><strong>Insertion cost table.</strong> For an array of size 100, compute the number of shifts for insertions at positions <code>0, 25, 50, 75, 100</code>. Which position is cheapest?</p>
+</li>
+<li>
+<p><strong>Amortised cost, traced.</strong> Start with capacity 1, empty dynamic array with doubling. Insert 32 elements, tracking the total copies. Verify the total is &lt; 2n.</p>
+</li>
+<li>
+<p><strong>+1 growth.</strong> Repeat problem 3 but with +1 growth. Compute the total copies for <code>n = 32</code>. What is the ratio to doubling?</p>
+</li>
+<li>
+<p><strong>Binary search tree of decisions.</strong> For an array of size 1024, how many binary-search iterations are needed to find the first element? The last? A missing element?</p>
+</li>
+<li>
+<p><strong>Reverse a subarray.</strong> Write <code>reverse(a, i, j)</code> that reverses the segment <code>a[i..j]</code> in place. What is its cost?</p>
+</li>
+<li>
+<p><strong>Rotate by <code>k</code>.</strong> Implement the three-reversal rotation. Verify by hand on <code>[1, 2, 3, 4, 5]</code> with <code>k = 2</code>.</p>
+</li>
+<li>
+<p><strong>Two-pointer sum, missing pair.</strong> In the sorted array <code>[1, 3, 5, 7, 9, 11]</code>, find two elements summing to <code>15</code>. Trace each step of the two-pointer algorithm.</p>
+</li>
+<li>
+<p><strong>2D array traversal.</strong> Allocate <code>int[1000][1000]</code>. Time a row-major scan vs. column-major scan. Report the ratio. Explain the difference in cache terms.</p>
+</li>
+<li>
+<p><strong>Dynamic array shrink policy.</strong> Suppose the shrink trigger is <code>size &lt; capacity / 2</code>. Show an adversarial sequence of insert/delete operations that alternates between growing and shrinking, causing O(n) work per operation. Then show that <code>capacity / 4</code> avoids this.</p>
+</li>
+<li>
+<p><strong>Array vs. linked list — quantitative.</strong> For <code>n = 100,000</code> random lookups on a sorted array (binary search) vs. a sorted linked list (linear search), estimate the wall-clock ratio. Which wins by how much?</p>
+</li>
+<li>
+<p><strong>Two-pointer sum on unsorted arrays.</strong> Can you adapt the two-pointer algorithm to work on an unsorted array by <strong>pre-sorting</strong> it first? What is the total cost, and how does it compare to brute force?</p>
+</li>
+<li>
+<p><strong>Sliding-window average.</strong> Given an array and an integer <code>k</code>, find the maximum average of any <code>k</code> consecutive elements. Design an O(n) algorithm using a sliding window. Why is the naive algorithm O(n·k)?</p>
+</li>
+<li>
+<p><strong>Duplicate detection.</strong> Given an unsorted array of <code>n</code> integers, find whether any value appears twice. Give O(n²), O(n log n), and O(n) solutions. What are their respective space costs?</p>
+</li>
+<li>
+<p><strong>Missing number.</strong> An array contains <code>n-1</code> distinct integers from <code>{1, 2, …, n}</code> (one is missing). Find the missing number in O(n) time and O(1) space. (Hint: use arithmetic or XOR.)</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

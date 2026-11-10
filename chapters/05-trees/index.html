@@ -1,0 +1,3633 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BSc Electrical Engineering (Computer) · Semester VII · Module Data Storage and Analysis">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+        <link rel="canonical" href="https://tesfamichael-g.github.io/ECEG-4192-Data-Structures/chapters/05-trees/">
+      
+      
+        <link rel="prev" href="../04-stacks-queues/">
+      
+      
+        <link rel="next" href="../06-hash-tables/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>5. Trees - ECEG-4192 — Data Structures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-5-trees" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-header__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECEG-4192 — Data Structures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5. Trees
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../syllabus.md" class="md-tabs__link">
+        
+  
+    
+  
+  Syllabus
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../schedule.md" class="md-tabs__link">
+        
+  
+    
+  
+  Schedule
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../slides/index.md" class="md-tabs__link">
+          
+  
+    
+  
+  Slides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../solutions/" class="md-tabs__link">
+          
+  
+    
+  
+  Solutions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-nav__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    ECEG-4192 — Data Structures
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../syllabus.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syllabus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schedule
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction & Analysis of Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Linked Lists
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Stacks and Queues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    5. Trees
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    5. Trees
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#51-tree-terminology" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 Tree terminology
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 Tree terminology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#511-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.1 Definition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#512-binary-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.2 Binary tree
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#513-complete-and-full-binary-trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.3 Complete and full binary trees
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#514-height-bounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.4 Height bounds
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-binary-tree-traversals" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 Binary tree traversals
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 Binary tree traversals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#521-in-order-left-root-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2.1 In-order (left, root, right)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#522-pre-order-root-left-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2.2 Pre-order (root, left, right)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#523-post-order-left-right-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2.3 Post-order (left, right, root)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#524-level-order-bfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2.4 Level-order (BFS)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#525-the-four-traversals-on-one-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2.5 The four traversals on one tree
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#53-binary-search-tree-bst" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 Binary Search Tree (BST)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 Binary Search Tree (BST)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#531-the-bst-property" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3.1 The BST property
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#532-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3.2 Search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#533-insert" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3.3 Insert
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#534-delete-the-tricky-one" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3.4 Delete — the tricky one
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#535-bst-complexity-the-big-warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3.5 BST complexity — the big warning
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54-avl-trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4 AVL trees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 AVL trees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#541-the-balance-condition" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4.1 The balance condition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#542-the-four-rotation-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4.2 The four rotation cases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#543-worked-example-right-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4.3 Worked example — right rotation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#544-worked-example-left-right-lr-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4.4 Worked example — left-right (LR) rotation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#545-insert-trace-build-an-avl-from-17" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4.5 Insert trace — build an AVL from 1..7
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55-heaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5 Heaps
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.5 Heaps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#551-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.1 Definition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#552-array-representation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.2 Array representation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#553-insert-sift-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.3 Insert — sift-up
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#554-extract-min-sift-down" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.4 Extract-min — sift-down
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#555-peek-min-o1" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.5 Peek-min — O(1)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#556-building-a-heap-from-n-elements-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.6 Building a heap from n elements — O(n)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#557-heapsort-sort-using-a-heap" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.7 Heapsort — sort using a heap
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-51-build-a-bst-from-sorted-input-worst-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.1 — Build a BST from sorted input (worst case)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-52-build-a-bst-from-random-order-best-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.2 — Build a BST from random order (best case)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-53-in-order-traversal-of-a-bst-yields-sorted-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.3 — In-order traversal of a BST yields sorted order
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-54-delete-from-a-bst-all-three-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.4 — Delete from a BST, all three cases
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-55-avl-right-rotation-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.5 — AVL right rotation, step by step
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-56-avl-left-right-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.6 — AVL left-right rotation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-57-avl-insertion-trace-concrete" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.7 — AVL insertion trace (concrete)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-58-min-heap-insert-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.8 — Min-heap insert trace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-59-min-heap-extract-min-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.9 — Min-heap extract-min trace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-510-heapify-bottom-up-heap-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.10 — Heapify (bottom-up heap construction)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-511-heapsort-on-a-small-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.11 — Heapsort on a small array
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#56-b-trees-brief" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.6 B+-trees (brief)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#57-choosing-a-tree-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.7 Choosing a tree structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quiz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quiz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-multiple-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      A. Multiple choice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-fill-in-the-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      B. Fill in the blank
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-define-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      C. Define / explain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Answer key
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suggested-tutorial-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Suggested tutorial problems
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Hash Tables
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Graphs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. Sorting Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Slides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/index.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../solutions/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Solutions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#51-tree-terminology" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 Tree terminology
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 Tree terminology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#511-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.1 Definition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#512-binary-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.2 Binary tree
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#513-complete-and-full-binary-trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.3 Complete and full binary trees
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#514-height-bounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.4 Height bounds
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-binary-tree-traversals" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 Binary tree traversals
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 Binary tree traversals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#521-in-order-left-root-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2.1 In-order (left, root, right)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#522-pre-order-root-left-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2.2 Pre-order (root, left, right)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#523-post-order-left-right-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2.3 Post-order (left, right, root)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#524-level-order-bfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2.4 Level-order (BFS)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#525-the-four-traversals-on-one-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2.5 The four traversals on one tree
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#53-binary-search-tree-bst" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 Binary Search Tree (BST)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 Binary Search Tree (BST)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#531-the-bst-property" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3.1 The BST property
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#532-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3.2 Search
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#533-insert" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3.3 Insert
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#534-delete-the-tricky-one" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3.4 Delete — the tricky one
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#535-bst-complexity-the-big-warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3.5 BST complexity — the big warning
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54-avl-trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4 AVL trees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 AVL trees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#541-the-balance-condition" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4.1 The balance condition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#542-the-four-rotation-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4.2 The four rotation cases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#543-worked-example-right-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4.3 Worked example — right rotation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#544-worked-example-left-right-lr-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4.4 Worked example — left-right (LR) rotation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#545-insert-trace-build-an-avl-from-17" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4.5 Insert trace — build an AVL from 1..7
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55-heaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5 Heaps
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.5 Heaps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#551-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.1 Definition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#552-array-representation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.2 Array representation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#553-insert-sift-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.3 Insert — sift-up
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#554-extract-min-sift-down" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.4 Extract-min — sift-down
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#555-peek-min-o1" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.5 Peek-min — O(1)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#556-building-a-heap-from-n-elements-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.6 Building a heap from n elements — O(n)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#557-heapsort-sort-using-a-heap" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.7 Heapsort — sort using a heap
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-51-build-a-bst-from-sorted-input-worst-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.1 — Build a BST from sorted input (worst case)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-52-build-a-bst-from-random-order-best-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.2 — Build a BST from random order (best case)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-53-in-order-traversal-of-a-bst-yields-sorted-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.3 — In-order traversal of a BST yields sorted order
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-54-delete-from-a-bst-all-three-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.4 — Delete from a BST, all three cases
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-55-avl-right-rotation-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.5 — AVL right rotation, step by step
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-56-avl-left-right-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.6 — AVL left-right rotation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-57-avl-insertion-trace-concrete" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.7 — AVL insertion trace (concrete)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-58-min-heap-insert-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.8 — Min-heap insert trace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-59-min-heap-extract-min-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.9 — Min-heap extract-min trace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-510-heapify-bottom-up-heap-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.10 — Heapify (bottom-up heap construction)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-511-heapsort-on-a-small-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.11 — Heapsort on a small array
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#56-b-trees-brief" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.6 B+-trees (brief)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#57-choosing-a-tree-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.7 Choosing a tree structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quiz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quiz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-multiple-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      A. Multiple choice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-fill-in-the-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      B. Fill in the blank
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-define-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      C. Define / explain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Answer key
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suggested-tutorial-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Suggested tutorial problems
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="chapter-5-trees">Chapter 5 — Trees<a class="headerlink" href="#chapter-5-trees" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">Chapter at a glance</p>
+<p><strong>Contact hours:</strong> 2 lecture + 1 tutorial + 2 lab · <strong>Home study:</strong> ~5 h</p>
+<p><strong>Coverage (syllabus):</strong> definition and implementation · types of trees
+(binary, binary search, AVL, B+-trees, heaps) · application of trees.</p>
+</div>
+<hr />
+<h2 id="learning-outcomes">Learning outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Define the <strong>tree terminology</strong>: root, parent, child, leaf, subtree, depth, height.</li>
+<li>Represent trees with <strong>left/right pointers</strong> and with <strong>array-based heap layout</strong>.</li>
+<li>Implement all four <strong>tree traversals</strong> — in-order, pre-order, post-order, level-order.</li>
+<li>Implement and analyse a <strong>Binary Search Tree</strong> — insert, search, delete — in best, average, and worst cases.</li>
+<li>Explain when a BST degrades to a <strong>linked list</strong> and why balance matters.</li>
+<li>Perform <strong>AVL rotations</strong> (left, right, left-right, right-left) to restore balance after insertion.</li>
+<li>Implement a <strong>binary heap</strong> with O(log n) insert and O(log n) extract-min.</li>
+<li>Use a heap to implement <strong>heapsort</strong> (preview of Chapter 8) and a <strong>priority queue</strong>.</li>
+<li>Explain the role of <strong>B+-trees</strong> in databases (conceptual, brief).</li>
+<li>Select the right tree structure for a given application.</li>
+</ol>
+<hr />
+<h2 id="51-tree-terminology">5.1 Tree terminology<a class="headerlink" href="#51-tree-terminology" title="Permanent link">&para;</a></h2>
+<h3 id="511-definition">5.1.1 Definition<a class="headerlink" href="#511-definition" title="Permanent link">&para;</a></h3>
+<p>A <strong>tree</strong> is a connected acyclic graph. Every non-empty tree has:</p>
+<ul>
+<li><strong>Root</strong> — the topmost node.</li>
+<li><strong>Leaves</strong> — nodes with no children.</li>
+<li><strong>Internal nodes</strong> — nodes with at least one child.</li>
+</ul>
+<p>For a node <span class="arithmatex">\(x\)</span>:</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Parent</strong></td>
+<td>The node directly above <code>x</code></td>
+</tr>
+<tr>
+<td><strong>Children</strong></td>
+<td>Nodes directly below <code>x</code></td>
+</tr>
+<tr>
+<td><strong>Siblings</strong></td>
+<td>Nodes with the same parent</td>
+</tr>
+<tr>
+<td><strong>Ancestors</strong></td>
+<td><code>x</code>, its parent, parent's parent, … up to root</td>
+</tr>
+<tr>
+<td><strong>Descendants</strong></td>
+<td><code>x</code>, its children, their children, …</td>
+</tr>
+<tr>
+<td><strong>Subtree rooted at x</strong></td>
+<td><code>x</code> and all its descendants</td>
+</tr>
+<tr>
+<td><strong>Depth of x</strong></td>
+<td>Number of edges from root to <code>x</code></td>
+</tr>
+<tr>
+<td><strong>Height of x</strong></td>
+<td>Number of edges from <code>x</code> to deepest descendant leaf</td>
+</tr>
+<tr>
+<td><strong>Height of tree</strong></td>
+<td>Height of root</td>
+</tr>
+<tr>
+<td><strong>Size</strong></td>
+<td>Number of nodes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Convention:</strong> height of a leaf is 0; height of an empty tree is −1.</p>
+<h3 id="512-binary-tree">5.1.2 Binary tree<a class="headerlink" href="#512-binary-tree" title="Permanent link">&para;</a></h3>
+<p>A <strong>binary tree</strong> has at most <strong>two</strong> children per node (left and right).</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">class</span> <span class="nc">TreeNode</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="kt">int</span><span class="w">      </span><span class="n">value</span><span class="p">;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="n">TreeNode</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">right</span><span class="p">;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="n">TreeNode</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<h3 id="513-complete-and-full-binary-trees">5.1.3 Complete and full binary trees<a class="headerlink" href="#513-complete-and-full-binary-trees" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Full</strong></td>
+<td>Every node has 0 or 2 children</td>
+</tr>
+<tr>
+<td><strong>Complete</strong></td>
+<td>All levels except possibly the last are full, and last level is filled left-to-right</td>
+</tr>
+<tr>
+<td><strong>Perfect</strong></td>
+<td>Every level is completely full (a complete tree with <span class="arithmatex">\(2^h\)</span> leaves)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Complete binary trees</strong> are the key concept for <strong>heaps</strong> — they fit compactly in an array with no wasted space.</p>
+<h3 id="514-height-bounds">5.1.4 Height bounds<a class="headerlink" href="#514-height-bounds" title="Permanent link">&para;</a></h3>
+<p>For a binary tree with <span class="arithmatex">\(n\)</span> nodes:</p>
+<ul>
+<li><strong>Minimum height:</strong> <span class="arithmatex">\(\lfloor \log_2 n \rfloor\)</span> (the tree is as balanced as possible).</li>
+<li><strong>Maximum height:</strong> <span class="arithmatex">\(n - 1\)</span> (a "linked list" shape — every node has one child).</li>
+</ul>
+<p><strong>Why this matters:</strong> every tree operation's cost depends on height. Balanced trees → O(log n); skewed trees → O(n).</p>
+<hr />
+<h2 id="52-binary-tree-traversals">5.2 Binary tree traversals<a class="headerlink" href="#52-binary-tree-traversals" title="Permanent link">&para;</a></h2>
+<p>The four traversals differ in the <strong>order</strong> they visit a node relative to its children.</p>
+<h3 id="521-in-order-left-root-right">5.2.1 In-order (left, root, right)<a class="headerlink" href="#521-in-order-left-root-right" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">inOrder</span><span class="p">(</span><span class="n">TreeNode</span><span class="w"> </span><span class="n">node</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">node</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="n">inOrder</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="na">left</span><span class="p">);</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="na">value</span><span class="p">);</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="n">inOrder</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="na">right</span><span class="p">);</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>For a <strong>BST</strong>, in-order gives <strong>sorted order</strong>.</p>
+<h3 id="522-pre-order-root-left-right">5.2.2 Pre-order (root, left, right)<a class="headerlink" href="#522-pre-order-root-left-right" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">preOrder</span><span class="p">(</span><span class="n">TreeNode</span><span class="w"> </span><span class="n">node</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">node</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="na">value</span><span class="p">);</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="n">preOrder</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="na">left</span><span class="p">);</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="n">preOrder</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="na">right</span><span class="p">);</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Used for <strong>tree serialisation</strong> — writing a tree to a file in a form that can be read back to produce the same tree.</p>
+<h3 id="523-post-order-left-right-root">5.2.3 Post-order (left, right, root)<a class="headerlink" href="#523-post-order-left-right-root" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">postOrder</span><span class="p">(</span><span class="n">TreeNode</span><span class="w"> </span><span class="n">node</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">node</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="n">postOrder</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="na">left</span><span class="p">);</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="n">postOrder</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="na">right</span><span class="p">);</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="na">value</span><span class="p">);</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Used for <strong>deleting a tree</strong> — children are deleted before the parent, so nothing is orphaned.</p>
+<h3 id="524-level-order-bfs">5.2.4 Level-order (BFS)<a class="headerlink" href="#524-level-order-bfs" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">levelOrder</span><span class="p">(</span><span class="n">TreeNode</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">root</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="n">Queue</span><span class="o">&lt;</span><span class="n">TreeNode</span><span class="o">&gt;</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="n">q</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">q</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">        </span><span class="n">TreeNode</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="na">remove</span><span class="p">();</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">value</span><span class="p">);</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">left</span><span class="w">  </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">left</span><span class="p">);</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">right</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">right</span><span class="p">);</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Uses a <strong>queue</strong> (Chapter 4). Visits nodes level by level — root, all children, all grandchildren, …</p>
+<h3 id="525-the-four-traversals-on-one-tree">5.2.5 The four traversals on one tree<a class="headerlink" href="#525-the-four-traversals-on-one-tree" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>        A
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>       / \
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>      B   C
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>     / \ / \
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    D  E F  G
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Traversal</th>
+<th>Order</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>In-order</td>
+<td>D B E A F C G</td>
+</tr>
+<tr>
+<td>Pre-order</td>
+<td>A B D E C F G</td>
+</tr>
+<tr>
+<td>Post-order</td>
+<td>D E B F G C A</td>
+</tr>
+<tr>
+<td>Level-order</td>
+<td>A B C D E F G</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Cost of all four:</strong> O(n) time, O(h) space (h = height, from recursion or queue).</p>
+<hr />
+<h2 id="53-binary-search-tree-bst">5.3 Binary Search Tree (BST)<a class="headerlink" href="#53-binary-search-tree-bst" title="Permanent link">&para;</a></h2>
+<h3 id="531-the-bst-property">5.3.1 The BST property<a class="headerlink" href="#531-the-bst-property" title="Permanent link">&para;</a></h3>
+<p>A <strong>Binary Search Tree</strong> is a binary tree where, for every node:</p>
+<ul>
+<li><strong>All values in the left subtree are &lt; the node's value.</strong></li>
+<li><strong>All values in the right subtree are &gt; the node's value.</strong></li>
+</ul>
+<p>This property makes <strong>search, insert, and delete</strong> O(h) — where h is the tree height.</p>
+<h3 id="532-search">5.3.2 Search<a class="headerlink" href="#532-search" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">TreeNode</span><span class="w"> </span><span class="nf">search</span><span class="p">(</span><span class="n">TreeNode</span><span class="w"> </span><span class="n">root</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">root</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">target</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">root</span><span class="p">.</span><span class="na">value</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">root</span><span class="p">;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">target</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">root</span><span class="p">.</span><span class="na">value</span><span class="p">)</span><span class="w">   </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="p">.</span><span class="na">left</span><span class="p">;</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">        </span><span class="k">else</span><span class="w">                       </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="p">.</span><span class="na">right</span><span class="p">;</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>At each step, discard half the remaining tree (in a balanced tree). <strong>O(h)</strong>.</p>
+<h3 id="533-insert">5.3.3 Insert<a class="headerlink" href="#533-insert" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">TreeNode</span><span class="w"> </span><span class="nf">insert</span><span class="p">(</span><span class="n">TreeNode</span><span class="w"> </span><span class="n">root</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">root</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TreeNode</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">root</span><span class="p">.</span><span class="na">value</span><span class="p">)</span><span class="w"> </span><span class="n">root</span><span class="p">.</span><span class="na">left</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">insert</span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="na">left</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="k">else</span><span class="w">                    </span><span class="n">root</span><span class="p">.</span><span class="na">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">insert</span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="na">right</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">root</span><span class="p">;</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Find the leaf position where the new value belongs, attach it there. <strong>O(h)</strong>.</p>
+<h3 id="534-delete-the-tricky-one">5.3.4 Delete — the tricky one<a class="headerlink" href="#534-delete-the-tricky-one" title="Permanent link">&para;</a></h3>
+<p>Three cases:</p>
+<p><strong>Case 1 — Leaf node (no children).</strong> Simply remove it.</p>
+<p><strong>Case 2 — One child.</strong> Splice the child up to replace the node.</p>
+<p><strong>Case 3 — Two children.</strong> Replace the node's value with its <strong>in-order successor</strong> (the smallest value in the right subtree), then delete the successor.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">TreeNode</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="n">TreeNode</span><span class="w"> </span><span class="n">root</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">root</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">root</span><span class="p">.</span><span class="na">value</span><span class="p">)</span><span class="w">      </span><span class="n">root</span><span class="p">.</span><span class="na">left</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">delete</span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="na">left</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">root</span><span class="p">.</span><span class="na">value</span><span class="p">)</span><span class="w"> </span><span class="n">root</span><span class="p">.</span><span class="na">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">delete</span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="na">right</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">        </span><span class="c1">// found the node</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="na">left</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">root</span><span class="p">.</span><span class="na">right</span><span class="p">;</span><span class="w">   </span><span class="c1">// case 1 or 2 (right child only)</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="na">right</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">root</span><span class="p">.</span><span class="na">left</span><span class="p">;</span><span class="w">    </span><span class="c1">// case 2 (left child only)</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">        </span><span class="c1">// case 3: two children</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">        </span><span class="n">TreeNode</span><span class="w"> </span><span class="n">succ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="p">.</span><span class="na">right</span><span class="p">;</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">succ</span><span class="p">.</span><span class="na">left</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="n">succ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">succ</span><span class="p">.</span><span class="na">left</span><span class="p">;</span><span class="w">   </span><span class="c1">// find in-order successor</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">        </span><span class="n">root</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">succ</span><span class="p">.</span><span class="na">value</span><span class="p">;</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">        </span><span class="n">root</span><span class="p">.</span><span class="na">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">delete</span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="na">right</span><span class="p">,</span><span class="w"> </span><span class="n">succ</span><span class="p">.</span><span class="na">value</span><span class="p">);</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">root</span><span class="p">;</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost:</strong> O(h) — walk down to find the node, plus O(h) to find the successor in the worst case.</p>
+<h3 id="535-bst-complexity-the-big-warning">5.3.5 BST complexity — the big warning<a class="headerlink" href="#535-bst-complexity-the-big-warning" title="Permanent link">&para;</a></h3>
+<p>All BST operations are <strong>O(h)</strong>, where h is the tree height.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Insertion order</th>
+<th>Tree shape</th>
+<th style="text-align: center;">Height</th>
+<th style="text-align: center;">Cost per operation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Random</td>
+<td>Roughly balanced</td>
+<td style="text-align: center;">O(log n)</td>
+<td style="text-align: center;"><strong>O(log n)</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">Sorted ascending</td>
+<td>Linked list rightward</td>
+<td style="text-align: center;">O(n)</td>
+<td style="text-align: center;"><strong>O(n)</strong> ← <strong>disaster</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>The degenerate case.</strong> Inserting <code>1, 2, 3, 4, 5, 6, 7, 8, 9, 10</code> in sorted order produces a <strong>right-skewed</strong> BST that's functionally a linked list:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>1
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a> \
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>  2
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>   \
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    3
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>     \
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>      4
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>       ...
+</span></code></pre></div>
+<p>Height = n − 1. Search, insert, delete all O(n). <strong>The BST loses its advantage.</strong></p>
+<p><strong>This is why balanced trees exist</strong> — AVL (5.6), red-black (in the standard library), B-trees (5.8) — they guarantee h = O(log n) regardless of insertion order.</p>
+<hr />
+<h2 id="54-avl-trees">5.4 AVL trees<a class="headerlink" href="#54-avl-trees" title="Permanent link">&para;</a></h2>
+<h3 id="541-the-balance-condition">5.4.1 The balance condition<a class="headerlink" href="#541-the-balance-condition" title="Permanent link">&para;</a></h3>
+<p>An <strong>AVL tree</strong> (Adelson-Velsky &amp; Landis, 1962) is a BST where, for every node, the <strong>balance factor</strong> is −1, 0, or +1:</p>
+<div class="arithmatex">\[
+\text{balance}(x) = \text{height}(x.\text{right}) - \text{height}(x.\text{left})
+\]</div>
+<p><strong>Invariant:</strong> |balance(x)| ≤ 1 for all nodes.</p>
+<p><strong>Result:</strong> AVL trees guarantee <strong>h = O(log n)</strong>. All operations are O(log n) worst case.</p>
+<h3 id="542-the-four-rotation-cases">5.4.2 The four rotation cases<a class="headerlink" href="#542-the-four-rotation-cases" title="Permanent link">&para;</a></h3>
+<p>When insertion breaks the AVL invariant, one of four rotations restores it.</p>
+<p><strong>Case 1 — Right rotation (LL imbalance).</strong> Balance(x) = −2 (left-heavy), and the new node went into the <strong>left child's left subtree</strong>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>        x                         y
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>       / \                       / \
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>      y   T3       →            z   x
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>     / \                       / \ / \
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    z   T2                    T1 T2 T3 T4
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>   / \
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>  T1  T4
+</span></code></pre></div>
+<p><strong>Operation:</strong> y becomes the new root of this subtree; x becomes y's right child; y's old right subtree becomes x's left.</p>
+<p><strong>Case 2 — Left rotation (RR imbalance).</strong> Balance(x) = +2 (right-heavy), and the new node went into the <strong>right child's right subtree</strong>. Mirror of Case 1.</p>
+<p><strong>Case 3 — Left-right rotation (LR imbalance).</strong> Balance(x) = −2, but the new node went into the <strong>left child's right subtree</strong>.</p>
+<p><strong>Two rotations:</strong> first a <strong>left rotation on the left child</strong> (converts to Case 1), then a <strong>right rotation on x</strong>.</p>
+<p><strong>Case 4 — Right-left rotation (RL imbalance).</strong> Balance(x) = +2, new node into the <strong>right child's left subtree</strong>. Two rotations: right on right child, then left on x.</p>
+<h3 id="543-worked-example-right-rotation">5.4.3 Worked example — right rotation<a class="headerlink" href="#543-worked-example-right-rotation" title="Permanent link">&para;</a></h3>
+<p><strong>Before:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>        30 (bf = -2)
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>        /
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>      20 (bf = -1)
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>      /
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    10 (bf = 0)
+</span></code></pre></div></p>
+<p><strong>After right rotation at 30:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>      20 (bf = 0)
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>     /  \
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>   10    30
+</span></code></pre></div></p>
+<p>Height restored. Root is 20, all balance factors 0.</p>
+<h3 id="544-worked-example-left-right-lr-rotation">5.4.4 Worked example — left-right (LR) rotation<a class="headerlink" href="#544-worked-example-left-right-lr-rotation" title="Permanent link">&para;</a></h3>
+<p><strong>Before:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>        30 (bf = -2)
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>        /
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>      10 (bf = +1)
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>        \
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>        20
+</span></code></pre></div></p>
+<p><strong>Step 1 — left rotation at 10:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>        30 (bf = -2)
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>        /
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>      20
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>      /
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>    10
+</span></code></pre></div></p>
+<p><strong>Step 2 — right rotation at 30:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>      20 (bf = 0)
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>     /  \
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>   10    30
+</span></code></pre></div></p>
+<p>Both steps together = one <strong>LR rotation</strong>.</p>
+<h3 id="545-insert-trace-build-an-avl-from-17">5.4.5 Insert trace — build an AVL from 1..7<a class="headerlink" href="#545-insert-trace-build-an-avl-from-17" title="Permanent link">&para;</a></h3>
+<p>Inserting <code>1, 2, 3, 4, 5, 6, 7</code> in sorted order:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Insert</th>
+<th>Tree (before)</th>
+<th>Action</th>
+<th>Tree (after)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>(empty)</td>
+<td>insert</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td><code>1</code></td>
+<td>insert right</td>
+<td><code>1 \ 2</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td><code>1 \ 2</code></td>
+<td>bf(1) = +2 → RR case → <strong>left rotate at 1</strong></td>
+<td><code>2 / 1 \ 3</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td><code>2 / 1 \ 3</code></td>
+<td>insert right of 3</td>
+<td><code>2 / 1 \ 3 \ 4</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td><code>...</code></td>
+<td>bf(3) = +2 → RR case → <strong>left rotate at 3</strong></td>
+<td><code>2 / 1 \ 4 / 3 \ 5</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td><code>...</code></td>
+<td>insert right of 5</td>
+<td><code>2 / 1 \ 4 / 3 \ 5 \ 6</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td><code>...</code></td>
+<td>bf(4) = +2 → RR case → <strong>left rotate at 4</strong></td>
+<td><code>4 / 2 \ 6 / 1 \ 3 \ 5 \ 7</code> — balanced ✓</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Balanced after every step.</strong> This is the AVL guarantee: sequential insertion never produces a skewed tree.</p>
+<hr />
+<h2 id="55-heaps">5.5 Heaps<a class="headerlink" href="#55-heaps" title="Permanent link">&para;</a></h2>
+<h3 id="551-definition">5.5.1 Definition<a class="headerlink" href="#551-definition" title="Permanent link">&para;</a></h3>
+<p>A <strong>binary heap</strong> is a <strong>complete binary tree</strong> satisfying the <strong>heap property</strong>:</p>
+<ul>
+<li><strong>Min-heap:</strong> value(parent) ≤ value(children) — the minimum is at the root.</li>
+<li><strong>Max-heap:</strong> value(parent) ≥ value(children) — the maximum is at the root.</li>
+</ul>
+<p><strong>Crucially:</strong> a heap is <strong>not a BST</strong>. Left and right subtrees have no ordering relative to each other — only parent-vs-child matters.</p>
+<h3 id="552-array-representation">5.5.2 Array representation<a class="headerlink" href="#552-array-representation" title="Permanent link">&para;</a></h3>
+<p>Because a heap is a <strong>complete</strong> binary tree, it fits in an array with no wasted space:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Index:   0   1   2   3   4   5   6
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>Value:  [2,  5,  8, 10,  6, 15,  9]
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Relation</th>
+<th>Formula (0-indexed)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Parent of <code>i</code></td>
+<td><code>(i - 1) / 2</code></td>
+</tr>
+<tr>
+<td>Left child of <code>i</code></td>
+<td><code>2*i + 1</code></td>
+</tr>
+<tr>
+<td>Right child of <code>i</code></td>
+<td><code>2*i + 2</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>No pointers needed.</strong> Parent and child indices are computed arithmetically — the heap is a <strong>cache-friendly</strong> data structure by construction.</p>
+<h3 id="553-insert-sift-up">5.5.3 Insert — sift-up<a class="headerlink" href="#553-insert-sift-up" title="Permanent link">&para;</a></h3>
+<p><strong>Algorithm:</strong></p>
+<ol>
+<li>Append the new value at the end (index <code>size</code>).</li>
+<li><strong>Sift up</strong> — compare with parent; swap if violated. Repeat until invariant restored.</li>
+</ol>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kd">class</span> <span class="nc">MinHeap</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="mi">16</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">insert</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="na">length</span><span class="p">)</span><span class="w"> </span><span class="n">resize</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="w">        </span><span class="n">data</span><span class="o">[</span><span class="n">size</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="w">        </span><span class="n">siftUp</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="w">        </span><span class="n">size</span><span class="o">++</span><span class="p">;</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">siftUp</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">parent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">parent</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="w">            </span><span class="n">swap</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">parent</span><span class="p">);</span>
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a><span class="w">            </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parent</span><span class="p">;</span>
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>
+</span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">swap</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-17-22"><a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+</span><span id="__span-17-23"><a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-17-24"><a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a><span class="w">    </span><span class="c1">// resize as in Chapter 2</span>
+</span><span id="__span-17-25"><a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost: O(log n).</strong> Sift-up does at most one swap per level, and the tree height is <span class="arithmatex">\(\lfloor \log_2 n \rfloor\)</span>.</p>
+<h3 id="554-extract-min-sift-down">5.5.4 Extract-min — sift-down<a class="headerlink" href="#554-extract-min-sift-down" title="Permanent link">&para;</a></h3>
+<p><strong>Algorithm:</strong></p>
+<ol>
+<li>Save the root value (the min).</li>
+<li>Move the <strong>last</strong> element to the root; decrement <code>size</code>.</li>
+<li><strong>Sift down</strong> — compare with children; swap with the smaller child if violated. Repeat.</li>
+</ol>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">extractMin</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">"Heap empty"</span><span class="p">);</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">minVal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">    </span><span class="n">data</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">size</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">    </span><span class="n">size</span><span class="o">--</span><span class="p">;</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">    </span><span class="n">siftDown</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">minVal</span><span class="p">;</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="p">}</span>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">siftDown</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">smallest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">left</span><span class="w">  </span><span class="o">&lt;</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">left</span><span class="o">]</span><span class="w">  </span><span class="o">&lt;</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">smallest</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="n">smallest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">left</span><span class="p">;</span>
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">right</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">right</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="n">smallest</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="n">smallest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">right</span><span class="p">;</span>
+</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">smallest</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="w">        </span><span class="n">swap</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">smallest</span><span class="p">);</span>
+</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="w">        </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">smallest</span><span class="p">;</span>
+</span><span id="__span-18-18"><a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-18-19"><a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost: O(log n).</strong></p>
+<h3 id="555-peek-min-o1">5.5.5 Peek-min — O(1)<a class="headerlink" href="#555-peek-min-o1" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">peekMin</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="s">"Heap empty"</span><span class="p">);</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">data</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>The root is always the minimum.</strong> That's the whole point.</p>
+<h3 id="556-building-a-heap-from-n-elements-on">5.5.6 Building a heap from n elements — O(n)<a class="headerlink" href="#556-building-a-heap-from-n-elements-on" title="Permanent link">&para;</a></h3>
+<p>Naive build: n insertions, each O(log n) → <strong>O(n log n)</strong>.</p>
+<p><strong>Better:</strong> build in <strong>O(n)</strong> using bottom-up <code>siftDown</code> from the last internal node.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">heapify</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">arr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">    </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arr</span><span class="p">;</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">    </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arr</span><span class="p">.</span><span class="na">length</span><span class="p">;</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">)</span><span class="w"> </span><span class="n">siftDown</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Why O(n)?</strong> Most nodes are near the bottom and need <strong>0 or 1 swap</strong>. Only a few near the root need many swaps. The total work is bounded by:</p>
+<div class="arithmatex">\[
+\sum_{h=0}^{\log n} \frac{n}{2^{h+1}} \cdot O(h) = O(n).
+\]</div>
+<p>This is the geometric-decay sum from Chapter 2 — the number of nodes decreases exponentially with height, which cancels the increasing per-node cost.</p>
+<h3 id="557-heapsort-sort-using-a-heap">5.5.7 Heapsort — sort using a heap<a class="headerlink" href="#557-heapsort-sort-using-a-heap" title="Permanent link">&para;</a></h3>
+<p><strong>Algorithm:</strong></p>
+<ol>
+<li>Build a <strong>max-heap</strong> from the array — O(n).</li>
+<li>Repeatedly: swap the root (max) with the last element, decrement size, sift-down the new root — O(log n) each.</li>
+<li>After n iterations, the array is sorted.</li>
+</ol>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">heapsort</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="na">length</span><span class="p">;</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">    </span><span class="c1">// build max-heap</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">)</span><span class="w"> </span><span class="n">siftDown</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="w">    </span><span class="c1">// extract one element at a time</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="w">        </span><span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">);</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="w">        </span><span class="n">siftDown</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">);</span>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost: O(n log n)</strong> — O(n) build + n × O(log n) extract.</p>
+<p><strong>In-place: O(1) auxiliary space.</strong> This is heapsort's key advantage over merge sort.</p>
+<p><strong>Not stable.</strong> Equal values may be reordered.</p>
+<hr />
+<h2 id="worked-example-51-build-a-bst-from-sorted-input-worst-case">Worked example 5.1 — Build a BST from sorted input (worst case)<a class="headerlink" href="#worked-example-51-build-a-bst-from-sorted-input-worst-case" title="Permanent link">&para;</a></h2>
+<p><strong>Insertion order:</strong> <code>10, 20, 30, 40, 50</code>.</p>
+<p><strong>Tree after each insertion:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>Insert 10:  10
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>Insert 20:  10 \ 20
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>Insert 30:  10 \ 20 \ 30
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>Insert 40:  10 \ 20 \ 30 \ 40
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>Insert 50:  10 \ 20 \ 30 \ 40 \ 50
+</span></code></pre></div>
+<p><strong>Height: 4</strong> (n − 1 = 5 − 1 = 4). Every operation is <strong>O(n)</strong>, not O(log n).</p>
+<p><strong>Why?</strong> Each new key is larger than all existing keys, so it always goes to the rightmost leaf. The tree is a right-skewed list.</p>
+<p><strong>Fix:</strong> use a <strong>self-balancing</strong> BST — AVL (5.4) or red-black.</p>
+<hr />
+<h2 id="worked-example-52-build-a-bst-from-random-order-best-case">Worked example 5.2 — Build a BST from random order (best case)<a class="headerlink" href="#worked-example-52-build-a-bst-from-random-order-best-case" title="Permanent link">&para;</a></h2>
+<p><strong>Insertion order:</strong> <code>50, 30, 70, 20, 40, 60, 80</code>.</p>
+<p><strong>Tree after each insertion:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>50
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>→
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>   50
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>   / \
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>  30  70
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>→
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>      50
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>     /  \
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>    30   70
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>   / \   /
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>  20 40 60
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>→
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>      50
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>     /  \
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>    30   70
+</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a>   / \   / \
+</span><span id="__span-23-17"><a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a>  20 40 60 80
+</span></code></pre></div>
+<p><strong>Height: 2.</strong> All operations <strong>O(log n)</strong> (log₂ 7 ≈ 2.8).</p>
+<p><strong>Compare with Worked example 5.1.</strong> Same seven keys, different insertion order → dramatically different shape.</p>
+<p><strong>The lesson:</strong> BST performance depends on insertion order, which the programmer usually cannot control. <strong>Balanced BSTs are the safe choice.</strong></p>
+<hr />
+<h2 id="worked-example-53-in-order-traversal-of-a-bst-yields-sorted-order">Worked example 5.3 — In-order traversal of a BST yields sorted order<a class="headerlink" href="#worked-example-53-in-order-traversal-of-a-bst-yields-sorted-order" title="Permanent link">&para;</a></h2>
+<p><strong>BST:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>        50
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>       /  \
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>      30   70
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>     / \   / \
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>    20 40 60 80
+</span></code></pre></div></p>
+<p><strong>In-order trace (left, root, right):</strong></p>
+<p>Starting at root 50, we first go to left subtree (root 30), which itself goes to left (root 20):</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>- Descend to 20, no left → visit 20
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>- Back to 30 → visit 30
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>- Right of 30 → descend to 40, no left → visit 40 → no right
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>- Back to 50 → visit 50
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>- Right of 50 → descend to 70, left = 60 → descend to 60 → visit 60
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>- Back to 70 → visit 70
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>- Right of 70 → descend to 80 → visit 80
+</span></code></pre></div>
+<p><strong>Output:</strong> <code>20, 30, 40, 50, 60, 70, 80</code> — <strong>sorted</strong>. ✓</p>
+<p><strong>Why this is a theorem.</strong> The in-order traversal visits, at every node, the entire left subtree (all values &lt; node), then the node itself, then the entire right subtree (all values &gt; node). By induction, the whole traversal visits values in ascending order.</p>
+<p><strong>This is the primary use of in-order traversal</strong> — extract sorted data from a BST in O(n).</p>
+<p><strong>Cost.</strong> O(n) time, O(h) space.</p>
+<hr />
+<h2 id="worked-example-54-delete-from-a-bst-all-three-cases">Worked example 5.4 — Delete from a BST, all three cases<a class="headerlink" href="#worked-example-54-delete-from-a-bst-all-three-cases" title="Permanent link">&para;</a></h2>
+<p><strong>Starting tree:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>        50
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>       /  \
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>      30   70
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>     / \   / \
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>    20 40 60 80
+</span></code></pre></div></p>
+<p><strong>Case 1 — Delete leaf 20.</strong></p>
+<p>Simply remove node 20 and set parent's <code>left = null</code>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>        50
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>       /  \
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>      30   70
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>       \   / \
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>       40 60 80
+</span></code></pre></div>
+<p><strong>O(h)</strong> to find, O(1) to remove.</p>
+<p><strong>Case 2 — Delete node 30 (one child — 40).</strong></p>
+<p>Replace 30 with its child 40:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>        50
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>       /  \
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>      40   70
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>          / \
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>         60 80
+</span></code></pre></div>
+<p><strong>O(h)</strong>.</p>
+<p><strong>Case 3 — Delete node 70 (two children — 60 and 80).</strong></p>
+<p><strong>Find the in-order successor</strong> of 70 — the smallest value in its right subtree. The right subtree is <code>{80, 60}</code>. The smallest is <strong>60</strong>.</p>
+<p><strong>Replace 70's value with 60, then delete 60 from its original position</strong> (which is a leaf):</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>        50
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>       /  \
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>      40   60
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>            \
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>            80
+</span></code></pre></div>
+<p><strong>O(h)</strong> total — find node (O(h)), find successor (O(h) worst case), delete successor (O(h)).</p>
+<p><strong>Why in-order successor and not predecessor?</strong> Either works. Both preserve the BST invariant. <strong>Successor</strong> is the smallest value greater than the deleted node; <strong>predecessor</strong> is the largest smaller. Choosing one consistently is fine — some textbooks alternate for balance, but that's an over-optimisation.</p>
+<hr />
+<h2 id="worked-example-55-avl-right-rotation-step-by-step">Worked example 5.5 — AVL right rotation, step by step<a class="headerlink" href="#worked-example-55-avl-right-rotation-step-by-step" title="Permanent link">&para;</a></h2>
+<p><strong>Before:</strong> Right-heavy tree at node 30.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>        30
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>       /  \
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>      10   40
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>            \
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>            50
+</span></code></pre></div>
+<p><strong>Balance factors:</strong>
+- Node 50: bf = 0
+- Node 40: bf = +1
+- Node 30: bf = +2 → <strong>violated</strong> (RR case)</p>
+<p><strong>Action:</strong> left rotation at 30.</p>
+<p><strong>Result:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>        40
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>       /  \
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>      30   50
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>     /
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>    10
+</span></code></pre></div></p>
+<p><strong>Balance factors after:</strong>
+- Node 10: bf = 0
+- Node 30: bf = 0
+- Node 50: bf = 0
+- Node 40: bf = 0</p>
+<p><strong>All invariant.</strong> ✓</p>
+<p><strong>When does this happen?</strong> Inserting 50 into a tree <code>{30, 10, 40}</code> causes RR imbalance. Since RR is one of the 4 AVL cases, single left rotation fixes it.</p>
+<hr />
+<h2 id="worked-example-56-avl-left-right-rotation">Worked example 5.6 — AVL left-right rotation<a class="headerlink" href="#worked-example-56-avl-left-right-rotation" title="Permanent link">&para;</a></h2>
+<p><strong>Before:</strong> Left-heavy tree with right-heavy left child.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>        30
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>       /  
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>      10
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>        \
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>        20
+</span></code></pre></div>
+<p><strong>Balance factors:</strong>
+- Node 20: bf = 0
+- Node 10: bf = +1 (right child 20, no left)
+- Node 30: bf = −2 → violated, and left child is right-heavy → <strong>LR case</strong></p>
+<p><strong>Step 1 — left rotation at 10:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>        30
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>       /
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>      20
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>      /
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>     10
+</span></code></pre></div>
+<p>Now it's LL case (left-heavy at 30, left child 20 is left-heavy). </p>
+<p><strong>Step 2 — right rotation at 30:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>      20
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>     /  \
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>   10    30
+</span></code></pre></div>
+<p><strong>All balanced.</strong> ✓</p>
+<p><strong>Rule of thumb:</strong> whenever the tree is "zigzagged" (heavy on one side, but the heavy subtree is heavy on the other side), you need <strong>two rotations</strong>.</p>
+<hr />
+<h2 id="worked-example-57-avl-insertion-trace-concrete">Worked example 5.7 — AVL insertion trace (concrete)<a class="headerlink" href="#worked-example-57-avl-insertion-trace-concrete" title="Permanent link">&para;</a></h2>
+<p><strong>Build an AVL by inserting <code>10, 20, 30, 40, 50, 25</code> in that order.</strong></p>
+<p><strong>Insert 10:</strong> <code>10</code> — balanced.</p>
+<p><strong>Insert 20:</strong> <code>10 \ 20</code> — bf(10) = +1, OK.</p>
+<p><strong>Insert 30:</strong> <code>10 \ 20 \ 30</code> — bf(10) = +2, RR → <strong>left rotate at 10</strong>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>    20
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>   /  \
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>  10   30
+</span></code></pre></div>
+<p><strong>Insert 40:</strong> <code>20 / 10 \ 30 \ 40</code> — bf(30) = +1, OK.</p>
+<p><strong>Insert 50:</strong> <code>20 / 10 \ 30 \ 40 \ 50</code> — bf(30) = +2, RR → <strong>left rotate at 30</strong>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>      20
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>     /  \
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>    10   40
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>        /  \
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>       30   50
+</span></code></pre></div>
+<p><strong>Insert 25:</strong> goes to right of 20 → left of 30. New tree:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>      20
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>     /  \
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>    10   40
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a>        /  \
+</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a>       30   50
+</span><span id="__span-37-6"><a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a>      /
+</span><span id="__span-37-7"><a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a>     25
+</span></code></pre></div>
+<p><strong>Balance factors:</strong>
+- 25: bf = 0
+- 30: bf = −1 (left child 25, no right)
+- 40: bf = −1 (left child 30, right child 50)
+- 20: bf = +1 (right child 40, left 10)
+- 10: bf = 0</p>
+<p><strong>All balance factors within [−1, +1].</strong> No rotation needed. ✓</p>
+<p><strong>AVL invariant maintained throughout 6 insertions.</strong> Each insertion was O(log n).</p>
+<hr />
+<h2 id="worked-example-58-min-heap-insert-trace">Worked example 5.8 — Min-heap insert trace<a class="headerlink" href="#worked-example-58-min-heap-insert-trace" title="Permanent link">&para;</a></h2>
+<p><strong>Start:</strong> empty heap.</p>
+<p><strong>Insert 5, 3, 8, 1, 9, 2 in order.</strong></p>
+<p><strong>Insert 5:</strong> array = <code>[5]</code>.</p>
+<p><strong>Insert 3:</strong> array = <code>[5, 3]</code>. Sift-up: parent(1)=0, <code>data[1]=3 &lt; data[0]=5</code> → swap. Array = <code>[3, 5]</code>.</p>
+<p><strong>Insert 8:</strong> array = <code>[3, 5, 8]</code>. Parent(2)=0, <code>data[2]=8 ≥ data[0]=3</code> → no swap. Array = <code>[3, 5, 8]</code>.</p>
+<p><strong>Insert 1:</strong> array = <code>[3, 5, 8, 1]</code>. Sift-up: parent(3)=1, <code>data[3]=1 &lt; data[1]=5</code> → swap. Array = <code>[3, 1, 8, 5]</code>. Now parent of 1 is 0, <code>data[1]=1 &lt; data[0]=3</code> → swap. Array = <code>[1, 3, 8, 5]</code>.</p>
+<p><strong>Insert 9:</strong> array = <code>[1, 3, 8, 5, 9]</code>. Parent(4)=1, <code>data[4]=9 ≥ data[1]=3</code> → no swap. Array = <code>[1, 3, 8, 5, 9]</code>.</p>
+<p><strong>Insert 2:</strong> array = <code>[1, 3, 8, 5, 9, 2]</code>. Parent(5)=2, <code>data[5]=2 &lt; data[2]=8</code> → swap. Array = <code>[1, 3, 2, 5, 9, 8]</code>. Parent of 2 (index 2) is 0, <code>data[2]=2 ≥ data[0]=1</code> → no swap.</p>
+<p><strong>Final array:</strong> <code>[1, 3, 2, 5, 9, 8]</code>.</p>
+<p><strong>Verify min-heap property:</strong>
+- Parent 0 (1): children 3, 2. Both ≥ 1. ✓
+- Parent 1 (3): children 5, 9. Both ≥ 3. ✓
+- Parent 2 (2): child 8. 8 ≥ 2. ✓</p>
+<p><strong>Valid min-heap.</strong> Root is 1 — the minimum. ✓</p>
+<p><strong>Cost.</strong> Each sift-up is at most log n swaps. Six insertions → O(6 log 6) = O(n log n) total.</p>
+<hr />
+<h2 id="worked-example-59-min-heap-extract-min-trace">Worked example 5.9 — Min-heap extract-min trace<a class="headerlink" href="#worked-example-59-min-heap-extract-min-trace" title="Permanent link">&para;</a></h2>
+<p><strong>Start:</strong> heap <code>[1, 3, 2, 5, 9, 8]</code> (from Example 5.8).</p>
+<p><strong>Extract-min:</strong></p>
+<ol>
+<li>Save <code>min = 1</code> (root).</li>
+<li>Move last element (8) to root. Array = <code>[8, 3, 2, 5, 9]</code>.</li>
+<li>Sift-down from index 0:</li>
+<li>Children of 0: indices 1 (3) and 2 (2). Smaller child is 2 (index 2). <code>data[0]=8 &gt; 2</code> → swap. Array = <code>[2, 3, 8, 5, 9]</code>.</li>
+<li>At index 2: no children (2*2+1=5 ≥ size 5). Stop.</li>
+</ol>
+<p><strong>Return:</strong> 1.</p>
+<p><strong>Resulting array:</strong> <code>[2, 3, 8, 5, 9]</code>.</p>
+<p><strong>Verify min-heap:</strong>
+- Root 2: children 3, 8. Both ≥ 2. ✓
+- Node 3 (index 1): children 5, 9. Both ≥ 3. ✓</p>
+<p><strong>Valid min-heap.</strong> ✓</p>
+<p><strong>Cost.</strong> O(log n) — at most log n sift-down swaps.</p>
+<hr />
+<h2 id="worked-example-510-heapify-bottom-up-heap-construction">Worked example 5.10 — Heapify (bottom-up heap construction)<a class="headerlink" href="#worked-example-510-heapify-bottom-up-heap-construction" title="Permanent link">&para;</a></h2>
+<p><strong>Input array:</strong> <code>[4, 10, 3, 5, 1, 2]</code> (unsorted).</p>
+<p><strong>Build min-heap from bottom up:</strong></p>
+<p><strong>Start:</strong> <code>[4, 10, 3, 5, 1, 2]</code>, size = 6. Last internal node index = <code>6/2 - 1 = 2</code>.</p>
+<p><strong>Sift-down at index 2 (value 3):</strong>
+- Children: indices 5 (value 2). Only left child exists (2*2+2=6 ≥ size).
+- 3 &gt; 2 → swap. Array = <code>[4, 10, 2, 5, 1, 3]</code>.</p>
+<p><strong>Sift-down at index 1 (value 10):</strong>
+- Children: indices 3 (value 5) and 4 (value 1). Smaller is 1.
+- 10 &gt; 1 → swap. Array = <code>[4, 1, 2, 5, 10, 3]</code>.
+- At index 4: no children. Stop.</p>
+<p><strong>Sift-down at index 0 (value 4):</strong>
+- Children: 1 (value 1), 2 (value 2). Smaller is 1.
+- 4 &gt; 1 → swap. Array = <code>[1, 4, 2, 5, 10, 3]</code>.
+- At index 1 (value 4): children 3 (value 5), 4 (value 10). Both ≥ 4 → no swap.</p>
+<p><strong>Final array:</strong> <code>[1, 4, 2, 5, 10, 3]</code>.</p>
+<p><strong>Verify:</strong>
+- Root 1: children 4, 2. Both ≥ 1. ✓
+- Node 4: children 5, 10. Both ≥ 4. ✓
+- Node 2: child 3. 3 ≥ 2. ✓</p>
+<p><strong>Valid min-heap.</strong> ✓</p>
+<p><strong>Cost.</strong> O(n) — this is the O(n) heapify from §5.5.6. Compare to n × insert = O(n log n). The bottom-up approach is strictly faster.</p>
+<hr />
+<h2 id="worked-example-511-heapsort-on-a-small-array">Worked example 5.11 — Heapsort on a small array<a class="headerlink" href="#worked-example-511-heapsort-on-a-small-array" title="Permanent link">&para;</a></h2>
+<p><strong>Input:</strong> <code>[5, 2, 8, 1, 9, 3]</code>, sorted ascending.</p>
+<p><strong>Step 1 — Build a max-heap.</strong> (Similar to Example 5.10 but with max-heap comparisons.) Result: <code>[9, 5, 8, 1, 2, 3]</code>.</p>
+<p><strong>Step 2 — Extract max repeatedly</strong> (swap root with last, sift-down on remaining).</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Iteration</th>
+<th>Array</th>
+<th>Swap</th>
+<th>Sift-down</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td><code>[9, 5, 8, 1, 2, 3]</code></td>
+<td>swap 9 and 3</td>
+<td>sift-down on <code>[3, 5, 8, 1, 2]</code> → <code>[8, 5, 3, 1, 2, 9]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td><code>[8, 5, 3, 1, 2, 9]</code></td>
+<td>swap 8 and 2</td>
+<td>sift-down on <code>[2, 5, 3, 1]</code> → <code>[5, 2, 3, 1, 8, 9]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td><code>[5, 2, 3, 1, 8, 9]</code></td>
+<td>swap 5 and 1</td>
+<td>sift-down on <code>[1, 2, 3]</code> → <code>[3, 2, 1, 5, 8, 9]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td><code>[3, 2, 1, 5, 8, 9]</code></td>
+<td>swap 3 and 1</td>
+<td>sift-down on <code>[1, 2]</code> → <code>[2, 1, 3, 5, 8, 9]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td><code>[2, 1, 3, 5, 8, 9]</code></td>
+<td>swap 2 and 1</td>
+<td><code>[1, 2, 3, 5, 8, 9]</code> — <strong>sorted</strong> ✓</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Result:</strong> <code>[1, 2, 3, 5, 8, 9]</code> — sorted ascending.</p>
+<p><strong>Cost.</strong> O(n log n) — n extract-max operations, each O(log n).</p>
+<p><strong>In-place.</strong> Only O(1) auxiliary space — the same array is used for the heap and the output.</p>
+<hr />
+<h2 id="56-b-trees-brief">5.6 B+-trees (brief)<a class="headerlink" href="#56-b-trees-brief" title="Permanent link">&para;</a></h2>
+<p><strong>B+-trees</strong> are the workhorse of <strong>databases and file systems</strong> — a variation of balanced search trees designed for <strong>disk access</strong>, where reading a node is expensive.</p>
+<p><strong>Key differences from a binary tree:</strong></p>
+<ul>
+<li><strong>High branching factor</strong> — each node holds hundreds of keys (not just 2). A tree of height 3 holds millions of keys.</li>
+<li><strong>All values in leaves</strong> — internal nodes hold only routing keys. This makes leaves dense and fast to scan.</li>
+<li><strong>Leaves linked</strong> — sequential access (range queries) walks the leaf chain.</li>
+</ul>
+<p><strong>Why the branching factor matters.</strong> Each level of the tree corresponds to <strong>one disk read</strong>. With binary tree depth ~20 for a million records, you'd do ~20 disk reads. With a B+-tree branching factor 200, depth is ~3 → only <strong>3 disk reads</strong>. <strong>This is why databases use B+-trees, not binary trees.</strong></p>
+<p><strong>Preview only.</strong> Full treatment is beyond this course — see CLRS Chapter 18 or a database textbook for depth. This course's focus is the binary structures.</p>
+<hr />
+<h2 id="57-choosing-a-tree-structure">5.7 Choosing a tree structure<a class="headerlink" href="#57-choosing-a-tree-structure" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Application</th>
+<th>Structure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sorted iteration</strong> + <strong>ordered operations</strong> (range, predecessor)</td>
+<td><strong>BST</strong> (if balanced) or <strong>AVL / red-black</strong></td>
+</tr>
+<tr>
+<td><strong>Frequent insertions in unpredictable order</strong></td>
+<td><strong>Balanced BST</strong> (AVL / red-black) — never plain BST</td>
+</tr>
+<tr>
+<td><strong>Priority queue / min or max access</strong></td>
+<td><strong>Binary heap</strong></td>
+</tr>
+<tr>
+<td><strong>Sorting (in-place)</strong></td>
+<td><strong>Heapsort</strong></td>
+</tr>
+<tr>
+<td><strong>DB index / filesystem</strong></td>
+<td><strong>B+-tree</strong></td>
+</tr>
+<tr>
+<td><strong>Range queries on disk</strong></td>
+<td><strong>B+-tree</strong></td>
+</tr>
+<tr>
+<td><strong>Prefix search / strings</strong></td>
+<td><strong>Trie</strong> (not covered here)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="chapter-summary">Chapter summary<a class="headerlink" href="#chapter-summary" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Tree terminology</strong> — root, leaf, height, depth, ancestors, subtree. Height bounds: O(log n) minimum for n nodes, O(n) maximum.</li>
+<li><strong>Binary tree</strong> — at most 2 children per node. <strong>Complete</strong> binary trees fit in arrays compactly (heaps).</li>
+<li><strong>Four traversals</strong> — in-order (sorted for BST), pre-order (serialization), post-order (deletion), level-order (BFS with queue). All O(n).</li>
+<li><strong>BST</strong> — every operation is O(h). In-order traversal yields sorted order.</li>
+<li><strong>BST can degrade</strong> to a linked list with sorted insertion → O(n) per operation. This motivates <strong>AVL</strong>.</li>
+<li><strong>AVL</strong> — BST with |balance factor| ≤ 1. Guarantees h = O(log n). <strong>Four rotation cases</strong> — LL, RR, LR, RL.</li>
+<li><strong>Heap</strong> — complete binary tree with parent-child ordering. Array-representable with index arithmetic: parent = <code>(i-1)/2</code>, children = <code>2i+1</code>, <code>2i+2</code>.</li>
+<li><strong>Heap insert</strong> — append then sift-up. <strong>O(log n)</strong>. <strong>Extract-min</strong> — move last to root then sift-down. <strong>O(log n)</strong>.</li>
+<li><strong>Heapify</strong> — build a heap from n elements in <strong>O(n)</strong> (not O(n log n)) — geometric series argument.</li>
+<li><strong>Heapsort</strong> — O(n log n) time, O(1) space, not stable.</li>
+<li><strong>B+-trees</strong> — high branching factor (hundreds of children per node), disk-oriented — used by all major databases.</li>
+</ol>
+<hr />
+<h2 id="quiz">Quiz<a class="headerlink" href="#quiz" title="Permanent link">&para;</a></h2>
+<h3 id="a-multiple-choice">A. Multiple choice<a class="headerlink" href="#a-multiple-choice" title="Permanent link">&para;</a></h3>
+<ol>
+<li>In a <strong>BST</strong>, in-order traversal yields:</li>
+</ol>
+<p>(a) pre-order (b) post-order (c) <strong>sorted order</strong> (d) reverse-sorted order</p>
+<ol>
+<li>Search in a <strong>balanced</strong> BST of n nodes is:</li>
+</ol>
+<p>(a) O(1) (b) <strong>O(log n)</strong> (c) O(n) (d) O(n log n)</p>
+<ol>
+<li>Search in a <strong>skewed</strong> BST (inserted sorted) of n nodes is:</li>
+</ol>
+<p>(a) O(1) (b) O(log n) (c) <strong>O(n)</strong> (d) O(n log n)</p>
+<ol>
+<li>Which rotation restores balance in the LR case?</li>
+</ol>
+<p>(a) single right (b) single left (c) <strong>left then right</strong> (d) right then left</p>
+<ol>
+<li>A <strong>max-heap</strong> guarantees:</li>
+</ol>
+<p>(a) all nodes sorted (b) <strong>each node ≥ its children</strong> (c) left subtree &lt; right subtree (d) root is median</p>
+<ol>
+<li>In a 0-indexed heap array, the left child of index <code>i</code> is:</li>
+</ol>
+<p>(a) <code>i/2</code> (b) <code>i+1</code> (c) <strong><code>2i+1</code></strong> (d) <code>2i+2</code></p>
+<ol>
+<li>Insert into a heap of size n costs:</li>
+</ol>
+<p>(a) O(1) (b) <strong>O(log n)</strong> (c) O(n) (d) O(n log n)</p>
+<ol>
+<li>Building a heap from n unsorted elements (bottom-up) costs:</li>
+</ol>
+<p>(a) O(1) (b) O(log n) (c) <strong>O(n)</strong> (d) O(n log n)</p>
+<ol>
+<li><strong>Heapsort</strong> time and space complexity:</li>
+</ol>
+<p>(a) <strong>O(n log n), O(1)</strong> (b) O(n log n), O(n) (c) O(n²), O(1) (d) O(n), O(n)</p>
+<ol>
+<li>
+<p>Which tree does <strong>not</strong> guarantee O(log n) operations?</p>
+<p>(a) AVL (b) <strong>naive BST</strong> (c) red-black (d) B+-tree</p>
+</li>
+<li>
+<p>The in-order successor of a node in a BST is:</p>
+<p>(a) its parent (b) <strong>the smallest value in its right subtree</strong> (c) the largest value in its left subtree (d) always a leaf</p>
+</li>
+<li>
+<p>A <strong>B+-tree</strong> is preferred for databases because:</p>
+<p>(a) it's simpler (b) <strong>its high branching factor reduces disk I/O</strong> (c) it uses less memory (d) it's faster on CPU</p>
+</li>
+</ol>
+<h3 id="b-fill-in-the-blank">B. Fill in the blank<a class="headerlink" href="#b-fill-in-the-blank" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>The <strong>height</strong> of a leaf in a binary tree is <strong>_____</strong>.</p>
+</li>
+<li>
+<p>A binary tree with <span class="arithmatex">\(n\)</span> nodes has minimum height <strong>_____</strong> and maximum height <strong>_____</strong>.</p>
+</li>
+<li>
+<p>In-order traversal of a BST gives values in <strong>_____</strong> order.</p>
+</li>
+<li>
+<p>BST search is O(_____) where h is the tree height.</p>
+</li>
+<li>
+<p>An <strong>AVL tree</strong> maintains balance factor in <strong>_____</strong> for every node.</p>
+</li>
+<li>
+<p>The <strong>LR rotation</strong> consists of a <strong>_____</strong> rotation on the left child followed by a <strong>_____</strong> rotation on the original root.</p>
+</li>
+<li>
+<p>In a 0-indexed array heap, the parent of index <code>i</code> is at index <strong>_____</strong>.</p>
+</li>
+<li>
+<p>Insert into a heap: append, then <strong>_____</strong>.</p>
+</li>
+<li>
+<p>Extract-min: move last element to root, then <strong>_____</strong>.</p>
+</li>
+<li>
+<p><strong>Heapify</strong> builds a heap from n elements in <strong>O(_____)</strong> time.</p>
+</li>
+</ol>
+<h3 id="c-define-explain">C. Define / explain<a class="headerlink" href="#c-define-explain" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Define a <strong>tree</strong>. What distinguishes a tree from a general graph?</p>
+</li>
+<li>
+<p>State the <strong>BST property</strong>. Show that in-order traversal of a BST gives sorted order.</p>
+</li>
+<li>
+<p><strong>Insertion sort</strong> on an array has O(n²) worst case. Does a <strong>BST-based sort</strong> have the same problem? Explain.</p>
+</li>
+<li>
+<p>Describe the <strong>four AVL rotation cases</strong> (LL, RR, LR, RL). Which rotation does each one apply?</p>
+</li>
+<li>
+<p>Prove that a <strong>binary heap</strong> with n elements has height ⌊log₂ n⌋.</p>
+</li>
+<li>
+<p>Explain why <strong>building a heap bottom-up</strong> is O(n), not O(n log n).</p>
+</li>
+<li>
+<p>Describe the <strong>three cases of BST deletion</strong>. Which case requires the in-order successor?</p>
+</li>
+<li>
+<p>Compare a <strong>BST</strong> and a <strong>heap</strong> on: ordering, operations supported, time complexity of each.</p>
+</li>
+<li>
+<p>What is a <strong>B+-tree</strong>? Why is it preferred over a BST in databases?</p>
+</li>
+<li>
+<p>For each scenario, choose the best tree structure and justify: (a) storing sorted data with fast lookup; (b) priority queue; (c) DB index; (d) sorting in-place.</p>
+</li>
+</ol>
+<hr />
+<h2 id="answer-key">Answer key<a class="headerlink" href="#answer-key" title="Permanent link">&para;</a></h2>
+<details class="success">
+<summary>A. Multiple choice</summary>
+<ol>
+<li><strong>(c)</strong> sorted order.</li>
+<li><strong>(b)</strong> O(log n).</li>
+<li><strong>(c)</strong> O(n).</li>
+<li><strong>(c)</strong> left then right.</li>
+<li><strong>(b)</strong> each node ≥ children.</li>
+<li><strong>(c)</strong> 2i+1.</li>
+<li><strong>(b)</strong> O(log n).</li>
+<li><strong>(c)</strong> O(n).</li>
+<li><strong>(a)</strong> O(n log n), O(1).</li>
+<li><strong>(b)</strong> naive BST.</li>
+<li><strong>(b)</strong> smallest in right subtree.</li>
+<li><strong>(b)</strong> high branching factor reduces disk I/O.</li>
+</ol>
+</details>
+<details class="success">
+<summary>B. Fill in the blank</summary>
+<ol>
+<li>0</li>
+<li>⌊log₂ n⌋; n−1</li>
+<li>ascending (sorted)</li>
+<li><span class="arithmatex">\(h\)</span></li>
+<li>{−1, 0, +1}</li>
+<li>left; right</li>
+<li><code>(i - 1) / 2</code></li>
+<li>sift-up</li>
+<li>sift-down</li>
+<li><span class="arithmatex">\(n\)</span></li>
+</ol>
+</details>
+<details class="success">
+<summary>C. Define / explain — model answers</summary>
+<ol>
+<li><em>Tree:</em> a <strong>connected acyclic graph</strong>. <em>Distinguished from a general graph:</em> trees have no cycles (unique path between any two nodes), and if we root the tree at one node, every node has a unique parent. A graph may have cycles, may be disconnected, and has no inherent root/parent structure. Any n-node tree has exactly n−1 edges.</li>
+<li><em>BST property:</em> for every node, all values in the left subtree are strictly less than the node's value, and all values in the right subtree are strictly greater. <em>In-order sorted proof:</em> by induction on tree structure. For a leaf, the (empty) left, the leaf value, and the (empty) right give sorted output trivially. For an internal node, the left subtree's in-order traversal is sorted and contains all values &lt; node; the right subtree's is sorted and contains all values &gt; node. Concatenating (left, node, right) gives a fully sorted sequence.</li>
+<li><em>BST-based sort:</em> insert all elements into a BST, then in-order traverse. <strong>Cost:</strong> n insertions, each O(h). For a balanced BST, O(n log n). For a <strong>skewed</strong> BST (sorted insertion), O(n²). <strong>So yes, BST sort has the same worst case as insertion sort.</strong> Fix: use an AVL or red-black tree → O(n log n) worst case (this is "tree sort"). In practice, heapsort or merge sort are preferred because they don't need pointer overhead.</li>
+<li><em>Four AVL rotation cases:</em></li>
+<li><strong>LL</strong> — the new node went into the left subtree's left subtree. Fix: <strong>single right rotation</strong>.</li>
+<li><strong>RR</strong> — the new node went into the right subtree's right subtree. Fix: <strong>single left rotation</strong>.</li>
+<li><strong>LR</strong> — the new node went into the left subtree's right subtree. Fix: <strong>left rotation on the left child, then right rotation on the root</strong>.</li>
+<li><strong>RL</strong> — the new node went into the right subtree's left subtree. Fix: <strong>right rotation on the right child, then left rotation on the root</strong>.</li>
+<li><em>Heap height:</em> a heap is a <strong>complete</strong> binary tree — all levels full except possibly the last. Level 0 holds 1 node, level 1 holds up to 2, level <span class="arithmatex">\(k\)</span> holds up to <span class="arithmatex">\(2^k\)</span>. Total nodes up to level <span class="arithmatex">\(h\)</span>: <span class="arithmatex">\(\sum_{k=0}^{h} 2^k = 2^{h+1} - 1\)</span>. If a heap has <span class="arithmatex">\(n\)</span> nodes, then <span class="arithmatex">\(n &lt; 2^{h+2}\)</span> and <span class="arithmatex">\(n \ge 2^{h} - 1\)</span>. Simplifying: <span class="arithmatex">\(h = \lfloor \log_2 n \rfloor\)</span>. <strong>The height is the floor of log₂ n.</strong></li>
+<li><em>O(n) heapify:</em> sift-down is called once for each internal node, from the last internal node up to the root. A node at height <span class="arithmatex">\(h\)</span> performs at most <span class="arithmatex">\(h\)</span> swaps. The number of nodes at height <span class="arithmatex">\(h\)</span> is <span class="arithmatex">\(\lceil n/2^{h+1} \rceil\)</span>. Total work: <span class="arithmatex">\(\sum_{h=0}^{\log n} \lceil n/2^{h+1} \rceil \cdot h \le n \sum_{h=0}^{\log n} h/2^{h} = O(n)\)</span> — the geometric series <span class="arithmatex">\(\sum h/2^h = 2\)</span> converges. <strong>The number of nodes decreases exponentially with height, cancelling the linear per-node work.</strong></li>
+<li><em>BST deletion, three cases:</em></li>
+<li><strong>Leaf</strong> (no children) — remove directly.</li>
+<li><strong>One child</strong> — splice the child up.</li>
+<li><strong>Two children</strong> — replace the node's value with its <strong>in-order successor</strong> (smallest value in its right subtree), then delete the successor (which has at most one child — reducing to case 1 or 2).</li>
+<li><em>BST vs. heap:</em></li>
+<li><strong>Ordering:</strong> BST has ordering across all values; heap has ordering only parent-to-child.</li>
+<li><strong>Operations:</strong> BST supports search/insert/delete/predecessor/successor/range in O(h); heap supports insert/extract-min/peek-min and that's roughly it.</li>
+<li><strong>Time:</strong> BST O(h) per op (worst O(n)); balanced BST O(log n); heap O(log n) insert/extract, O(1) peek.</li>
+<li><strong>Space:</strong> heap is array-based (compact, cache-friendly); BST needs pointers per node.</li>
+<li><em>B+-tree:</em> a balanced multiway search tree with high branching factor (typically hundreds of children per node). All values stored in leaves; leaves linked for sequential access. <em>Why for DBs:</em> the branching factor makes height very small — typically <strong>height 3</strong> holds millions of records. Each tree level corresponds to one disk read, so lookups cost <strong>~3 disk reads</strong> instead of ~20 for a BST. Range queries are efficient because of the linked-leaf structure.</li>
+<li><em>Choice of structure:</em><ul>
+<li>(a) <strong>Sorted data with fast lookup:</strong> balanced BST (AVL or red-black). <strong>Not</strong> a plain BST — sorted insertion would degrade to O(n).</li>
+<li>(b) <strong>Priority queue:</strong> binary heap. <strong>Not</strong> a BST — heap's O(1) peek and O(log n) extract-min are optimal for priority ordering; BST's log n for min is worse and it has unnecessary ordering.</li>
+<li>(c) <strong>DB index:</strong> B+-tree. <strong>Not</strong> a BST — the high branching factor reduces disk I/O dramatically.</li>
+<li>(d) <strong>Sorting in-place:</strong> heapsort (which uses a heap). <strong>Not</strong> a BST — a BST sorts in O(n log n) but uses O(n) extra memory for pointers; heapsort is O(1) extra.</li>
+</ul>
+</li>
+</ol>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Weiss</strong>, Chapters 4–6 (Trees, BST, AVL, B-trees, hash tables).</li>
+<li><strong>Lafore</strong>, Chapters 8–11 (Binary trees, red-black, heaps, B-trees).</li>
+<li><strong>CLRS</strong>, Chapters 6 (Heaps), 12 (BST), 13 (Red-black), 18 (B-trees).</li>
+<li><strong>Sedgewick &amp; Wayne</strong>, Chapter 3 (Search trees).</li>
+<li><strong>Open Data Structures</strong>, Chapters 6 (Binary trees), 7 (Random BST), 8 (Treaps), 10 (Heaps) — rigorous with full implementations.</li>
+<li><strong>VisuAlgo</strong> — <a href="https://visualgo.net/">visualgo.net</a> — animated BST, AVL rotations, heap operations.</li>
+<li><strong>"The Anatomy of a Large-Scale Hypertextual Web Search Engine"</strong> (Brin &amp; Page, 1998) — how Google used BSTs for URL lookups.</li>
+<li><strong>PostgreSQL documentation</strong>, "Indexes" — how B+-trees work in a real database.</li>
+</ul>
+<hr />
+<h2 id="suggested-tutorial-problems">Suggested tutorial problems<a class="headerlink" href="#suggested-tutorial-problems" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>In-order traversal.</strong> Given tree with root 8, children 3 (with 1, 6) and 10 (with 14), what is the in-order traversal? Pre-order? Post-order?</p>
+</li>
+<li>
+<p><strong>BST insert trace.</strong> Insert <code>50, 30, 70, 20, 40, 60, 80</code> into an empty BST. Draw the tree. Verify in-order traversal.</p>
+</li>
+<li>
+<p><strong>BST degenerate case.</strong> Insert <code>1, 2, 3, 4, 5</code> in that order. Draw the tree. What is its height? Compare with the height of an AVL built from the same keys.</p>
+</li>
+<li>
+<p><strong>BST delete.</strong> From the tree in problem 2, delete 30. Which case does this fall into? Trace the resulting tree.</p>
+</li>
+<li>
+<p><strong>BST delete, two children.</strong> Delete 50 from the tree in problem 2. Which case? Find the in-order successor. Show the tree before and after.</p>
+</li>
+<li>
+<p><strong>AVL RR rotation.</strong> Build an AVL by inserting <code>10, 20, 30</code>. Which rotation? Trace the rotation on the board.</p>
+</li>
+<li>
+<p><strong>AVL LR rotation.</strong> Insert <code>30, 10, 20</code> in that order. Which case? Perform the rotation step by step.</p>
+</li>
+<li>
+<p><strong>AVL insertion trace.</strong> Build an AVL by inserting <code>1..10</code> in sorted order. After each insertion, show the tree. How many rotations in total?</p>
+</li>
+<li>
+<p><strong>Heap insert.</strong> Insert <code>10, 20, 5, 3, 15, 8</code> into an empty min-heap. Show the array and sift-up at each step.</p>
+</li>
+<li>
+<p><strong>Heap extract.</strong> Extract the minimum from the heap in problem 9. Show the sift-down.</p>
+</li>
+<li>
+<p><strong>Heapify.</strong> Convert <code>[5, 8, 3, 9, 1, 7, 2]</code> into a min-heap using bottom-up heapify. Show the array after each <code>siftDown</code> call.</p>
+</li>
+<li>
+<p><strong>Heapsort.</strong> Sort <code>[4, 1, 3, 2, 16, 9, 10, 14, 8, 7]</code> using heapsort. Show the array after each extract-max step.</p>
+</li>
+<li>
+<p><strong>Max vs. min heap.</strong> Explain how to find the <strong>maximum</strong> in a min-heap (in linear time, not O(1)). How would you find it in a max-heap?</p>
+</li>
+<li>
+<p><strong>BST validity.</strong> Design an algorithm to check whether a given binary tree is a valid BST. Give the O(n) recursive approach. What's a common bug in this problem?</p>
+</li>
+<li>
+<p><strong>In-order to tree.</strong> Given the in-order and pre-order traversals of a binary tree, reconstruct the tree. Show on <code>in-order = [4, 2, 5, 1, 3]</code>, <code>pre-order = [1, 2, 4, 5, 3]</code>.</p>
+</li>
+<li>
+<p><strong>Level-order to tree.</strong> Given a level-order traversal, can you always reconstruct the tree? Why or why not?</p>
+</li>
+<li>
+<p><strong>B+-tree motivation.</strong> A database holds 1 million records. Compare the number of disk reads needed to find one record using: (a) a sorted array with binary search, (b) a binary search tree, (c) a B+-tree with branching factor 200. Assume each tree node = 1 disk read, and the sorted array stores each record contiguously (so binary search = log₂(10⁶) ≈ 20 disk reads).</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

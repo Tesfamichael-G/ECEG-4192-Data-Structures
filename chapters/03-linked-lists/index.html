@@ -1,0 +1,3357 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BSc Electrical Engineering (Computer) · Semester VII · Module Data Storage and Analysis">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+        <link rel="canonical" href="https://tesfamichael-g.github.io/ECEG-4192-Data-Structures/chapters/03-linked-lists/">
+      
+      
+        <link rel="prev" href="../02-arrays/">
+      
+      
+        <link rel="next" href="../04-stacks-queues/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>3. Linked Lists - ECEG-4192 — Data Structures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-3-linked-lists" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-header__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECEG-4192 — Data Structures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3. Linked Lists
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../syllabus.md" class="md-tabs__link">
+        
+  
+    
+  
+  Syllabus
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../schedule.md" class="md-tabs__link">
+        
+  
+    
+  
+  Schedule
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../slides/index.md" class="md-tabs__link">
+          
+  
+    
+  
+  Slides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../solutions/" class="md-tabs__link">
+          
+  
+    
+  
+  Solutions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-nav__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    ECEG-4192 — Data Structures
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../syllabus.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syllabus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schedule
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction & Analysis of Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    3. Linked Lists
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    3. Linked Lists
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#31-node-structure-and-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Node structure and pointers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 Node structure and pointers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#311-the-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1.1 The node
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#312-the-null-terminator" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1.2 The null terminator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#313-why-not-just-use-an-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1.3 Why not just use an array?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32-singly-linked-list-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 Singly-linked list — operations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 Singly-linked list — operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#321-insert-at-head-front" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.1 Insert at head (front)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#322-insert-at-tail-end-without-tail-pointer" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.2 Insert at tail (end) — without tail pointer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#323-insert-at-tail-with-tail-pointer" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.3 Insert at tail — with tail pointer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#324-delete-by-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.4 Delete by value
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#325-traverse-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.5 Traverse — O(n)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#326-search-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.6 Search — O(n)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#327-full-cost-table-singly-linked" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.7 Full cost table (singly-linked)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33-doubly-linked-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 Doubly-linked list
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 Doubly-linked list">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#331-node-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3.1 Node structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#332-why-the-extra-pointer-pays-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3.2 Why the extra pointer pays off
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#333-insert-after-a-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3.3 Insert after a node
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#334-cost-table-doubly-linked" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3.4 Cost table (doubly-linked)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#34-circular-linked-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 Circular linked list
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4 Circular linked list">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#341-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4.1 Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#342-when-to-use-a-circular-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4.2 When to use a circular list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#343-careful-no-null-terminator" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4.3 Careful — no null terminator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-31-insert-at-head-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 3.1 — Insert at head, step by step
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-32-insert-at-tail-with-tail-pointer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 3.2 — Insert at tail with tail pointer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-33-delete-by-value-full-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 3.3 — Delete by value — full trace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-34-reverse-a-singly-linked-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 3.4 — Reverse a singly-linked list
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-35-merge-two-sorted-lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 3.5 — Merge two sorted lists
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-36-detect-a-cycle-floyds-tortoise-and-hare" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 3.6 — Detect a cycle (Floyd's tortoise and hare)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-37-find-the-middle-of-a-linked-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 3.7 — Find the middle of a linked list
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-38-doubly-linked-list-lru-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 3.8 — Doubly-linked list: LRU cache
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-39-josephus-problem-with-a-circular-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 3.9 — Josephus problem with a circular list
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#35-comparison-arrays-vs-linked-lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.5 Comparison — arrays vs. linked lists
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quiz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quiz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-multiple-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      A. Multiple choice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-fill-in-the-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      B. Fill in the blank
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-define-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      C. Define / explain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Answer key
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suggested-tutorial-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Suggested tutorial problems
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Stacks and Queues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Trees
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Hash Tables
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Graphs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. Sorting Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Slides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/index.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../solutions/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Solutions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#31-node-structure-and-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Node structure and pointers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 Node structure and pointers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#311-the-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1.1 The node
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#312-the-null-terminator" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1.2 The null terminator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#313-why-not-just-use-an-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1.3 Why not just use an array?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32-singly-linked-list-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 Singly-linked list — operations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 Singly-linked list — operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#321-insert-at-head-front" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.1 Insert at head (front)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#322-insert-at-tail-end-without-tail-pointer" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.2 Insert at tail (end) — without tail pointer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#323-insert-at-tail-with-tail-pointer" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.3 Insert at tail — with tail pointer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#324-delete-by-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.4 Delete by value
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#325-traverse-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.5 Traverse — O(n)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#326-search-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.6 Search — O(n)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#327-full-cost-table-singly-linked" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.7 Full cost table (singly-linked)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33-doubly-linked-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 Doubly-linked list
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 Doubly-linked list">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#331-node-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3.1 Node structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#332-why-the-extra-pointer-pays-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3.2 Why the extra pointer pays off
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#333-insert-after-a-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3.3 Insert after a node
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#334-cost-table-doubly-linked" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3.4 Cost table (doubly-linked)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#34-circular-linked-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 Circular linked list
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4 Circular linked list">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#341-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4.1 Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#342-when-to-use-a-circular-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4.2 When to use a circular list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#343-careful-no-null-terminator" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4.3 Careful — no null terminator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-31-insert-at-head-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 3.1 — Insert at head, step by step
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-32-insert-at-tail-with-tail-pointer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 3.2 — Insert at tail with tail pointer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-33-delete-by-value-full-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 3.3 — Delete by value — full trace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-34-reverse-a-singly-linked-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 3.4 — Reverse a singly-linked list
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-35-merge-two-sorted-lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 3.5 — Merge two sorted lists
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-36-detect-a-cycle-floyds-tortoise-and-hare" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 3.6 — Detect a cycle (Floyd's tortoise and hare)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-37-find-the-middle-of-a-linked-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 3.7 — Find the middle of a linked list
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-38-doubly-linked-list-lru-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 3.8 — Doubly-linked list: LRU cache
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-39-josephus-problem-with-a-circular-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 3.9 — Josephus problem with a circular list
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#35-comparison-arrays-vs-linked-lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.5 Comparison — arrays vs. linked lists
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quiz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quiz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-multiple-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      A. Multiple choice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-fill-in-the-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      B. Fill in the blank
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-define-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      C. Define / explain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Answer key
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suggested-tutorial-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Suggested tutorial problems
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="chapter-3-linked-lists">Chapter 3 — Linked Lists<a class="headerlink" href="#chapter-3-linked-lists" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">Chapter at a glance</p>
+<p><strong>Contact hours:</strong> 2 lecture + 1 tutorial + 2 lab · <strong>Home study:</strong> ~5 h</p>
+<p><strong>Coverage (syllabus):</strong> memory allocation · operations in linked lists · variations
+of linked lists: circular, doubly-linked.</p>
+</div>
+<hr />
+<h2 id="learning-outcomes">Learning outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Explain the <strong>node-and-pointer</strong> memory model that underlies linked lists.</li>
+<li>Implement a <strong>singly-linked list</strong> with insert, delete, search, and traverse.</li>
+<li>Implement a <strong>doubly-linked list</strong> and explain when the extra pointer pays off.</li>
+<li>Implement a <strong>circular linked list</strong> and identify its applications.</li>
+<li><strong>Reverse</strong>, <strong>merge</strong>, and <strong>sort</strong> a linked list.</li>
+<li>Detect cycles and find the middle of a linked list using <strong>Floyd's algorithm</strong>.</li>
+<li>Compare linked lists to arrays with a full operation-by-operation cost table.</li>
+<li>Justify choosing linked list over array (or vice versa) for a given problem.</li>
+</ol>
+<hr />
+<h2 id="31-node-structure-and-pointers">3.1 Node structure and pointers<a class="headerlink" href="#31-node-structure-and-pointers" title="Permanent link">&para;</a></h2>
+<h3 id="311-the-node">3.1.1 The node<a class="headerlink" href="#311-the-node" title="Permanent link">&para;</a></h3>
+<p>A <strong>node</strong> holds one value and (at least) one pointer to the next node:</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">class</span> <span class="nc">Node</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="kt">int</span><span class="w">  </span><span class="n">value</span><span class="p">;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">next</span><span class="p">;</span><span class="w">   </span><span class="c1">// reference to the next node, or null</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="n">Node</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>In memory, a linked list is <strong>not contiguous</strong>. Each node is a separate heap allocation:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Heap:
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  [Node{value:10, next:→}]  at address 0x1000
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  [Node{value:20, next:→}]  at address 0x2050
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  [Node{value:30, next:→}]  at address 0x3f00
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  ...
+</span></code></pre></div>
+<p>The <code>next</code> pointer stores the address of the following node. The list is formed by <strong>following</strong> these pointers from the <strong>head</strong>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>head → 10 → 20 → 30 → null
+</span></code></pre></div>
+<h3 id="312-the-null-terminator">3.1.2 The null terminator<a class="headerlink" href="#312-the-null-terminator" title="Permanent link">&para;</a></h3>
+<p>The last node's <code>next</code> is <strong>null</strong> — the standard signal for "end of list." Every traversal loop must check for <code>null</code> before dereferencing:</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">Node</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">value</span><span class="p">);</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Null pointer bugs are the dominant bug class in linked-list code.</strong> Forget the null check, and you'll get <code>NullPointerException</code> at runtime (Java) or a segfault (C).</p>
+<h3 id="313-why-not-just-use-an-array">3.1.3 Why not just use an array?<a class="headerlink" href="#313-why-not-just-use-an-array" title="Permanent link">&para;</a></h3>
+<p>Different layout → different costs:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th style="text-align: center;">Array</th>
+<th style="text-align: center;">Linked list</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Access by index <code>a[i]</code></td>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td>Insert at front</td>
+<td style="text-align: center;">O(n)</td>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+</tr>
+<tr>
+<td>Insert at end</td>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+<td style="text-align: center;">O(1) with tail pointer</td>
+</tr>
+<tr>
+<td>Delete at front</td>
+<td style="text-align: center;">O(n)</td>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+</tr>
+<tr>
+<td>Cache locality</td>
+<td style="text-align: center;"><strong>Excellent</strong></td>
+<td style="text-align: center;">Poor</td>
+</tr>
+</tbody>
+</table>
+<p>The linked list trades <strong>random access</strong> for <strong>cheap insertion and deletion at known positions</strong>. Chapter 3 is about knowing when this trade is worth it.</p>
+<hr />
+<h2 id="32-singly-linked-list-operations">3.2 Singly-linked list — operations<a class="headerlink" href="#32-singly-linked-list-operations" title="Permanent link">&para;</a></h2>
+<h3 id="321-insert-at-head-front">3.2.1 Insert at head (front)<a class="headerlink" href="#321-insert-at-head-front" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">Node</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kt">void</span><span class="w"> </span><span class="nf">insertAtHead</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="n">n</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span><span class="w">      </span><span class="c1">// new node points to old head</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w">            </span><span class="c1">// update head pointer</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost: O(1).</strong> Regardless of list length.</p>
+<p><strong>Trace.</strong> Insert 30, 20, 10 in that order:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Step</th>
+<th>List</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">Insert 30</td>
+<td><code>30 → null</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">Insert 20</td>
+<td><code>20 → 30 → null</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">Insert 10</td>
+<td><code>10 → 20 → 30 → null</code></td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>order of insertion is reversed</strong> in the final list — an important consequence of insert-at-head.</p>
+<h3 id="322-insert-at-tail-end-without-tail-pointer">3.2.2 Insert at tail (end) — without tail pointer<a class="headerlink" href="#322-insert-at-tail-end-without-tail-pointer" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">insertAtTail</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">head</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">        </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">;</span><span class="w">   </span><span class="c1">// walk to last</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost: O(n)</strong> — must traverse to the end every time.</p>
+<h3 id="323-insert-at-tail-with-tail-pointer">3.2.3 Insert at tail — with tail pointer<a class="headerlink" href="#323-insert-at-tail-with-tail-pointer" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">Node</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kt">void</span><span class="w"> </span><span class="nf">insertAtTail</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">head</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="n">tail</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="n">tail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost: O(1).</strong> The extra <code>tail</code> pointer costs one reference (8 bytes), saves O(n) per append.</p>
+<h3 id="324-delete-by-value">3.2.4 Delete by value<a class="headerlink" href="#324-delete-by-value" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">head</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">head</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">.</span><span class="na">next</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">.</span><span class="na">next</span><span class="p">;</span><span class="w">   </span><span class="c1">// skip over the match</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost: O(n)</strong> — search for the value, then O(1) to unlink.</p>
+<p><strong>Careful trace.</strong> List <code>10 → 20 → 30 → null</code>, delete 20:</p>
+<ul>
+<li><code>cur = 10</code>; <code>cur.next.value = 20 == x</code> → stop.</li>
+<li><code>cur.next = cur.next.next</code> → <code>cur.next = 30</code>.</li>
+<li>Result: <code>10 → 30 → null</code> ✓</li>
+</ul>
+<h3 id="325-traverse-on">3.2.5 Traverse — O(n)<a class="headerlink" href="#325-traverse-on" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">print</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">value</span><span class="p">);</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>O(n) time, O(1) space.</strong></p>
+<h3 id="326-search-on">3.2.6 Search — O(n)<a class="headerlink" href="#326-search-on" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kt">boolean</span><span class="w"> </span><span class="nf">contains</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>O(n) worst case.</strong> Even with tail pointer, search requires walking.</p>
+<h3 id="327-full-cost-table-singly-linked">3.2.7 Full cost table (singly-linked)<a class="headerlink" href="#327-full-cost-table-singly-linked" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th style="text-align: center;">Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Insert at head</td>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+</tr>
+<tr>
+<td>Insert at tail (no tail)</td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td>Insert at tail (with tail)</td>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+</tr>
+<tr>
+<td>Insert after given node</td>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+</tr>
+<tr>
+<td>Delete at head</td>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+</tr>
+<tr>
+<td>Delete by value</td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td>Access by index</td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td>Search</td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td>Traverse</td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The pattern:</strong> anything involving the <strong>head</strong> is O(1); anything requiring <strong>reaching a specific position</strong> is O(n).</p>
+<hr />
+<h2 id="33-doubly-linked-list">3.3 Doubly-linked list<a class="headerlink" href="#33-doubly-linked-list" title="Permanent link">&para;</a></h2>
+<h3 id="331-node-structure">3.3.1 Node structure<a class="headerlink" href="#331-node-structure" title="Permanent link">&para;</a></h3>
+<p>A doubly-linked node adds a <code>prev</code> pointer:</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kd">class</span> <span class="nc">Node</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="kt">int</span><span class="w">  </span><span class="n">value</span><span class="p">;</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">prev</span><span class="p">;</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">next</span><span class="p">;</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="n">Node</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>The list can be traversed <strong>both directions</strong>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>null ← 10 ⇄ 20 ⇄ 30 → null
+</span></code></pre></div>
+<h3 id="332-why-the-extra-pointer-pays-off">3.3.2 Why the extra pointer pays off<a class="headerlink" href="#332-why-the-extra-pointer-pays-off" title="Permanent link">&para;</a></h3>
+<p>With <code>prev</code>, you can:</p>
+<ul>
+<li><strong>Traverse backward</strong> — useful for reverse iteration.</li>
+<li><strong>Delete a node given a pointer to it</strong> in O(1) — no need to walk to find the predecessor.</li>
+</ul>
+<p>The last is the big one. In a singly-linked list, deleting a node <code>x</code> requires finding its predecessor — O(n). In a doubly-linked list, <code>x.prev</code> gives it directly.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">deleteNode</span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="na">prev</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="na">prev</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="k">else</span><span class="w">                </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="na">next</span><span class="p">;</span><span class="w">      </span><span class="c1">// x was head</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="na">next</span><span class="p">.</span><span class="na">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="na">prev</span><span class="p">;</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="c1">// x is now unlinked; Java GC collects it</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>O(1).</strong> This is why a doubly-linked list is used for <strong>LRU caches</strong> — where nodes are constantly moved and removed by pointer.</p>
+<h3 id="333-insert-after-a-node">3.3.3 Insert after a node<a class="headerlink" href="#333-insert-after-a-node" title="Permanent link">&para;</a></h3>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">insertAfter</span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="n">n</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">    </span><span class="n">n</span><span class="p">.</span><span class="na">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="na">next</span><span class="p">.</span><span class="na">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">    </span><span class="n">x</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>O(1).</strong> Four pointer updates.</p>
+<h3 id="334-cost-table-doubly-linked">3.3.4 Cost table (doubly-linked)<a class="headerlink" href="#334-cost-table-doubly-linked" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th style="text-align: center;">Singly</th>
+<th style="text-align: center;">Doubly</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Insert at head</td>
+<td style="text-align: center;">O(1)</td>
+<td style="text-align: center;">O(1)</td>
+</tr>
+<tr>
+<td>Insert at tail</td>
+<td style="text-align: center;">O(1) with tail</td>
+<td style="text-align: center;">O(1)</td>
+</tr>
+<tr>
+<td>Insert after node</td>
+<td style="text-align: center;">O(1)</td>
+<td style="text-align: center;">O(1)</td>
+</tr>
+<tr>
+<td><strong>Delete given node</strong></td>
+<td style="text-align: center;"><strong>O(n)</strong></td>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+</tr>
+<tr>
+<td>Traverse forward</td>
+<td style="text-align: center;">O(n)</td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td>Traverse backward</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Extra cost:</strong> two pointers per node (16 bytes vs. 8 on 64-bit systems) — <strong>double the memory</strong>.</p>
+<hr />
+<h2 id="34-circular-linked-list">3.4 Circular linked list<a class="headerlink" href="#34-circular-linked-list" title="Permanent link">&para;</a></h2>
+<h3 id="341-structure">3.4.1 Structure<a class="headerlink" href="#341-structure" title="Permanent link">&para;</a></h3>
+<p>The last node's <code>next</code> points back to the <strong>head</strong> instead of <code>null</code>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>10 → 20 → 30 → 10 → 20 → 30 → ...
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>↑                              │
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>└──────────────────────────────┘
+</span></code></pre></div>
+<h3 id="342-when-to-use-a-circular-list">3.4.2 When to use a circular list<a class="headerlink" href="#342-when-to-use-a-circular-list" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Round-robin scheduling</strong> — a scheduler cycles through processes; after the last, wraps to the first.</li>
+<li><strong>Circular buffers</strong> — streaming audio/video, where data wraps around.</li>
+<li><strong>Josephus problem</strong> — a group elimination game.</li>
+<li><strong>Anywhere "next after last" means "first"</strong> — the pointer structure naturally models this.</li>
+</ul>
+<h3 id="343-careful-no-null-terminator">3.4.3 Careful — no null terminator<a class="headerlink" href="#343-careful-no-null-terminator" title="Permanent link">&para;</a></h3>
+<p>Circular lists have <strong>no null</strong> to signal the end. Traversal must <strong>stop when it returns to the head</strong> — otherwise it loops forever:</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">printCircular</span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">head</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">head</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="k">do</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">value</span><span class="p">);</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">        </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">head</span><span class="p">);</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>The <code>do...while</code> guarantees at least one iteration, and stops when <code>cur</code> returns to <code>head</code>.</p>
+<hr />
+<h2 id="worked-example-31-insert-at-head-step-by-step">Worked example 3.1 — Insert at head, step by step<a class="headerlink" href="#worked-example-31-insert-at-head-step-by-step" title="Permanent link">&para;</a></h2>
+<p><strong>Goal.</strong> Build <code>10 → 20 → 30</code> by inserting at head.</p>
+<p><strong>Code:</strong></p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">insertAtHead</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="n">n</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">    </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Trace.</strong></p>
+<p><strong>Insert 10:</strong> <code>n = Node(10)</code>, <code>n.next = null</code>, <code>head = n</code>. List: <code>10 → null</code>.</p>
+<p><strong>Insert 20:</strong> <code>n = Node(20)</code>, <code>n.next = head (10)</code>, <code>head = n (20)</code>. List: <code>20 → 10 → null</code>.</p>
+<p><strong>Insert 30:</strong> <code>n = Node(30)</code>, <code>n.next = head (20)</code>, <code>head = n (30)</code>. List: <code>30 → 20 → 10 → null</code>.</p>
+<p><strong>Final list:</strong> <code>30 → 20 → 10 → null</code> — <strong>reversed</strong> relative to insertion order.</p>
+<p><strong>Cost.</strong> Three insertions, each <strong>O(1)</strong>. <strong>Total: O(1) regardless of list length.</strong></p>
+<p><strong>Contrast with array.</strong> To build <code>[30, 20, 10]</code> by inserting at the front of an array: each insertion shifts all existing elements → O(n) per insert → O(n²) for n inserts. <strong>Linked list is n× faster here.</strong></p>
+<hr />
+<h2 id="worked-example-32-insert-at-tail-with-tail-pointer">Worked example 3.2 — Insert at tail with tail pointer<a class="headerlink" href="#worked-example-32-insert-at-tail-with-tail-pointer" title="Permanent link">&para;</a></h2>
+<p><strong>Goal.</strong> Build <code>10 → 20 → 30</code> in original order.</p>
+<p><strong>Code:</strong></p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">Node</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="kt">void</span><span class="w"> </span><span class="nf">insertAtTail</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">head</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="w">    </span><span class="n">tail</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="w">    </span><span class="n">tail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Trace.</strong></p>
+<p><strong>Insert 10:</strong> <code>head = tail = Node(10)</code>. List: <code>10 → null</code>.</p>
+<p><strong>Insert 20:</strong> <code>tail.next = Node(20)</code> (so <code>10.next = 20</code>); <code>tail = Node(20)</code>. List: <code>10 → 20 → null</code>.</p>
+<p><strong>Insert 30:</strong> <code>tail.next = Node(30)</code> (so <code>20.next = 30</code>); <code>tail = Node(30)</code>. List: <code>10 → 20 → 30 → null</code>.</p>
+<p><strong>Final list:</strong> <code>10 → 20 → 30 → null</code> — <strong>original order</strong> preserved.</p>
+<p><strong>Cost.</strong> Three insertions, each <strong>O(1)</strong>. <strong>Total: O(1)</strong> — but requires the extra <code>tail</code> pointer.</p>
+<p><strong>Trade-off.</strong> Without the tail pointer, insert-at-tail is O(n) per call; with it, O(1). The tail pointer is worth 8 bytes of memory in almost every scenario where you append.</p>
+<hr />
+<h2 id="worked-example-33-delete-by-value-full-trace">Worked example 3.3 — Delete by value — full trace<a class="headerlink" href="#worked-example-33-delete-by-value-full-trace" title="Permanent link">&para;</a></h2>
+<p><strong>Goal.</strong> Delete 20 from <code>10 → 20 → 30 → 40 → null</code>.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">head</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">head</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">.</span><span class="na">next</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Trace.</strong></p>
+<ul>
+<li><code>head = 10</code>. <code>10.value == 20</code>? No.</li>
+<li><code>cur = 10</code>. <code>cur.next.value = 20 == 20</code>? No, we're checking <code>cur.next.value</code>. Wait — <code>cur.next = Node(20)</code>, so <code>cur.next.value = 20</code>. Match! Exit loop.</li>
+</ul>
+<p>Wait — that's the check <code>cur.next.value != x</code> — we exit when <code>cur.next.value == x</code>, i.e., when <code>cur.next</code> is the node to delete.</p>
+<ul>
+<li><code>cur = 10</code>. <code>cur.next = Node(20)</code>, <code>cur.next.value = 20</code>. Match → exit loop.</li>
+<li><code>cur.next = cur.next.next</code> → <code>cur.next = Node(30)</code>.</li>
+<li>List: <code>10 → 30 → 40 → null</code>.</li>
+</ul>
+<p><strong>Correct.</strong></p>
+<p><strong>Cost.</strong> 1 comparison of <code>head</code>, 1 comparison of <code>cur.next</code>, 1 pointer update. <strong>Total: O(n) worst case</strong> — if the target is at the end, <code>cur</code> must walk the whole list.</p>
+<p><strong>Common bug.</strong> Forgetting to handle <code>head</code> as a special case. If <code>x = 10</code> (head), the loop condition <code>cur.next.value != x</code> will never fire — <code>cur</code> starts at head, and <code>head.value == x</code> is not checked in the loop. The special case at the top is mandatory.</p>
+<hr />
+<h2 id="worked-example-34-reverse-a-singly-linked-list">Worked example 3.4 — Reverse a singly-linked list<a class="headerlink" href="#worked-example-34-reverse-a-singly-linked-list" title="Permanent link">&para;</a></h2>
+<p><strong>Goal.</strong> Reverse <code>1 → 2 → 3 → 4 → 5 → null</code> in place → <code>5 → 4 → 3 → 2 → 1 → null</code>.</p>
+<p><strong>Approach 1 — iterative three-pointer trick.</strong></p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">Node</span><span class="w"> </span><span class="nf">reverse</span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">head</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">        </span><span class="n">Node</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">;</span><span class="w">   </span><span class="c1">// save next</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">        </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">prev</span><span class="p">;</span><span class="w">        </span><span class="c1">// reverse current's pointer</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="w">        </span><span class="n">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">;</span><span class="w">             </span><span class="c1">// advance prev</span>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="w">        </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">next</span><span class="p">;</span><span class="w">             </span><span class="c1">// advance cur</span>
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">prev</span><span class="p">;</span><span class="w">                 </span><span class="c1">// new head</span>
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Trace on <code>1 → 2 → 3 → null</code>:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Iteration</th>
+<th><code>prev</code></th>
+<th><code>cur</code></th>
+<th><code>cur.next</code> (saved)</th>
+<th>After <code>cur.next = prev</code></th>
+<th>After advance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td>null</td>
+<td>Node(1)</td>
+<td>Node(2)</td>
+<td>1 → null</td>
+<td>prev=1, cur=2</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td>Node(1)</td>
+<td>Node(2)</td>
+<td>Node(3)</td>
+<td>2 → 1</td>
+<td>prev=2, cur=3</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>Node(2)</td>
+<td>Node(3)</td>
+<td>null</td>
+<td>3 → 2</td>
+<td>prev=3, cur=null</td>
+</tr>
+<tr>
+<td style="text-align: center;">exit</td>
+<td>Node(3)</td>
+<td>null</td>
+<td>—</td>
+<td>—</td>
+<td>return prev (3)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Final list:</strong> <code>3 → 2 → 1 → null</code> — reversed. <strong>Return <code>prev</code> as new head.</strong> ✓</p>
+<p><strong>Cost.</strong> One pass, each node visited once. <strong>O(n) time, O(1) space.</strong></p>
+<p><strong>Approach 2 — recursive.</strong></p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">Node</span><span class="w"> </span><span class="nf">reverse</span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">head</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">head</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">head</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">newHead</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reverse</span><span class="p">(</span><span class="n">head</span><span class="p">.</span><span class="na">next</span><span class="p">);</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">    </span><span class="n">head</span><span class="p">.</span><span class="na">next</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">    </span><span class="n">head</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">newHead</span><span class="p">;</span>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost.</strong> O(n) time, <strong>O(n) stack space</strong> (recursion depth = n). The iterative version is preferred for large lists.</p>
+<p><strong>Why reversal is easy on linked lists but O(n) on arrays.</strong> Reversing a linked list just flips pointers — no data movement. Reversing an array requires swapping <code>n/2</code> pairs. Both are O(n) time, but the <strong>constant is much smaller</strong> for linked lists (3 pointer writes per node vs. 2 array writes + 2 reads per pair).</p>
+<hr />
+<h2 id="worked-example-35-merge-two-sorted-lists">Worked example 3.5 — Merge two sorted lists<a class="headerlink" href="#worked-example-35-merge-two-sorted-lists" title="Permanent link">&para;</a></h2>
+<p><strong>Goal.</strong> Given two sorted lists <code>1 → 3 → 5</code> and <code>2 → 4 → 6</code>, produce <code>1 → 2 → 3 → 4 → 5 → 6</code>.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">Node</span><span class="w"> </span><span class="nf">merge</span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">dummy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dummy</span><span class="p">;</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="na">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">tail</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="na">next</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="w">        </span><span class="k">else</span><span class="w">                    </span><span class="p">{</span><span class="w"> </span><span class="n">tail</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="na">next</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="w">        </span><span class="n">tail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tail</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="w">    </span><span class="n">tail</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w">   </span><span class="c1">// append remaining</span>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">dummy</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Trace on <code>1 → 3 → 5</code> and <code>2 → 4 → 6</code>:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Step</th>
+<th><code>a</code></th>
+<th><code>b</code></th>
+<th><code>tail.next</code></th>
+<th>Output so far</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">init</td>
+<td>1</td>
+<td>2</td>
+<td>null</td>
+<td><code>dummy</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td>3</td>
+<td>2</td>
+<td>1</td>
+<td><code>dummy → 1</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>3</td>
+<td>4</td>
+<td>2</td>
+<td><code>→ 1 → 2</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>5</td>
+<td>4</td>
+<td>3</td>
+<td><code>→ 1 → 2 → 3</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>5</td>
+<td>6</td>
+<td>4</td>
+<td><code>→ 1 → 2 → 3 → 4</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>null</td>
+<td>6</td>
+<td>5</td>
+<td><code>→ 1 → 2 → 3 → 4 → 5</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">exit</td>
+<td>null</td>
+<td>6</td>
+<td>—</td>
+<td>append remainder: <code>→ 6</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Final:</strong> <code>1 → 2 → 3 → 4 → 5 → 6 → null</code> ✓</p>
+<p><strong>Cost.</strong> Each node visited once. <strong>O(m + n) time, O(1) space</strong> (reuses existing nodes).</p>
+<p><strong>The <code>dummy</code> node trick.</strong> Using <code>Node dummy = new Node(0)</code> avoids the "first iteration sets head" special case. The dummy is discarded (<code>return dummy.next</code>) — the actual data starts from <code>dummy.next</code>.</p>
+<p>This is <strong>the most important linked-list idiom</strong> in competitive programming and production. Learn it, use it, teach it.</p>
+<p><strong>Why merge is easier on linked lists than arrays.</strong> Merging two arrays requires shifting to make room for the merged element — O(n²) if done naively. Merging two <strong>sorted</strong> arrays is O(m + n) with a new output array, but O(m + n) extra space. Merging two <strong>linked lists</strong> is O(m + n) time and O(1) space — just splice pointers.</p>
+<hr />
+<h2 id="worked-example-36-detect-a-cycle-floyds-tortoise-and-hare">Worked example 3.6 — Detect a cycle (Floyd's tortoise and hare)<a class="headerlink" href="#worked-example-36-detect-a-cycle-floyds-tortoise-and-hare" title="Permanent link">&para;</a></h2>
+<p><strong>Problem.</strong> Given a linked list, determine whether it contains a <strong>cycle</strong> (a node whose <code>next</code> eventually points back to an earlier node).</p>
+<p><strong>Naive approach.</strong> Use a <code>HashSet</code> of visited nodes; detect duplicates. <strong>O(n) time, O(n) space.</strong></p>
+<p><strong>Floyd's algorithm — O(1) space.</strong></p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kt">boolean</span><span class="w"> </span><span class="nf">hasCycle</span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">head</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">slow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">,</span><span class="w"> </span><span class="n">fast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">fast</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">fast</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="w">        </span><span class="n">slow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">slow</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="w">        </span><span class="n">fast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fast</span><span class="p">.</span><span class="na">next</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">slow</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">fast</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Why it works.</strong> If there's a cycle, the <code>slow</code> pointer (1 step/iter) and <code>fast</code> (2 steps/iter) eventually meet <strong>inside the cycle</strong>. If there's no cycle, <code>fast</code> reaches <code>null</code> and the loop terminates.</p>
+<p><strong>Trace with a cycle</strong> on <code>1 → 2 → 3 → 4 → 2 → (3 → 4 → 2 → ...)</code>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Step</th>
+<th><code>slow</code></th>
+<th><code>fast</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">init</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>3</td>
+<td>2 (wrapped)</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>3</td>
+<td>2</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td>4</td>
+<td>4 — <strong>match!</strong> return true</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Cost.</strong> O(n) time, O(1) space.</p>
+<p><strong>The tortoise and hare insight.</strong> In a cycle of length <span class="arithmatex">\(c\)</span>, once both pointers are in the cycle, the gap between them decreases by 1 per iteration (fast gains 1 on slow). After at most <span class="arithmatex">\(c\)</span> iterations, they meet. <strong>Total time:</strong> O(n + c) = O(n).</p>
+<p><strong>Extension.</strong> Once they meet, to find the <strong>start of the cycle</strong>: reset <code>slow</code> to <code>head</code>; advance both <code>slow</code> and <code>fast</code> one step at a time. They meet at the cycle start. This follows from the fact that the distance from head to cycle-start equals the distance from meeting point to cycle-start.</p>
+<hr />
+<h2 id="worked-example-37-find-the-middle-of-a-linked-list">Worked example 3.7 — Find the middle of a linked list<a class="headerlink" href="#worked-example-37-find-the-middle-of-a-linked-list" title="Permanent link">&para;</a></h2>
+<p><strong>Problem.</strong> Given a linked list, find the middle node in one pass.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="n">Node</span><span class="w"> </span><span class="nf">middle</span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">head</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">slow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">,</span><span class="w"> </span><span class="n">fast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">fast</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">fast</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">        </span><span class="n">slow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">slow</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">        </span><span class="n">fast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fast</span><span class="p">.</span><span class="na">next</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">slow</span><span class="p">;</span>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Trace on <code>1 → 2 → 3 → 4 → 5</code> (odd length):</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Step</th>
+<th><code>slow</code></th>
+<th><code>fast</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">init</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>3</td>
+<td>5</td>
+</tr>
+<tr>
+<td style="text-align: center;">exit (fast.next = null)</td>
+<td><strong>3</strong></td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Middle is node 3.</strong> ✓</p>
+<p><strong>Trace on <code>1 → 2 → 3 → 4</code> (even length):</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Step</th>
+<th><code>slow</code></th>
+<th><code>fast</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">init</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>3</td>
+<td>null</td>
+</tr>
+<tr>
+<td style="text-align: center;">exit</td>
+<td><strong>3</strong></td>
+<td>null</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Middle is node 3</strong> — the "upper middle" of 2 and 3. If you want the lower middle, initialize <code>fast = head.next</code> instead.</p>
+<p><strong>Cost.</strong> O(n) time, O(1) space.</p>
+<p><strong>This two-pointer pattern</strong> — <code>slow</code> + <code>fast</code> — is one of the most reusable tools for linked-list problems. Floyd's cycle detection (Example 3.6), middle-finding (this example), and palindrome-checking all use it.</p>
+<hr />
+<h2 id="worked-example-38-doubly-linked-list-lru-cache">Worked example 3.8 — Doubly-linked list: LRU cache<a class="headerlink" href="#worked-example-38-doubly-linked-list-lru-cache" title="Permanent link">&para;</a></h2>
+<p><strong>LRU (Least Recently Used) cache</strong> is the classic application of a doubly-linked list. The cache keeps the <code>k</code> most recently used items. When full, it evicts the <strong>least</strong> recently used.</p>
+<p><strong>Design.</strong></p>
+<ul>
+<li><strong>HashMap:</strong> key → node, for O(1) lookup.</li>
+<li><strong>Doubly-linked list:</strong> maintains recency order — head = most recent, tail = least recent.</li>
+</ul>
+<p><strong>Operations:</strong></p>
+<ul>
+<li><code>get(key)</code>: if key exists, move node to head (mark as recently used). O(1).</li>
+<li><code>put(key, value)</code>: if key exists, update and move to head. If new and cache full, evict tail. Insert new node at head. O(1).</li>
+</ul>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="kd">class</span> <span class="nc">LRUCache</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">    </span><span class="kd">class</span> <span class="nc">Node</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="n">prev</span><span class="p">,</span><span class="w"> </span><span class="n">next</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="w">    </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">Integer</span><span class="p">,</span><span class="w"> </span><span class="n">Node</span><span class="o">&gt;</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(),</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">();</span><span class="w">   </span><span class="c1">// sentinel nodes</span>
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">capacity</span><span class="p">;</span>
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="w">    </span><span class="n">LRUCache</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">cap</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="w">        </span><span class="n">capacity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cap</span><span class="p">;</span>
+</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="w">        </span><span class="n">head</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tail</span><span class="p">;</span>
+</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a><span class="w">        </span><span class="n">tail</span><span class="p">.</span><span class="na">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+</span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-24-13"><a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a>
+</span><span id="__span-24-14"><a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-24-15"><a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a><span class="w">        </span><span class="n">Node</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">map</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+</span><span id="__span-24-16"><a id="__codelineno-24-16" name="__codelineno-24-16" href="#__codelineno-24-16"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-24-17"><a id="__codelineno-24-17" name="__codelineno-24-17" href="#__codelineno-24-17"></a><span class="w">        </span><span class="n">moveToHead</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+</span><span id="__span-24-18"><a id="__codelineno-24-18" name="__codelineno-24-18" href="#__codelineno-24-18"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="na">value</span><span class="p">;</span>
+</span><span id="__span-24-19"><a id="__codelineno-24-19" name="__codelineno-24-19" href="#__codelineno-24-19"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-24-20"><a id="__codelineno-24-20" name="__codelineno-24-20" href="#__codelineno-24-20"></a>
+</span><span id="__span-24-21"><a id="__codelineno-24-21" name="__codelineno-24-21" href="#__codelineno-24-21"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">put</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-24-22"><a id="__codelineno-24-22" name="__codelineno-24-22" href="#__codelineno-24-22"></a><span class="w">        </span><span class="n">Node</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">map</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+</span><span id="__span-24-23"><a id="__codelineno-24-23" name="__codelineno-24-23" href="#__codelineno-24-23"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-24-24"><a id="__codelineno-24-24" name="__codelineno-24-24" href="#__codelineno-24-24"></a><span class="w">            </span><span class="n">n</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+</span><span id="__span-24-25"><a id="__codelineno-24-25" name="__codelineno-24-25" href="#__codelineno-24-25"></a><span class="w">            </span><span class="n">moveToHead</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+</span><span id="__span-24-26"><a id="__codelineno-24-26" name="__codelineno-24-26" href="#__codelineno-24-26"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-24-27"><a id="__codelineno-24-27" name="__codelineno-24-27" href="#__codelineno-24-27"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">map</span><span class="p">.</span><span class="na">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">capacity</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-24-28"><a id="__codelineno-24-28" name="__codelineno-24-28" href="#__codelineno-24-28"></a><span class="w">                </span><span class="n">Node</span><span class="w"> </span><span class="n">lru</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tail</span><span class="p">.</span><span class="na">prev</span><span class="p">;</span>
+</span><span id="__span-24-29"><a id="__codelineno-24-29" name="__codelineno-24-29" href="#__codelineno-24-29"></a><span class="w">                </span><span class="n">removeNode</span><span class="p">(</span><span class="n">lru</span><span class="p">);</span>
+</span><span id="__span-24-30"><a id="__codelineno-24-30" name="__codelineno-24-30" href="#__codelineno-24-30"></a><span class="w">                </span><span class="n">map</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="n">lru</span><span class="p">.</span><span class="na">key</span><span class="p">);</span>
+</span><span id="__span-24-31"><a id="__codelineno-24-31" name="__codelineno-24-31" href="#__codelineno-24-31"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-24-32"><a id="__codelineno-24-32" name="__codelineno-24-32" href="#__codelineno-24-32"></a><span class="w">            </span><span class="n">Node</span><span class="w"> </span><span class="n">nn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">();</span>
+</span><span id="__span-24-33"><a id="__codelineno-24-33" name="__codelineno-24-33" href="#__codelineno-24-33"></a><span class="w">            </span><span class="n">nn</span><span class="p">.</span><span class="na">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">key</span><span class="p">;</span><span class="w"> </span><span class="n">nn</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+</span><span id="__span-24-34"><a id="__codelineno-24-34" name="__codelineno-24-34" href="#__codelineno-24-34"></a><span class="w">            </span><span class="n">insertAtHead</span><span class="p">(</span><span class="n">nn</span><span class="p">);</span>
+</span><span id="__span-24-35"><a id="__codelineno-24-35" name="__codelineno-24-35" href="#__codelineno-24-35"></a><span class="w">            </span><span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">nn</span><span class="p">);</span>
+</span><span id="__span-24-36"><a id="__codelineno-24-36" name="__codelineno-24-36" href="#__codelineno-24-36"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-24-37"><a id="__codelineno-24-37" name="__codelineno-24-37" href="#__codelineno-24-37"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-24-38"><a id="__codelineno-24-38" name="__codelineno-24-38" href="#__codelineno-24-38"></a>
+</span><span id="__span-24-39"><a id="__codelineno-24-39" name="__codelineno-24-39" href="#__codelineno-24-39"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">moveToHead</span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">removeNode</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"> </span><span class="n">insertAtHead</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-24-40"><a id="__codelineno-24-40" name="__codelineno-24-40" href="#__codelineno-24-40"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">removeNode</span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="na">prev</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="na">next</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="na">next</span><span class="p">.</span><span class="na">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="na">prev</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-24-41"><a id="__codelineno-24-41" name="__codelineno-24-41" href="#__codelineno-24-41"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">insertAtHead</span><span class="p">(</span><span class="n">Node</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-24-42"><a id="__codelineno-24-42" name="__codelineno-24-42" href="#__codelineno-24-42"></a><span class="w">        </span><span class="n">n</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">.</span><span class="na">next</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="na">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+</span><span id="__span-24-43"><a id="__codelineno-24-43" name="__codelineno-24-43" href="#__codelineno-24-43"></a><span class="w">        </span><span class="n">head</span><span class="p">.</span><span class="na">next</span><span class="p">.</span><span class="na">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">head</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</span><span id="__span-24-44"><a id="__codelineno-24-44" name="__codelineno-24-44" href="#__codelineno-24-44"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-24-45"><a id="__codelineno-24-45" name="__codelineno-24-45" href="#__codelineno-24-45"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost.</strong> Every operation is <strong>O(1)</strong>. The doubly-linked list gives O(1) removal of any node; the hash map gives O(1) lookup.</p>
+<p><strong>Why not just a hash map alone?</strong> A hash map is unordered — it can't tell you which entry is "least recently used." The doubly-linked list maintains the ordering. Together, they provide O(1) LRU semantics.</p>
+<p><strong>Why not just a linked list alone?</strong> Finding a node by key would be O(n). The hash map provides O(1) access to the node.</p>
+<p><strong>This pattern — hash map + doubly-linked list — is used in every LRU cache in production</strong>, from Redis to Linux page caches to web browsers.</p>
+<hr />
+<h2 id="worked-example-39-josephus-problem-with-a-circular-list">Worked example 3.9 — Josephus problem with a circular list<a class="headerlink" href="#worked-example-39-josephus-problem-with-a-circular-list" title="Permanent link">&para;</a></h2>
+<p><strong>Setup.</strong> <span class="arithmatex">\(n\)</span> people numbered 1 to <span class="arithmatex">\(n\)</span> sit in a circle. Starting from 1, we skip <span class="arithmatex">\(k-1\)</span> people and eliminate the <span class="arithmatex">\(k\)</span>-th. Then from the next person, skip <span class="arithmatex">\(k-1\)</span> and eliminate the <span class="arithmatex">\(k\)</span>-th. Repeat until one survives.</p>
+<p><strong>Example:</strong> <span class="arithmatex">\(n = 7\)</span>, <span class="arithmatex">\(k = 3\)</span> → survivors eliminated in order: 3, 6, 2, 7, 5, 1. Survivor: 4.</p>
+<p><strong>With a circular linked list:</strong></p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">josephus</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">        </span><span class="n">Node</span><span class="w"> </span><span class="n">nn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">head</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nn</span><span class="p">;</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nn</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">tail</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nn</span><span class="p">;</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nn</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="w">    </span><span class="n">tail</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">;</span><span class="w">   </span><span class="c1">// make it circular</span>
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a><span class="w">    </span><span class="n">Node</span><span class="w"> </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">head</span><span class="p">,</span><span class="w"> </span><span class="n">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tail</span><span class="p">;</span>
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">cur</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a><span class="w">            </span><span class="n">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">;</span>
+</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a><span class="w">            </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-25-16"><a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a><span class="w">        </span><span class="c1">// eliminate cur</span>
+</span><span id="__span-25-17"><a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a><span class="w">        </span><span class="n">prev</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-25-18"><a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a><span class="w">        </span><span class="n">cur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">next</span><span class="p">;</span>
+</span><span id="__span-25-19"><a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-25-20"><a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">cur</span><span class="p">.</span><span class="na">value</span><span class="p">;</span>
+</span><span id="__span-25-21"><a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Trace (n=3, k=2):</strong></p>
+<p>Initial circle: <code>1 → 2 → 3 → (back to 1)</code>.</p>
+<ul>
+<li>Skip 1, eliminate 2: <code>1 → 3 → (back to 1)</code>.</li>
+<li>Skip 3, eliminate 1: <code>3 → (back to 3)</code>.</li>
+<li>Survivor: <strong>3</strong>.</li>
+</ul>
+<p><strong>Closed form (for the record):</strong> the survivor is <span class="arithmatex">\(J(n, k) = (J(n-1, k) + k) \bmod n\)</span> with <span class="arithmatex">\(J(1, k) = 0\)</span>, giving positions 0-indexed. The linked-list simulation is what most candidates write in interviews, then the recursion.</p>
+<p><strong>Cost.</strong> Each elimination is O(k) (skipping), total O(nk). The recursion is O(n) — but the linked-list version is easier to understand and to verify.</p>
+<hr />
+<h2 id="35-comparison-arrays-vs-linked-lists">3.5 Comparison — arrays vs. linked lists<a class="headerlink" href="#35-comparison-arrays-vs-linked-lists" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th style="text-align: center;">Array</th>
+<th style="text-align: center;">Linked list</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Random access <code>a[i]</code></strong></td>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td>Search (unsorted)</td>
+<td style="text-align: center;">O(n)</td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td>Search (sorted)</td>
+<td style="text-align: center;"><strong>O(log n)</strong></td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td>Insert at front</td>
+<td style="text-align: center;">O(n)</td>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+</tr>
+<tr>
+<td>Insert at end</td>
+<td style="text-align: center;"><strong>O(1)</strong> amortised</td>
+<td style="text-align: center;">O(1) with tail</td>
+</tr>
+<tr>
+<td>Insert in middle (position known)</td>
+<td style="text-align: center;">O(n)</td>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+</tr>
+<tr>
+<td>Insert in middle (must find)</td>
+<td style="text-align: center;">O(n)</td>
+<td style="text-align: center;">O(n)</td>
+</tr>
+<tr>
+<td>Delete at front</td>
+<td style="text-align: center;">O(n)</td>
+<td style="text-align: center;"><strong>O(1)</strong></td>
+</tr>
+<tr>
+<td>Delete given node pointer</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;"><strong>O(1)</strong> (doubly)</td>
+</tr>
+<tr>
+<td>Cache locality</td>
+<td style="text-align: center;"><strong>Excellent</strong></td>
+<td style="text-align: center;">Poor</td>
+</tr>
+<tr>
+<td>Memory overhead</td>
+<td style="text-align: center;"><strong>None</strong></td>
+<td style="text-align: center;">8–16 bytes per node</td>
+</tr>
+</tbody>
+</table>
+<p><strong>How to choose:</strong></p>
+<ul>
+<li><strong>Random access dominates?</strong> → Array.</li>
+<li><strong>Insert/delete at front dominates?</strong> → Linked list.</li>
+<li><strong>Insert/delete in middle dominates and you can find the node cheaply?</strong> → Doubly-linked list.</li>
+<li><strong>Sorted lookup dominates?</strong> → Array (binary search) or balanced tree (Chapter 5).</li>
+<li><strong>Cache friendliness matters?</strong> → Array — 10–100× faster in wall-clock for linear scans.</li>
+</ul>
+<hr />
+<h2 id="chapter-summary">Chapter summary<a class="headerlink" href="#chapter-summary" title="Permanent link">&para;</a></h2>
+<ol>
+<li>A <strong>node</strong> holds a value and one or two <strong>pointers</strong> (<code>next</code>, <code>prev</code>). The list is formed by following pointers from the <strong>head</strong>.</li>
+<li><strong>Singly-linked lists</strong> support O(1) insert at head, O(1) insert at tail with a tail pointer, O(n) search, and O(n) random access.</li>
+<li><strong>Doubly-linked lists</strong> add a <code>prev</code> pointer, enabling O(1) delete of a given node — the basis of <strong>LRU caches</strong>.</li>
+<li><strong>Circular lists</strong> have no null terminator; traversal stops when it returns to the head.</li>
+<li><strong>Reversal, merge, cycle detection, and middle-finding</strong> are the classic patterns — all use the two-pointer trick.</li>
+<li>The <strong><code>dummy</code> node</strong> trick eliminates special-casing the head — learn it and use it everywhere.</li>
+<li><strong>Arrays win on random access and cache locality</strong>; linked lists win on insertion/deletion at known positions.</li>
+<li>Choose the right structure based on the <strong>operation mix</strong>, not on a generic preference.</li>
+</ol>
+<hr />
+<h2 id="quiz">Quiz<a class="headerlink" href="#quiz" title="Permanent link">&para;</a></h2>
+<h3 id="a-multiple-choice">A. Multiple choice<a class="headerlink" href="#a-multiple-choice" title="Permanent link">&para;</a></h3>
+<ol>
+<li>In a singly-linked list, <code>insert at head</code> costs:</li>
+</ol>
+<p>(a) O(1) (b) O(log n) (c) O(n) (d) O(n²)</p>
+<ol>
+<li>In a singly-linked list <strong>without</strong> a tail pointer, <code>insert at tail</code> costs:</li>
+</ol>
+<p>(a) O(1) (b) O(log n) (c) O(n) (d) O(n²)</p>
+<ol>
+<li>Adding a <code>prev</code> pointer to each node lets you delete a given node in:</li>
+</ol>
+<p>(a) O(1) (b) O(log n) (c) O(n) (d) O(n²)</p>
+<ol>
+<li>Floyd's cycle-detection algorithm uses:</li>
+</ol>
+<p>(a) a hash set (b) a stack (c) two pointers at different speeds (d) recursion</p>
+<ol>
+<li>Reversing a singly-linked list in place takes:</li>
+</ol>
+<p>(a) O(1) time, O(1) space (b) O(n) time, O(1) space
+   (c) O(n) time, O(n) space (d) O(n log n) time, O(1) space</p>
+<ol>
+<li>The <code>dummy</code> node trick is used to:</li>
+</ol>
+<p>(a) save memory (b) eliminate the special case of the first insertion
+   (c) avoid null checks (d) make the list circular</p>
+<ol>
+<li>Merging two sorted lists of sizes m and n takes:</li>
+</ol>
+<p>(a) O(m + n) time, O(m + n) space (b) O(m + n) time, O(1) space
+   (c) O(m · n) time (d) O(log m + log n) time</p>
+<ol>
+<li>In a <strong>circular</strong> linked list, traversal must stop when:</li>
+</ol>
+<p>(a) <code>next == null</code> (b) the pointer returns to head (c) a counter reaches n
+   (d) the value becomes negative</p>
+<ol>
+<li>In Floyd's algorithm, the two pointers advance at:</li>
+</ol>
+<p>(a) the same speed (b) 1 and 2 steps per iteration (c) 1 and log n steps
+   (d) 1 and n steps</p>
+<ol>
+<li>
+<p>The LRU cache uses which combination?</p>
+<p>(a) array + hash map (b) doubly-linked list + hash map
+(c) stack + queue (d) two arrays</p>
+</li>
+<li>
+<p>Deleting the <strong>first</strong> element of a singly-linked list costs:</p>
+<p>(a) O(1) (b) O(log n) (c) O(n) (d) O(n²)</p>
+</li>
+<li>
+<p>Accessing the <strong>i-th</strong> element of a linked list costs:</p>
+<p>(a) O(1) (b) O(log n) (c) O(i) → O(n) worst case (d) O(n²)</p>
+</li>
+</ol>
+<h3 id="b-fill-in-the-blank">B. Fill in the blank<a class="headerlink" href="#b-fill-in-the-blank" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>A node in a linked list contains a value and a <strong>____</strong> pointer.</p>
+</li>
+<li>
+<p>Inserting at head of a singly-linked list costs <strong>O(_____)</strong>.</p>
+</li>
+<li>
+<p>The last node's <code>next</code> is <strong>_____</strong> in a non-circular singly-linked list.</p>
+</li>
+<li>
+<p>A doubly-linked list node has both <code>next</code> and <strong>_____</strong> pointers.</p>
+</li>
+<li>
+<p>Floyd's algorithm runs in O(n) time and <strong>O(_____</strong> space.</p>
+</li>
+<li>
+<p>The <strong>_____</strong> node trick eliminates special-casing when building a new list.</p>
+</li>
+<li>
+<p>LRU cache combines a hash map with a <strong>_____</strong> linked list.</p>
+</li>
+<li>
+<p>In a circular linked list, the last node's <code>next</code> points to the <strong>_____</strong>.</p>
+</li>
+<li>
+<p>Reversing a singly-linked list uses <strong>_____</strong> pointers (<code>prev</code>, <code>cur</code>, <code>next</code>).</p>
+</li>
+<li>
+<p>Finding the middle with two pointers uses one that moves 1 step and one that moves <strong>_____</strong> steps.</p>
+</li>
+</ol>
+<h3 id="c-define-explain">C. Define / explain<a class="headerlink" href="#c-define-explain" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Explain the <strong>node-and-pointer</strong> model. Why is a linked list's memory scattered, not contiguous?</p>
+</li>
+<li>
+<p>Compare the <strong>cost of <code>insert at head</code></strong> in an array vs. a singly-linked list. Why does the linked list win by a factor of n?</p>
+</li>
+<li>
+<p>Explain why <strong><code>insert at tail</code></strong> is O(n) without a tail pointer but O(1) with one. What is the trade-off?</p>
+</li>
+<li>
+<p>Describe the <strong><code>dummy</code> node</strong> trick. Give one scenario where it eliminates nontrivial bugs.</p>
+</li>
+<li>
+<p>Explain the <strong>tortoise-and-hare</strong> algorithm (Floyd's cycle detection). Prove that if a cycle exists, the two pointers must meet.</p>
+</li>
+<li>
+<p>Compare <strong>singly-linked</strong> and <strong>doubly-linked</strong> lists on: insert at head, delete a given node, memory per node, and traversal in reverse.</p>
+</li>
+<li>
+<p>Describe the <strong>reverse-a-linked-list</strong> algorithm. Why does it need three pointers?</p>
+</li>
+<li>
+<p>Explain the <strong>LRU cache</strong> design. Why not just a hash map? Why not just a linked list?</p>
+</li>
+<li>
+<p>Compare the <strong>cost of accessing the i-th element</strong> in an array vs. a linked list. Give one application where this difference decides the choice.</p>
+</li>
+<li>
+<p>Explain why <strong>cache locality</strong> makes arrays faster than linked lists for linear scans, even though both are O(n). What is the wall-clock factor typically?</p>
+</li>
+</ol>
+<hr />
+<h2 id="answer-key">Answer key<a class="headerlink" href="#answer-key" title="Permanent link">&para;</a></h2>
+<details class="success">
+<summary>A. Multiple choice</summary>
+<ol>
+<li><strong>(a)</strong> O(1).</li>
+<li><strong>(c)</strong> O(n).</li>
+<li><strong>(a)</strong> O(1).</li>
+<li><strong>(c)</strong> two pointers at different speeds.</li>
+<li><strong>(b)</strong> O(n) time, O(1) space.</li>
+<li><strong>(b)</strong> eliminate first-insertion special case.</li>
+<li><strong>(b)</strong> O(m + n) time, O(1) space (for linked lists).</li>
+<li><strong>(b)</strong> returns to head.</li>
+<li><strong>(b)</strong> 1 and 2.</li>
+<li><strong>(b)</strong> doubly-linked + hash map.</li>
+<li><strong>(a)</strong> O(1).</li>
+<li><strong>(c)</strong> O(i), worst O(n).</li>
+</ol>
+</details>
+<details class="success">
+<summary>B. Fill in the blank</summary>
+<ol>
+<li><code>next</code></li>
+<li><span class="arithmatex">\(O(1)\)</span></li>
+<li><code>null</code></li>
+<li><code>prev</code></li>
+<li><span class="arithmatex">\(1\)</span></li>
+<li>dummy</li>
+<li>doubly-linked</li>
+<li>head</li>
+<li>three</li>
+<li>2</li>
+</ol>
+</details>
+<details class="success">
+<summary>C. Define / explain — model answers</summary>
+<ol>
+<li><em>Node-and-pointer model:</em> each node is a heap allocation containing a value and a pointer to the next node. The list is formed by following pointers. <em>Why scattered:</em> each node is a <strong>separate</strong> allocation — the allocator places them wherever there's free memory. Unlike arrays, there is no guarantee of adjacency — a node's "next" may be anywhere in the heap. This is why random access requires walking the list.</li>
+<li><em>Insert at head — array vs. linked list:</em> array insertion at index 0 requires shifting all <code>n</code> existing elements right → O(n). Linked-list insertion creates one node, sets <code>n.next = head</code>, and updates <code>head</code> → O(1). <strong>The n× difference</strong> comes from the array's contiguous layout: to make room at the front, every element must move. The linked list just redirects a pointer.</li>
+<li><em>Insert at tail — without tail pointer:</em> must walk from head to the last node, O(n). <em>With tail pointer:</em> <code>tail.next = newNode; tail = newNode</code> → O(1). <em>Trade-off:</em> the tail pointer is 8 bytes (one reference) per list; you save O(n) per append. Any application that appends more than a few times should use the tail pointer.</li>
+<li><em>Dummy node:</em> create a throwaway <code>Node(0)</code> at the start, use it as the "previous" for building, and return <code>dummy.next</code> at the end. <em>Scenario:</em> merging two sorted lists (Example 3.5) — without the dummy, every iteration needs a conditional to check "is this the first element?" — with the dummy, the loop is uniform, no special cases, no bugs. Used everywhere in competitive programming.</li>
+<li><em>Tortoise and hare:</em> both pointers start at head. Each iteration, <code>slow = slow.next</code> (1 step) and <code>fast = fast.next.next</code> (2 steps). <em>Proof of cycle detection:</em> if there's a cycle of length <span class="arithmatex">\(c\)</span>, once both pointers are inside the cycle, the gap between them decreases by 1 per iteration. After at most <span class="arithmatex">\(c\)</span> iterations, they meet. If there's no cycle, <code>fast</code> (or <code>fast.next</code>) becomes <code>null</code> and the loop terminates. <strong>O(n) time, O(1) space.</strong></li>
+<li><em>Singly vs. doubly:</em></li>
+<li>Insert at head: O(1) both.</li>
+<li>Delete given node: O(n) singly (need predecessor), <strong>O(1) doubly</strong> (prev pointer).</li>
+<li>Memory: 8 bytes singly, 16 bytes doubly (on 64-bit).</li>
+<li>Traversal in reverse: impossible singly, O(n) doubly.</li>
+<li><em>Reverse:</em> three pointers — <code>prev</code> (last reversed node), <code>cur</code> (node being reversed), <code>next</code> (temporary save of <code>cur.next</code>). Loop: save <code>next = cur.next</code>, set <code>cur.next = prev</code>, advance <code>prev = cur</code>, <code>cur = next</code>. Return <code>prev</code>. Each node visited once, O(n) time, O(1) space.</li>
+<li><em>LRU cache design:</em> a hash map gives O(1) key lookup, but has <strong>no order</strong> — it can't tell you "least recently used." A doubly-linked list maintains the recency order — head is most recent, tail is least recent. Together: O(1) get (via hash map), O(1) put (via hash map + O(1) unlink/relink on doubly-linked list). Neither structure alone suffices.</li>
+<li><em>i-th element access:</em> array O(1) (address arithmetic); linked list O(i) (walk i steps). <em>Application:</em> a program that stores a 10-million-element temperature time-series and repeatedly accesses <code>a[t]</code> for random <code>t</code> <strong>must use an array</strong> — a linked list would be 10 million times slower per access. Conversely, a program that repeatedly inserts at the front of a growing list <strong>must use a linked list</strong> — an array would shift all elements each time.</li>
+<li><em>Cache locality:</em> modern CPUs fetch 64-byte cache lines; an array stores 16 consecutive <code>int</code>s in one line → 1 miss, 15 hits per 16 accesses. A linked list stores each node in a separate heap allocation → <strong>every access misses cache</strong>. <em>Wall-clock factor:</em> typically <strong>5–20×</strong> slower for linked-list traversal than array traversal on the same data, despite both being O(n). This is why <strong>Big-O is not the whole story</strong> — constants, especially cache misses, dominate for small-to-medium data.</li>
+</ol>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Weiss</strong>, Chapter 3 — linked lists, stacks, queues.</li>
+<li><strong>Lafore</strong>, Chapters 5–6 — linked list and doubly-linked list.</li>
+<li><strong>CLRS</strong>, Section 10.2 (Linked lists).</li>
+<li><strong>Sedgewick &amp; Wayne</strong>, Section 1.3 — the "linked list vs. array" analysis.</li>
+<li><strong>Open Data Structures</strong>, Chapter 3 — rigorous linked list treatment with all operations.</li>
+<li><strong>Coding interview practice:</strong> LeetCode "Linked List" tag — 100+ problems, sorted by difficulty. Start with "Reverse Linked List," "Merge Two Sorted Lists," "Linked List Cycle."</li>
+<li><strong>"What Every Programmer Should Know About Memory"</strong> (Ulrich Drepper) — Section 3.3 on array vs. linked list performance.</li>
+</ul>
+<hr />
+<h2 id="suggested-tutorial-problems">Suggested tutorial problems<a class="headerlink" href="#suggested-tutorial-problems" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>Insert at head trace.</strong> Build <code>5 → 4 → 3 → 2 → 1</code> by inserting <code>1, 2, 3, 4, 5</code> in order using <code>insertAtHead</code>. Trace each step.</p>
+</li>
+<li>
+<p><strong>Insert at tail trace.</strong> Same build, but using <code>insertAtTail</code> with a tail pointer.</p>
+</li>
+<li>
+<p><strong>Delete all occurrences.</strong> Given a linked list and a value <code>v</code>, remove all occurrences of <code>v</code>. Edge cases: <code>v</code> is at the head; <code>v</code> is the only value.</p>
+</li>
+<li>
+<p><strong>Reverse a linked list.</strong> Implement the iterative reverse. Then implement the recursive reverse. Compare memory usage.</p>
+</li>
+<li>
+<p><strong>Merge two sorted lists.</strong> Implement Example 3.5. Verify with <code>[1, 3, 5]</code> and <code>[2, 4, 6]</code>.</p>
+</li>
+<li>
+<p><strong>Remove duplicates.</strong> Given a <strong>sorted</strong> linked list, remove all duplicate nodes. Given an <strong>unsorted</strong> linked list, do the same in O(n log n) using a sort first.</p>
+</li>
+<li>
+<p><strong>Detect and remove a cycle.</strong> Use Floyd's algorithm to detect a cycle; then find and remove the entry point.</p>
+</li>
+<li>
+<p><strong>Find the middle.</strong> Implement <code>middle(head)</code> using the two-pointer approach. Test on odd and even lengths.</p>
+</li>
+<li>
+<p><strong>Merge sort a linked list.</strong> Implement merge sort — split by finding the middle, sort each half recursively, merge. What is the total cost, and how does it compare to sorting an array?</p>
+</li>
+<li>
+<p><strong>Josephus.</strong> Implement the circular-list Josephus. Verify <span class="arithmatex">\(J(7, 3)\)</span> returns 4.</p>
+</li>
+<li>
+<p><strong>LRU cache.</strong> Implement <code>LRUCache</code> with <code>get</code> and <code>put</code> in O(1). Test with a sequence of operations.</p>
+</li>
+<li>
+<p><strong>Palindrome check.</strong> Given a linked list, determine whether its values form a palindrome. Solve in O(n) time and O(1) space (hint: find middle, reverse second half, compare, then reverse back).</p>
+</li>
+<li>
+<p><strong>Add two numbers.</strong> Given two linked lists representing digits of a number (reversed order), return a linked list representing their sum. E.g., <code>2 → 4 → 3</code> + <code>5 → 6 → 4</code> = <code>7 → 0 → 8</code> (342 + 465 = 807).</p>
+</li>
+<li>
+<p><strong>Copy a list with random pointers.</strong> Each node has <code>next</code> and <code>random</code> pointers. Copy the list in O(n) time. (Hint: interleave clones with originals, then split.)</p>
+</li>
+<li>
+<p><strong>Intersection of two lists.</strong> Given two linked lists, find the node where they intersect. Solve in O(m + n) time, O(1) space. (Hint: align tails.)</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

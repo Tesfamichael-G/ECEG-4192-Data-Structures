@@ -1,0 +1,2065 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BSc Electrical Engineering (Computer) · Semester VII · Module Data Storage and Analysis">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+        <link rel="canonical" href="https://tesfamichael-g.github.io/ECEG-4192-Data-Structures/solutions/07-graphs/">
+      
+      
+        <link rel="prev" href="../06-hash-tables/">
+      
+      
+        <link rel="next" href="../08-sorting/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>Chapter 7 - ECEG-4192 — Data Structures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#solutions-to-chapter-7-graphs" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-header__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECEG-4192 — Data Structures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 7
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../syllabus.md" class="md-tabs__link">
+        
+  
+    
+  
+  Syllabus
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../schedule.md" class="md-tabs__link">
+        
+  
+    
+  
+  Schedule
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapters/01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../slides/index.md" class="md-tabs__link">
+          
+  
+    
+  
+  Slides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+    
+  
+  Solutions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-nav__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    ECEG-4192 — Data Structures
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../syllabus.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syllabus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schedule
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction & Analysis of Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Linked Lists
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Stacks and Queues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Trees
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Hash Tables
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Graphs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. Sorting Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Slides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/index.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Solutions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Chapter 7
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-adjacency-matrix-vs-list-graph-from-example-71-n6-m7" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Adjacency matrix vs. list — graph from Example 7.1 (n=6, m=7)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-bfs-from-4-on-example-71-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. BFS from 4 on Example 7.1 graph
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-dfs-from-2-recursive-sorted-neighbors" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. DFS from 2 (recursive, sorted neighbors)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-connected-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Connected components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-bipartite-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Bipartite check
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-cycle-detection-undirected" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Cycle detection (undirected)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-cycle-detection-directed" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Cycle detection (directed)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-topological-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Topological sort
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-dijkstra-from-vertex-2-example-73-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Dijkstra from vertex 2 (Example 7.3 graph)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-dijkstra-fails-with-negative-edges" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Dijkstra fails with negative edges
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-bellmanford-with-negative-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Bellman–Ford with negative cycle
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-kruskal-union-find-trace-example-75" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Kruskal union-find trace (Example 7.5)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-prim-from-vertex-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. Prim from vertex 3
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-mst-uniqueness" class="md-nav__link">
+    <span class="md-ellipsis">
+      14. MST uniqueness
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-road-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      15. Road network
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-social-network-100m-users-path-from-alice-to-bob" class="md-nav__link">
+    <span class="md-ellipsis">
+      16. Social network — 100M users, path from Alice to Bob
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-adjacency-matrix-vs-list-graph-from-example-71-n6-m7" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Adjacency matrix vs. list — graph from Example 7.1 (n=6, m=7)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-bfs-from-4-on-example-71-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. BFS from 4 on Example 7.1 graph
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-dfs-from-2-recursive-sorted-neighbors" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. DFS from 2 (recursive, sorted neighbors)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-connected-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Connected components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-bipartite-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Bipartite check
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-cycle-detection-undirected" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Cycle detection (undirected)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-cycle-detection-directed" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Cycle detection (directed)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-topological-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Topological sort
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-dijkstra-from-vertex-2-example-73-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Dijkstra from vertex 2 (Example 7.3 graph)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-dijkstra-fails-with-negative-edges" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Dijkstra fails with negative edges
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-bellmanford-with-negative-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Bellman–Ford with negative cycle
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-kruskal-union-find-trace-example-75" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Kruskal union-find trace (Example 7.5)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-prim-from-vertex-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. Prim from vertex 3
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-mst-uniqueness" class="md-nav__link">
+    <span class="md-ellipsis">
+      14. MST uniqueness
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-road-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      15. Road network
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-social-network-100m-users-path-from-alice-to-bob" class="md-nav__link">
+    <span class="md-ellipsis">
+      16. Social network — 100M users, path from Alice to Bob
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="solutions-to-chapter-7-graphs">Solutions to Chapter 7 — Graphs<a class="headerlink" href="#solutions-to-chapter-7-graphs" title="Permanent link">&para;</a></h1>
+<p><a href="../../chapters/07-graphs/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.78 19.03a.75.75 0 0 1-1.06 0l-6.25-6.25a.75.75 0 0 1 0-1.06l6.25-6.25a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L5.81 11.5h14.44a.75.75 0 0 1 0 1.5H5.81l4.97 4.97a.75.75 0 0 1 0 1.06Z"/></svg></span> Back to Chapter 7</a></p>
+<hr />
+<h2 id="1-adjacency-matrix-vs-list-graph-from-example-71-n6-m7">1. Adjacency matrix vs. list — graph from Example 7.1 (n=6, m=7)<a class="headerlink" href="#1-adjacency-matrix-vs-list-graph-from-example-71-n6-m7" title="Permanent link">&para;</a></h2>
+<p><strong>Adjacency matrix:</strong> 6×6 = 36 ints × 4 bytes = <strong>144 bytes</strong>.</p>
+<p><strong>Adjacency list:</strong> 6 header pointers × 8 bytes = 48 bytes, plus 14 entries (2 × 7 for undirected) × (int + pointer) = 14 × 12 = 168 bytes, total ≈ <strong>216 bytes</strong>.</p>
+<p><strong>For sparse graphs (m ≈ n), memory is comparable</strong>, but list scales with m, matrix with n². For n=10,000, m=20,000: matrix = 400 MB, list ≈ 240 KB — <strong>1600× difference</strong>.</p>
+<hr />
+<h2 id="2-bfs-from-4-on-example-71-graph">2. BFS from 4 on Example 7.1 graph<a class="headerlink" href="#2-bfs-from-4-on-example-71-graph" title="Permanent link">&para;</a></h2>
+<p>Adjacency: 0: [1, 2], 1: [0, 3, 4], 2: [0, 4], 3: [1, 5], 4: [1, 2, 5], 5: [3, 4].</p>
+<p>BFS from 4:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Step</th>
+<th>Queue</th>
+<th>Visited</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td>[4]</td>
+<td>{4}</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td>[1, 2, 5]</td>
+<td>{4, 1, 2, 5}</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>[2, 5, 0, 3]</td>
+<td 0_ 3>+</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>[5, 0, 3]</td>
+<td>(none new from 2)</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>[0, 3]</td>
+<td>(none new from 5)</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>[3]</td>
+<td>(none new from 0)</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td>[]</td>
+<td>(none new from 3)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Visit order:</strong> 4, 1, 2, 5, 0, 3. <strong>Distances from 4:</strong> [2, 1, 1, 2, 0, 1].</p>
+<hr />
+<h2 id="3-dfs-from-2-recursive-sorted-neighbors">3. DFS from 2 (recursive, sorted neighbors)<a class="headerlink" href="#3-dfs-from-2-recursive-sorted-neighbors" title="Permanent link">&para;</a></h2>
+<p>DFS(2) → visit 2 → neighbors [0, 4].
+- DFS(0) → visit 0 → neighbors [1, 2].
+  - DFS(1) → visit 1 → neighbors [0, 3, 4].
+    - DFS(3) → visit 3 → neighbors [1, 5].
+      - DFS(5) → visit 5 → neighbors [3, 4].
+        - DFS(4) → visit 4 → neighbors [1, 2, 5] — all visited.</p>
+<p><strong>Visit order:</strong> 2, 0, 1, 3, 5, 4.</p>
+<p><strong>DFS tree edges:</strong> 2→0, 0→1, 1→3, 3→5, 5→4.</p>
+<hr />
+<h2 id="4-connected-components">4. Connected components<a class="headerlink" href="#4-connected-components" title="Permanent link">&para;</a></h2>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">countComponents</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="kt">boolean</span><span class="o">[]</span><span class="w"> </span><span class="n">visited</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">boolean</span><span class="o">[</span><span class="n">adj</span><span class="p">.</span><span class="na">size</span><span class="p">()</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">visited</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">            </span><span class="n">bfsMark</span><span class="p">(</span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">visited</span><span class="p">);</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">            </span><span class="n">count</span><span class="o">++</span><span class="p">;</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">count</span><span class="p">;</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>O(V + E) time.</strong></p>
+<hr />
+<h2 id="5-bipartite-check">5. Bipartite check<a class="headerlink" href="#5-bipartite-check" title="Permanent link">&para;</a></h2>
+<p>Color vertices with 2 colors such that every edge connects different colors. During BFS, alternate colors on each level. If an edge connects same-color vertices, graph is <strong>not bipartite</strong>.</p>
+<p><strong>O(V + E) time.</strong></p>
+<hr />
+<h2 id="6-cycle-detection-undirected">6. Cycle detection (undirected)<a class="headerlink" href="#6-cycle-detection-undirected" title="Permanent link">&para;</a></h2>
+<p>DFS: track parent. If a visited neighbor is not the parent, there's a cycle.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">boolean</span><span class="w"> </span><span class="nf">hasCycle</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">parent</span><span class="p">,</span><span class="w"> </span><span class="kt">boolean</span><span class="o">[]</span><span class="w"> </span><span class="n">visited</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="n">visited</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">u</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">visited</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">hasCycle</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">visited</span><span class="p">,</span><span class="w"> </span><span class="n">adj</span><span class="p">))</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">parent</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>O(V + E) time.</strong></p>
+<hr />
+<h2 id="7-cycle-detection-directed">7. Cycle detection (directed)<a class="headerlink" href="#7-cycle-detection-directed" title="Permanent link">&para;</a></h2>
+<p>3-color DFS: <code>WHITE</code> (unvisited), <code>GRAY</code> (in stack), <code>BLACK</code> (fully explored). Cycle if any back edge to a <code>GRAY</code> node.</p>
+<p>The undirected approach (parent check) fails on directed graphs because <code>u → v</code> and <code>u → w → v</code> is not a cycle but a diamond — parent check flags <code>v</code> as seen which is wrong.</p>
+<p><strong>O(V + E) time.</strong></p>
+<hr />
+<h2 id="8-topological-sort">8. Topological sort<a class="headerlink" href="#8-topological-sort" title="Permanent link">&para;</a></h2>
+<p><strong>DFS approach:</strong> reverse postorder.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">topoDFS</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">boolean</span><span class="o">[]</span><span class="w"> </span><span class="n">visited</span><span class="p">,</span><span class="w"> </span><span class="n">Deque</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">stack</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="n">visited</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">u</span><span class="p">))</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">visited</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="n">topoDFS</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">visited</span><span class="p">,</span><span class="w"> </span><span class="n">stack</span><span class="p">,</span><span class="w"> </span><span class="n">adj</span><span class="p">);</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="n">stack</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="p">}</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1">// after all DFS starts, stack (bottom to top) is topological order</span>
+</span></code></pre></div>
+<p><strong>Kahn's algorithm (BFS):</strong> compute in-degrees; enqueue nodes with 0 in-degree; pop, decrement neighbors' in-degrees, enqueue new 0s.</p>
+<p>Both <strong>O(V + E)</strong>. Result may differ if multiple valid orderings exist.</p>
+<hr />
+<h2 id="9-dijkstra-from-vertex-2-example-73-graph">9. Dijkstra from vertex 2 (Example 7.3 graph)<a class="headerlink" href="#9-dijkstra-from-vertex-2-example-73-graph" title="Permanent link">&para;</a></h2>
+<p>Edges: 0→1 (4), 0→2 (1), 1→3 (1), 2→1 (3), 2→3 (5), 3→4 (2), 2→4 (6).</p>
+<p>Start: dist = [∞, ∞, 0, ∞, ∞].</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Step</th>
+<th>Pop</th>
+<th>dist [0..4]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>(2, 0)</td>
+<td>[∞, 3, 0, 5, 6]</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>(1, 3)</td>
+<td>[∞, 3, 0, 4, 6] (1→3: 3+1=4 &lt; 5)</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>(3, 4)</td>
+<td>[∞, 3, 0, 4, 6] (3→4: 4+2=6, no change)</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>(4, 6)</td>
+<td>[∞, 3, 0, 4, 6]</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Final:</strong> dist = [∞, 3, 0, 4, 6]. Node 0 unreachable. ✓</p>
+<hr />
+<h2 id="10-dijkstra-fails-with-negative-edges">10. Dijkstra fails with negative edges<a class="headerlink" href="#10-dijkstra-fails-with-negative-edges" title="Permanent link">&para;</a></h2>
+<p>Graph: <code>s→u (1), s→v (4), u→v (-3)</code>.</p>
+<p><strong>Dijkstra from s:</strong>
+- Pop s (dist 0), relax: u←1, v←4.
+- Pop u (dist 1), relax u→v: 1 + (-3) = -2 &lt; 4 → <strong>but wait</strong>, if v was already popped at dist 4, we'd have missed this. In this graph, u is popped before v (dist 1 &lt; 4), so v gets updated to -2. <strong>Dijkstra actually works here.</strong></p>
+<p>Let me construct a failure case: <code>s→u (1), s→v (2), u→v (-5)</code>.
+- Pop s (dist 0), relax: u←1, v←2.
+- Pop u (dist 1), relax u→v: 1 + (-5) = -4 &lt; 2 → update v←-4. <strong>Still works</strong> because u is popped before v.</p>
+<p>Construct: <code>s→u (5), s→v (3), u→v (-10)</code>, <code>u→w (1)</code>, <code>v→w (1)</code>.</p>
+<ul>
+<li>Pop s (0), relax: u←5, v←3.</li>
+<li>Pop v (3), relax v→w: 3+1=4 → w←4. Also v→u? No edge.</li>
+<li>Pop w (4), no outgoing. <strong>w finalized at 4.</strong></li>
+<li>Pop u (5), relax u→v: 5+(-10)=-5 &lt; 3 → <strong>update v←-5</strong>. relax u→w: 5+1=6 &gt; 4, no.</li>
+<li>Pop v (-5). Done.</li>
+</ul>
+<p>But w's dist was finalized at 4 — should have been 5 + (-10) + 1 = <strong>-4</strong> via u→v→w. Dijkstra missed it because it finalized w before relaxing u.</p>
+<p><strong>Correct answer:</strong> w = -4. Dijkstra returns 4. <strong>Bellman–Ford gives -4.</strong> ✓</p>
+<hr />
+<h2 id="11-bellmanford-with-negative-cycle">11. Bellman–Ford with negative cycle<a class="headerlink" href="#11-bellmanford-with-negative-cycle" title="Permanent link">&para;</a></h2>
+<p>Graph: edges <code>(0,1,4), (0,2,5), (1,2,-3), (2,3,-1)</code>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Pass</th>
+<th>dist [0..3]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">init</td>
+<td>[0, ∞, ∞, ∞]</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td>[0, 4, 1, 0]</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>[0, 4, 1, 0] (stable)</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>[0, 4, 1, 0] (stable)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Converged in 2 passes.</strong> No negative cycle.</p>
+<p>Add <code>(3,1,-10)</code> → cycle 1→2→3→1: -3 + (-1) + (-10) = -14, negative cycle.</p>
+<p><strong>Pass 3</strong> would detect: relax (3,1) with dist[3] = 0: 0 + (-10) = -10 &lt; 4 → update dist[1] = -10. <strong>Change on the V-th pass → negative cycle detected.</strong></p>
+<hr />
+<h2 id="12-kruskal-union-find-trace-example-75">12. Kruskal union-find trace (Example 7.5)<a class="headerlink" href="#12-kruskal-union-find-trace-example-75" title="Permanent link">&para;</a></h2>
+<p>Sorted edges: (1,2,1), (3,4,2), (3,5,4), (0,2,5), (1,3,5), (2,3,5), (0,1,6), (2,4,6), (4,5,6).</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Edge</th>
+<th style="text-align: center;">Weight</th>
+<th style="text-align: center;">Union?</th>
+<th>Components</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">(1,2)</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">✓ (roots different)</td>
+<td>{1,2}, {3}, {4}, {5}, {0}</td>
+</tr>
+<tr>
+<td style="text-align: center;">(3,4)</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">✓</td>
+<td>{1,2}, {3,4}, {5}, {0}</td>
+</tr>
+<tr>
+<td style="text-align: center;">(3,5)</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">✓</td>
+<td>{1,2}, {3,4,5}, {0}</td>
+</tr>
+<tr>
+<td style="text-align: center;">(0,2)</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">✓</td>
+<td 3_4_5>{0,1,2},</td>
+</tr>
+<tr>
+<td style="text-align: center;">(1,3)</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">✓</td>
+<td>{0,1,2,3,4,5} — <strong>done</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">(2,3)</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">✗ (same component)</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">(0,1)</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">✗</td>
+<td>—</td>
+</tr>
+<tr>
+<td style="text-align: center;">...</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>MST weight: 1 + 2 + 4 + 5 + 5 = 17.</strong> ✓</p>
+<hr />
+<h2 id="13-prim-from-vertex-3">13. Prim from vertex 3<a class="headerlink" href="#13-prim-from-vertex-3" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Step</th>
+<th>Tree</th>
+<th>Min edge to outside</th>
+<th>Add</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>{3}</td>
+<td>(3,4,2)</td>
+<td>4 (w=2)</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>{3,4}</td>
+<td>(3,5,4)</td>
+<td>5 (w=4)</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>{3,4,5}</td>
+<td>(2,3,5) or (1,3,5) — tie</td>
+<td>2 (w=5)</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>{3,4,5,2}</td>
+<td>(1,2,1) or (1,3,5)</td>
+<td>1 (w=1)</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>{3,4,5,2,1}</td>
+<td>(0,2,5)</td>
+<td>0 (w=5)</td>
+</tr>
+<tr>
+<td style="text-align: center;">done</td>
+<td>all</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>MST weight: 2 + 4 + 5 + 1 + 5 = 17.</strong> ✓ Same as Kruskal.</p>
+<hr />
+<h2 id="14-mst-uniqueness">14. MST uniqueness<a class="headerlink" href="#14-mst-uniqueness" title="Permanent link">&para;</a></h2>
+<p>MST is <strong>unique</strong> iff all edge weights are distinct. If two edges have equal weight, there may be multiple MSTs (as in Example 7.5, where edges (1,3), (2,3), (1,3) all have weight 5 — choosing either (1,3) or a different weight-5 edge gives a valid MST).</p>
+<p>Example: triangle with all weights 1. Any two edges form an MST — 3 possible MSTs, all weight 2.</p>
+<hr />
+<h2 id="15-road-network">15. Road network<a class="headerlink" href="#15-road-network" title="Permanent link">&para;</a></h2>
+<p><strong>Representation:</strong> adjacency list — road networks are <strong>sparse</strong> (average city has ~3-4 roads per intersection).</p>
+<p><strong>Shortest route:</strong> Dijkstra — road weights are non-negative (distance).</p>
+<p><strong>Cheapest construction:</strong> Kruskal or Prim for MST — connects all towns with minimum total road length.</p>
+<hr />
+<h2 id="16-social-network-100m-users-path-from-alice-to-bob">16. Social network — 100M users, path from Alice to Bob<a class="headerlink" href="#16-social-network-100m-users-path-from-alice-to-bob" title="Permanent link">&para;</a></h2>
+<p>Adjacency matrix: 100M × 100M ints × 4 bytes = <strong>40 quadrillion bytes</strong> = <strong>40 petabytes</strong>. Impossible.</p>
+<p>Adjacency list: 100M users × ~200 friends × 12 bytes ≈ <strong>240 GB</strong>. Feasible on a large server.</p>
+<p><strong>Use adjacency list</strong> — sparse graph.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

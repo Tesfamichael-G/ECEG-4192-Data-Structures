@@ -1,0 +1,2847 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BSc Electrical Engineering (Computer) · Semester VII · Module Data Storage and Analysis">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+        <link rel="canonical" href="https://tesfamichael-g.github.io/ECEG-4192-Data-Structures/chapters/08-sorting/">
+      
+      
+        <link rel="prev" href="../07-graphs/">
+      
+      
+        <link rel="next" href="../../slides/01-introduction/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>8. Sorting Algorithms - ECEG-4192 — Data Structures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-8-sorting-algorithms" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-header__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECEG-4192 — Data Structures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              8. Sorting Algorithms
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../syllabus.md" class="md-tabs__link">
+        
+  
+    
+  
+  Syllabus
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../schedule.md" class="md-tabs__link">
+        
+  
+    
+  
+  Schedule
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../slides/index.md" class="md-tabs__link">
+          
+  
+    
+  
+  Slides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../solutions/" class="md-tabs__link">
+          
+  
+    
+  
+  Solutions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-nav__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    ECEG-4192 — Data Structures
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../syllabus.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syllabus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schedule
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction & Analysis of Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Linked Lists
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Stacks and Queues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Trees
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Hash Tables
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Graphs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    8. Sorting Algorithms
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    8. Sorting Algorithms
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#81-key-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1 Key concepts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.1 Key concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#811-stability" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1.1 Stability
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#812-in-place" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1.2 In-place
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#813-the-comparison-lower-bound" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1.3 The comparison lower bound
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#814-the-summary-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1.4 The summary table
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#82-bubble-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2 Bubble sort
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.2 Bubble sort">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-81-bubble-sort-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 8.1 — Bubble sort trace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#83-insertion-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.3 Insertion sort
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.3 Insertion sort">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-82-insertion-sort-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 8.2 — Insertion sort trace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#84-selection-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.4 Selection sort
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.4 Selection sort">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-83-selection-sort-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 8.3 — Selection sort trace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#85-merge-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.5 Merge sort
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.5 Merge sort">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-84-merge-sort-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 8.4 — Merge sort trace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#86-quicksort" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.6 Quicksort
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.6 Quicksort">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-85-quicksort-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 8.5 — Quicksort trace
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-86-quicksort-worst-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 8.6 — Quicksort worst case
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#87-heapsort-recap-from-chapter-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.7 Heapsort (recap from Chapter 5)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.7 Heapsort (recap from Chapter 5)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-87-heapsort-on-5-2-8-1-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 8.7 — Heapsort on [5, 2, 8, 1, 9]
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#88-choosing-the-right-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.8 Choosing the right sort
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-88-stability-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 8.8 — Stability matters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quiz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quiz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-multiple-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      A. Multiple choice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-fill-in-the-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      B. Fill in the blank
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-define-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      C. Define / explain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Answer key
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suggested-tutorial-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Suggested tutorial problems
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Slides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/index.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../solutions/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Solutions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#81-key-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1 Key concepts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.1 Key concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#811-stability" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1.1 Stability
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#812-in-place" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1.2 In-place
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#813-the-comparison-lower-bound" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1.3 The comparison lower bound
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#814-the-summary-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1.4 The summary table
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#82-bubble-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2 Bubble sort
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.2 Bubble sort">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-81-bubble-sort-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 8.1 — Bubble sort trace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#83-insertion-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.3 Insertion sort
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.3 Insertion sort">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-82-insertion-sort-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 8.2 — Insertion sort trace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#84-selection-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.4 Selection sort
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.4 Selection sort">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-83-selection-sort-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 8.3 — Selection sort trace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#85-merge-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.5 Merge sort
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.5 Merge sort">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-84-merge-sort-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 8.4 — Merge sort trace
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#86-quicksort" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.6 Quicksort
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.6 Quicksort">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-85-quicksort-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 8.5 — Quicksort trace
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-86-quicksort-worst-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 8.6 — Quicksort worst case
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#87-heapsort-recap-from-chapter-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.7 Heapsort (recap from Chapter 5)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.7 Heapsort (recap from Chapter 5)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-87-heapsort-on-5-2-8-1-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 8.7 — Heapsort on [5, 2, 8, 1, 9]
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#88-choosing-the-right-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.8 Choosing the right sort
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-88-stability-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 8.8 — Stability matters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quiz
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quiz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-multiple-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      A. Multiple choice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-fill-in-the-blank" class="md-nav__link">
+    <span class="md-ellipsis">
+      B. Fill in the blank
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-define-explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      C. Define / explain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Answer key
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suggested-tutorial-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Suggested tutorial problems
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="chapter-8-sorting-algorithms">Chapter 8 — Sorting Algorithms<a class="headerlink" href="#chapter-8-sorting-algorithms" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">Chapter at a glance</p>
+<p><strong>Contact hours:</strong> 2 lecture + 1 tutorial + 2 lab · <strong>Home study:</strong> ~5 h</p>
+<p><strong>Coverage (syllabus):</strong> introduction to sorting algorithms.</p>
+</div>
+<hr />
+<h2 id="learning-outcomes">Learning outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
+<p>By the end of this chapter you should be able to:</p>
+<ol>
+<li>Explain what a <strong>stable</strong> sort is, and why stability matters.</li>
+<li>Explain what an <strong>in-place</strong> sort is, and its memory implications.</li>
+<li>Implement and analyse: <strong>bubble, insertion, selection, merge, quicksort, heapsort</strong>.</li>
+<li>State the best, average, and worst-case complexities of each.</li>
+<li>Trace each algorithm on a small array.</li>
+<li>Choose the right sort based on data properties (size, distribution, existing order, stability requirements).</li>
+<li>Explain why comparison-based sorting has an Ω(n log n) lower bound.</li>
+</ol>
+<hr />
+<h2 id="81-key-concepts">8.1 Key concepts<a class="headerlink" href="#81-key-concepts" title="Permanent link">&para;</a></h2>
+<h3 id="811-stability">8.1.1 Stability<a class="headerlink" href="#811-stability" title="Permanent link">&para;</a></h3>
+<p>A sort is <strong>stable</strong> if equal elements keep their <strong>original relative order</strong>.</p>
+<p><strong>Example.</strong> Sort <code>[(3, "a"), (1, "x"), (3, "b")]</code> by the first field:</p>
+<ul>
+<li>Stable → <code>[(1, "x"), (3, "a"), (3, "b")]</code></li>
+<li>Unstable → <code>[(1, "x"), (3, "b"), (3, "a")]</code> (possible)</li>
+</ul>
+<p><strong>Why it matters.</strong> When you sort by one key, then by another, stability preserves the first sort as a tiebreaker. Example: sort by name, then by department — a stable sort gives alphabetically-ordered names within each department.</p>
+<h3 id="812-in-place">8.1.2 In-place<a class="headerlink" href="#812-in-place" title="Permanent link">&para;</a></h3>
+<p>A sort is <strong>in-place</strong> if it uses O(1) auxiliary memory (beyond a few variables). Merge sort is not (needs O(n)); heapsort and quicksort are (O(1) or O(log n) for recursion).</p>
+<h3 id="813-the-comparison-lower-bound">8.1.3 The comparison lower bound<a class="headerlink" href="#813-the-comparison-lower-bound" title="Permanent link">&para;</a></h3>
+<p>Any <strong>comparison-based</strong> sort must do at least <strong>Ω(n log n)</strong> comparisons in the worst case.</p>
+<p><strong>Proof (information-theoretic).</strong> There are <code>n!</code> possible permutations of input. Each comparison is a binary decision (yes/no). A decision tree that distinguishes all <code>n!</code> permutations must have height ≥ <code>log₂(n!) ≈ n log n − n</code> (Stirling). Therefore ≥ Ω(n log n) comparisons. ∎</p>
+<p>This means: <strong>no comparison-based sort can beat O(n log n) in the worst case.</strong> Faster sorts exist only with additional assumptions (counting, radix).</p>
+<h3 id="814-the-summary-table">8.1.4 The summary table<a class="headerlink" href="#814-the-summary-table" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th style="text-align: center;">Best</th>
+<th style="text-align: center;">Average</th>
+<th style="text-align: center;">Worst</th>
+<th style="text-align: center;">Space</th>
+<th style="text-align: center;">Stable?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bubble</strong></td>
+<td style="text-align: center;">O(n) (already sorted, with flag)</td>
+<td style="text-align: center;">O(n²)</td>
+<td style="text-align: center;">O(n²)</td>
+<td style="text-align: center;">O(1)</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+</tr>
+<tr>
+<td><strong>Insertion</strong></td>
+<td style="text-align: center;">O(n) (nearly sorted)</td>
+<td style="text-align: center;">O(n²)</td>
+<td style="text-align: center;">O(n²)</td>
+<td style="text-align: center;">O(1)</td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+</tr>
+<tr>
+<td><strong>Selection</strong></td>
+<td style="text-align: center;">O(n²)</td>
+<td style="text-align: center;">O(n²)</td>
+<td style="text-align: center;">O(n²)</td>
+<td style="text-align: center;">O(1)</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td><strong>Merge</strong></td>
+<td style="text-align: center;">O(n log n)</td>
+<td style="text-align: center;">O(n log n)</td>
+<td style="text-align: center;">O(n log n)</td>
+<td style="text-align: center;"><strong>O(n)</strong></td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+</tr>
+<tr>
+<td><strong>Quicksort</strong></td>
+<td style="text-align: center;">O(n log n)</td>
+<td style="text-align: center;">O(n log n)</td>
+<td style="text-align: center;"><strong>O(n²)</strong></td>
+<td style="text-align: center;">O(log n)</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td><strong>Heapsort</strong></td>
+<td style="text-align: center;">O(n log n)</td>
+<td style="text-align: center;">O(n log n)</td>
+<td style="text-align: center;">O(n log n)</td>
+<td style="text-align: center;">O(1)</td>
+<td style="text-align: center;">No</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="82-bubble-sort">8.2 Bubble sort<a class="headerlink" href="#82-bubble-sort" title="Permanent link">&para;</a></h2>
+<p><strong>Idea.</strong> Repeatedly compare adjacent pairs; if out of order, swap. After each pass, the largest remaining element "bubbles" to the end.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">bubbleSort</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="na">length</span><span class="p">;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">        </span><span class="kt">boolean</span><span class="w"> </span><span class="n">swapped</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">                </span><span class="n">swapped</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">swapped</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w">   </span><span class="c1">// already sorted</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost.</strong> Worst: O(n²) — n passes × n comparisons. Best (with <code>swapped</code> flag): O(n) — one pass, no swaps. Average: O(n²).</p>
+<p><strong>Stable:</strong> yes. <strong>In-place:</strong> yes.</p>
+<p><strong>Practical use:</strong> pedagogic only — never use for real data.</p>
+<h3 id="worked-example-81-bubble-sort-trace">Worked example 8.1 — Bubble sort trace<a class="headerlink" href="#worked-example-81-bubble-sort-trace" title="Permanent link">&para;</a></h3>
+<p>Sort <code>[5, 2, 8, 1, 9]</code>.</p>
+<p><strong>Pass 1:</strong>
+- Compare (5, 2) → swap → <code>[2, 5, 8, 1, 9]</code>
+- Compare (5, 8) → keep → <code>[2, 5, 8, 1, 9]</code>
+- Compare (8, 1) → swap → <code>[2, 5, 1, 8, 9]</code>
+- Compare (8, 9) → keep → <code>[2, 5, 1, 8, 9]</code>
+- <strong>After pass 1:</strong> <code>[2, 5, 1, 8, 9]</code> — largest (9) at end ✓</p>
+<p><strong>Pass 2 (n-1-i = 3 comparisons):</strong>
+- (2, 5) → keep
+- (5, 1) → swap → <code>[2, 1, 5, 8, 9]</code>
+- (5, 8) → keep
+- <strong>After pass 2:</strong> <code>[2, 1, 5, 8, 9]</code></p>
+<p><strong>Pass 3:</strong>
+- (2, 1) → swap → <code>[1, 2, 5, 8, 9]</code>
+- (2, 5) → keep</p>
+<p><strong>Pass 4:</strong>
+- (1, 2) → keep → <code>[1, 2, 5, 8, 9]</code> — sorted, <code>swapped</code> = false → break.</p>
+<p><strong>Total:</strong> 4 passes, 10 comparisons. <strong>O(n²).</strong></p>
+<hr />
+<h2 id="83-insertion-sort">8.3 Insertion sort<a class="headerlink" href="#83-insertion-sort" title="Permanent link">&para;</a></h2>
+<p><strong>Idea.</strong> Build the sorted array one element at a time — insert each new element into its correct position in the already-sorted prefix.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">insertionSort</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">            </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">            </span><span class="n">j</span><span class="o">--</span><span class="p">;</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">        </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">key</span><span class="p">;</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost.</strong> Best (nearly sorted): O(n) — one comparison per element, no shifts. Average: O(n²) — n/2 shifts per element. Worst (reverse-sorted): O(n²).</p>
+<p><strong>Stable:</strong> yes. <strong>In-place:</strong> yes.</p>
+<p><strong>Practical use:</strong> excellent for small arrays and <strong>nearly-sorted data</strong>. Java's <code>Arrays.sort</code> for primitive ints uses dual-pivot quicksort with insertion sort for subarrays &lt; 47 elements. Python's <code>Timsort</code> uses insertion sort on small runs.</p>
+<h3 id="worked-example-82-insertion-sort-trace">Worked example 8.2 — Insertion sort trace<a class="headerlink" href="#worked-example-82-insertion-sort-trace" title="Permanent link">&para;</a></h3>
+<p>Sort <code>[5, 2, 8, 1, 9]</code>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><code>i</code></th>
+<th style="text-align: center;"><code>key</code></th>
+<th><code>j</code> loop</th>
+<th>Array after</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td>j=0: a[0]=5 &gt; 2, shift 5 → j=-1</td>
+<td><code>[2, 5, 8, 1, 9]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">8</td>
+<td>j=1: a[1]=5 ≤ 8 → stop</td>
+<td><code>[2, 5, 8, 1, 9]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+<td>j=2: 8&gt;1 shift; j=1: 5&gt;1 shift; j=0: 2&gt;1 shift; j=-1</td>
+<td><code>[1, 2, 5, 8, 9]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">9</td>
+<td>j=3: 8≤9 → stop</td>
+<td><code>[1, 2, 5, 8, 9]</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total:</strong> 4 insertions, 4 shifts total. Nearly sorted = fast.</p>
+<p><strong>Best case</strong> — array already sorted: <code>[1, 2, 3, 4, 5]</code> → 0 shifts, 4 comparisons. <strong>O(n).</strong></p>
+<hr />
+<h2 id="84-selection-sort">8.4 Selection sort<a class="headerlink" href="#84-selection-sort" title="Permanent link">&para;</a></h2>
+<p><strong>Idea.</strong> Repeatedly find the <strong>minimum</strong> element in the unsorted suffix, swap it into position.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">selectionSort</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="na">length</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">minIdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">minIdx</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="n">minIdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="p">;</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">minIdx</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">minIdx</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">minIdx</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost.</strong> Always <strong>O(n²)</strong> — n passes, each scanning the remaining suffix. Best case is also O(n²) — no early exit.</p>
+<p><strong>Stable:</strong> <strong>No</strong> — the swap can move equal elements past each other. <strong>In-place:</strong> yes.</p>
+<p><strong>Practical use:</strong> rare — its only advantage is that it does <strong>at most n−1 swaps</strong> (useful when writes are expensive). Otherwise insertion sort or quicksort wins.</p>
+<h3 id="worked-example-83-selection-sort-trace">Worked example 8.3 — Selection sort trace<a class="headerlink" href="#worked-example-83-selection-sort-trace" title="Permanent link">&para;</a></h3>
+<p>Sort <code>[5, 2, 8, 1, 9]</code>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><code>i</code></th>
+<th style="text-align: center;">Min in <code>a[i..n-1]</code></th>
+<th>Swap with <code>a[i]</code></th>
+<th>Array after</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1 (index 3)</td>
+<td>swap a[0] ↔ a[3]</td>
+<td><code>[1, 2, 8, 5, 9]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2 (index 1)</td>
+<td>no swap</td>
+<td><code>[1, 2, 8, 5, 9]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">5 (index 3)</td>
+<td>swap a[2] ↔ a[3]</td>
+<td><code>[1, 2, 5, 8, 9]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">8 (index 3)</td>
+<td>no swap</td>
+<td><code>[1, 2, 5, 8, 9]</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total:</strong> 2 swaps, 10 comparisons. <strong>O(n²)</strong> comparisons, <strong>O(n)</strong> swaps.</p>
+<hr />
+<h2 id="85-merge-sort">8.5 Merge sort<a class="headerlink" href="#85-merge-sort" title="Permanent link">&para;</a></h2>
+<p><strong>Idea.</strong> Divide the array in half, recursively sort each half, then <strong>merge</strong> the two sorted halves in O(n).</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">mergeSort</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">lo</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">hi</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lo</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">hi</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">lo</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hi</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="n">mergeSort</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">lo</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">);</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="n">mergeSort</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">hi</span><span class="p">);</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="n">merge</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">lo</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">,</span><span class="w"> </span><span class="n">hi</span><span class="p">);</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="p">}</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="kt">void</span><span class="w"> </span><span class="nf">merge</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">lo</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">hi</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">hi</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">lo</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lo</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">hi</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="n">temp</span><span class="o">[</span><span class="n">k</span><span class="o">++]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">++]</span><span class="p">;</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">        </span><span class="k">else</span><span class="w">              </span><span class="n">temp</span><span class="o">[</span><span class="n">k</span><span class="o">++]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">++]</span><span class="p">;</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">mid</span><span class="p">)</span><span class="w"> </span><span class="n">temp</span><span class="o">[</span><span class="n">k</span><span class="o">++]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">++]</span><span class="p">;</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">hi</span><span class="p">)</span><span class="w">  </span><span class="n">temp</span><span class="o">[</span><span class="n">k</span><span class="o">++]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">++]</span><span class="p">;</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">arraycopy</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">lo</span><span class="p">,</span><span class="w"> </span><span class="n">temp</span><span class="p">.</span><span class="na">length</span><span class="p">);</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost.</strong> Recurrence: <code>T(n) = 2 T(n/2) + O(n)</code> → <strong>O(n log n) all cases.</strong> No adversarial input.</p>
+<p><strong>Stable:</strong> yes (with <code>&lt;=</code> in the merge comparison). <strong>In-place:</strong> <strong>No</strong> — needs O(n) auxiliary space.</p>
+<p><strong>Practical use:</strong> excellent general-purpose sort. Java's <code>Arrays.sort</code> for objects uses Timsort (a merge-sort variant). Python's <code>sorted()</code> uses Timsort. <strong>Use merge sort when you need guaranteed O(n log n) and stability.</strong></p>
+<h3 id="worked-example-84-merge-sort-trace">Worked example 8.4 — Merge sort trace<a class="headerlink" href="#worked-example-84-merge-sort-trace" title="Permanent link">&para;</a></h3>
+<p>Sort <code>[5, 2, 8, 1, 9]</code>.</p>
+<p><strong>Divide recursively:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>           [5, 2, 8, 1, 9]
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>              /        \
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>        [5, 2, 8]    [1, 9]
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>        /      \        |
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    [5, 2]   [8]     [1] [9]  (already size 1)
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    /   \
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>  [5]   [2]
+</span></code></pre></div></p>
+<p><strong>Merge back:</strong>
+- <code>[5]</code> + <code>[2]</code> → <code>[2, 5]</code>
+- <code>[2, 5]</code> + <code>[8]</code> → <code>[2, 5, 8]</code>
+- <code>[1]</code> + <code>[9]</code> → <code>[1, 9]</code>
+- <code>[2, 5, 8]</code> + <code>[1, 9]</code> → <code>[1, 2, 5, 8, 9]</code> ✓</p>
+<p><strong>Total:</strong> 5 elements, <code>log₂ 5 ≈ 2.32</code>, ~3 merge levels. <strong>O(n log n).</strong></p>
+<hr />
+<h2 id="86-quicksort">8.6 Quicksort<a class="headerlink" href="#86-quicksort" title="Permanent link">&para;</a></h2>
+<p><strong>Idea.</strong> Pick a <strong>pivot</strong>. Partition the array so that everything &lt; pivot is left, everything &gt; pivot is right. Recursively sort both halves.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">quickSort</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">lo</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">hi</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lo</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">hi</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">partition</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">lo</span><span class="p">,</span><span class="w"> </span><span class="n">hi</span><span class="p">);</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="n">quickSort</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">lo</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="n">quickSort</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">hi</span><span class="p">);</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">}</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="kt">int</span><span class="w"> </span><span class="nf">partition</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">lo</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">hi</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">pivot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">hi</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lo</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lo</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">hi</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">pivot</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">            </span><span class="n">i</span><span class="o">++</span><span class="p">;</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">hi</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">hi</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost.</strong> Best/average: <strong>O(n log n)</strong> (balanced partitions). Worst: <strong>O(n²)</strong> (already-sorted input with last-element pivot — the classic trap).</p>
+<p><strong>Stable:</strong> <strong>No</strong>. <strong>In-place:</strong> yes (except recursion stack, O(log n) average / O(n) worst).</p>
+<p><strong>Practical use:</strong> the fastest general-purpose sort in practice — small constants. Java uses dual-pivot quicksort for primitives; C++ <code>std::sort</code> is introsort (quicksort + heapsort + insertion sort). <strong>Always randomise or median-of-three the pivot</strong> to avoid O(n²) on sorted input.</p>
+<h3 id="worked-example-85-quicksort-trace">Worked example 8.5 — Quicksort trace<a class="headerlink" href="#worked-example-85-quicksort-trace" title="Permanent link">&para;</a></h3>
+<p>Sort <code>[3, 7, 8, 5, 2, 1, 9, 4]</code> using last-element pivot.</p>
+<p><strong>Partition (pivot = 4, index 7):</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><code>j</code></th>
+<th style="text-align: center;"><code>a[j]</code></th>
+<th style="text-align: center;">≤ 4?</th>
+<th>Action</th>
+<th>Array</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">✓</td>
+<td>i=0, swap a[0]↔a[0]</td>
+<td><code>[3, 7, 8, 5, 2, 1, 9, 4]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">✗</td>
+<td>—</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">✗</td>
+<td>—</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">✗</td>
+<td>—</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">✓</td>
+<td>i=1, swap a[1]↔a[4]</td>
+<td><code>[3, 2, 8, 5, 7, 1, 9, 4]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">✓</td>
+<td>i=2, swap a[2]↔a[5]</td>
+<td><code>[3, 2, 1, 5, 7, 8, 9, 4]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">✗</td>
+<td>—</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Final swap: <code>a[i+1] = a[3] ↔ a[7]</code> → <code>[3, 2, 1, 4, 7, 8, 9, 5]</code>. Pivot at index 3.</p>
+<p><strong>Recurse left</strong> <code>[3, 2, 1]</code> (pivot = 1): → <code>[1, 2, 3]</code>.
+<strong>Recurse right</strong> <code>[7, 8, 9, 5]</code> (pivot = 5): → <code>[5, 7, 8, 9]</code>.</p>
+<p><strong>Final:</strong> <code>[1, 2, 3, 4, 5, 7, 8, 9]</code> ✓</p>
+<h3 id="worked-example-86-quicksort-worst-case">Worked example 8.6 — Quicksort worst case<a class="headerlink" href="#worked-example-86-quicksort-worst-case" title="Permanent link">&para;</a></h3>
+<p><strong>Input:</strong> <code>[1, 2, 3, 4, 5, 6, 7, 8, 9]</code> (already sorted).</p>
+<p><strong>Pivot rule: last element.</strong></p>
+<ul>
+<li>Pivot = 9. Partition: everything else is smaller → pivot at end (index 8). Recurse on <code>[1..8]</code>.</li>
+<li>Pivot = 8. Partition: pivot at end (index 7). Recurse on <code>[1..7]</code>.</li>
+<li>...</li>
+</ul>
+<p><strong>Each partition does O(n) work but only splits off one element.</strong> Total: n + (n-1) + (n-2) + ... = <strong>O(n²)</strong>.</p>
+<p><strong>Fix:</strong> random pivot, median-of-three, or shuffle before sorting. <strong>Always do one of these</strong> — an already-sorted input is a common real-world case (e.g., re-sorting a previously-sorted list).</p>
+<hr />
+<h2 id="87-heapsort-recap-from-chapter-5">8.7 Heapsort (recap from Chapter 5)<a class="headerlink" href="#87-heapsort-recap-from-chapter-5" title="Permanent link">&para;</a></h2>
+<p><strong>Idea.</strong> Build a <strong>max-heap</strong> from the array (O(n)); repeatedly extract the max (swap root with last, sift-down).</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">heapSort</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="na">length</span><span class="p">;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">)</span><span class="w"> </span><span class="n">siftDown</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">);</span><span class="w">   </span><span class="c1">// build max-heap</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">        </span><span class="n">siftDown</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">);</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="p">}</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="kt">void</span><span class="w"> </span><span class="nf">siftDown</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">largest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">left</span><span class="w">  </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">left</span><span class="o">]</span><span class="w">  </span><span class="o">&gt;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">largest</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="n">largest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">left</span><span class="p">;</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">right</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">right</span><span class="o">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">largest</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="n">largest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">right</span><span class="p">;</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">largest</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">largest</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">largest</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="w">        </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">largest</span><span class="p">;</span>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Cost.</strong> Always <strong>O(n log n)</strong> — no adversarial input.</p>
+<p><strong>Stable:</strong> <strong>No</strong>. <strong>In-place:</strong> yes (O(1) auxiliary).</p>
+<p><strong>Practical use:</strong> when you need guaranteed O(n log n) with O(1) space. C++'s introsort falls back to heapsort when quicksort recursion gets too deep. Also: <strong>the basis of priority queues</strong>.</p>
+<h3 id="worked-example-87-heapsort-on-5-2-8-1-9">Worked example 8.7 — Heapsort on <code>[5, 2, 8, 1, 9]</code><a class="headerlink" href="#worked-example-87-heapsort-on-5-2-8-1-9" title="Permanent link">&para;</a></h3>
+<p><strong>Phase 1 — Build max-heap:</strong></p>
+<p>Starting array: <code>[5, 2, 8, 1, 9]</code>.</p>
+<ul>
+<li><code>i = 1</code> (value 2): children 1 (value 1), 9 (value 9). Sift-down: 2 &lt; 9, swap → <code>[5, 9, 8, 1, 2]</code>.</li>
+<li><code>i = 0</code> (value 5): children 9, 8. Max child 9. 5 &lt; 9, swap → <code>[9, 5, 8, 1, 2]</code>. At index 1 (value 5): children 1, 2. Max child 2. 5 &gt; 2, no swap.</li>
+</ul>
+<p><strong>Max-heap built:</strong> <code>[9, 5, 8, 1, 2]</code>.</p>
+<p><strong>Phase 2 — Extract max repeatedly:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Step</th>
+<th>Array (before extract)</th>
+<th>Swap root with last</th>
+<th>Sift-down range</th>
+<th>Array after</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td><code>[9, 5, 8, 1, 2]</code></td>
+<td>swap 9 ↔ 2</td>
+<td><code>[2, 5, 8, 1]</code> → sift</td>
+<td><code>[8, 5, 2, 1, 9]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td><code>[8, 5, 2, 1, 9]</code></td>
+<td>swap 8 ↔ 1</td>
+<td><code>[1, 5, 2]</code> → sift</td>
+<td><code>[5, 1, 2, 8, 9]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td><code>[5, 1, 2, 8, 9]</code></td>
+<td>swap 5 ↔ 2</td>
+<td><code>[2, 1]</code> → sift</td>
+<td><code>[2, 1, 5, 8, 9]</code></td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td><code>[2, 1, 5, 8, 9]</code></td>
+<td>swap 2 ↔ 1</td>
+<td><code>[1]</code> no sift</td>
+<td><code>[1, 2, 5, 8, 9]</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sorted:</strong> <code>[1, 2, 5, 8, 9]</code> ✓</p>
+<p><strong>Cost.</strong> Build: O(n). Extract n times: O(n log n). <strong>Total: O(n log n).</strong></p>
+<hr />
+<h2 id="88-choosing-the-right-sort">8.8 Choosing the right sort<a class="headerlink" href="#88-choosing-the-right-sort" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Best choice</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Small array (n &lt; 20)</strong></td>
+<td>Insertion sort</td>
+<td>Minimal constant</td>
+</tr>
+<tr>
+<td><strong>Nearly sorted</strong></td>
+<td>Insertion sort</td>
+<td>O(n) best case</td>
+</tr>
+<tr>
+<td><strong>Large, generic, stability needed</strong></td>
+<td>Merge sort</td>
+<td>O(n log n), stable</td>
+</tr>
+<tr>
+<td><strong>Large, generic, speed critical</strong></td>
+<td>Quicksort (randomised pivot)</td>
+<td>Fastest in practice</td>
+</tr>
+<tr>
+<td><strong>Large, need O(1) space</strong></td>
+<td>Heapsort</td>
+<td>O(n log n), O(1) space</td>
+</tr>
+<tr>
+<td><strong>Integer keys in bounded range</strong></td>
+<td>Counting/radix sort</td>
+<td>O(n) time</td>
+</tr>
+<tr>
+<td><strong>External (data &gt; RAM)</strong></td>
+<td>External merge sort</td>
+<td>Streamable</td>
+</tr>
+<tr>
+<td><strong>Partially sorted segments</strong></td>
+<td>Timsort (Java/Python)</td>
+<td>Detects and merges runs</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Java's <code>Arrays.sort</code>:</strong>
+- <strong>Primitives:</strong> dual-pivot quicksort (fast, non-stable).
+- <strong>Objects:</strong> Timsort (stable, merge-based).</p>
+<p><strong>Python's <code>sorted()</code>:</strong> Timsort.</p>
+<p><strong>C++ <code>std::sort</code>:</strong> introsort (quicksort + heapsort + insertion sort).</p>
+<p><strong>In practice, never implement your own sort for production</strong> — the language's built-in has 30 years of engineering.</p>
+<hr />
+<h2 id="worked-example-88-stability-matters">Worked example 8.8 — Stability matters<a class="headerlink" href="#worked-example-88-stability-matters" title="Permanent link">&para;</a></h2>
+<p><strong>Input:</strong> <code>[(3, "Alice"), (1, "Bob"), (3, "Carol"), (2, "Dave")]</code>.</p>
+<p>Sort by the first field.</p>
+<p><strong>Stable sort output:</strong> <code>[(1, "Bob"), (2, "Dave"), (3, "Alice"), (3, "Carol")]</code> — Alice before Carol.</p>
+<p><strong>Unstable sort output:</strong> <code>[(1, "Bob"), (2, "Dave"), (3, "Carol"), (3, "Alice")]</code> — Carol before Alice. Both 3s have the same key but swapped relative order.</p>
+<p><strong>Impact.</strong> If you now sort by the second field (name), the stable sort preserves Alice-before-Carol for the tie in department 3. The unstable sort loses that information.</p>
+<p><strong>Rule:</strong> use stable sorts (merge, insertion, bubble) when doing multi-key sorts. Use quicksort only when you don't care about relative order of equal elements.</p>
+<hr />
+<h2 id="chapter-summary">Chapter summary<a class="headerlink" href="#chapter-summary" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Comparison-based sorting has Ω(n log n) worst-case lower bound</strong> — information-theoretic.</li>
+<li><strong>Bubble sort</strong> — O(n²) average, O(n) best (with early exit). Pedagogical only.</li>
+<li><strong>Insertion sort</strong> — O(n²) average, O(n) best. <strong>Excellent for small and nearly-sorted arrays.</strong></li>
+<li><strong>Selection sort</strong> — always O(n²), O(n) swaps. Rarely preferred.</li>
+<li><strong>Merge sort</strong> — O(n log n) all cases, <strong>stable</strong>, but O(n) space.</li>
+<li><strong>Quicksort</strong> — O(n log n) average, <strong>O(n²) worst</strong> on sorted input with last-element pivot. <strong>Randomise the pivot.</strong></li>
+<li><strong>Heapsort</strong> — O(n log n) all cases, O(1) space, not stable.</li>
+<li><strong>Stability</strong> preserves relative order of equal elements — critical for multi-key sorting.</li>
+<li><strong>In-place</strong> sorts use O(1) auxiliary memory; merge sort does not.</li>
+<li><strong>Practical choice:</strong> primitives → quicksort; objects → Timsort (Java/Python); O(1) space required → heapsort; small/nearly-sorted → insertion sort.</li>
+</ol>
+<hr />
+<h2 id="quiz">Quiz<a class="headerlink" href="#quiz" title="Permanent link">&para;</a></h2>
+<h3 id="a-multiple-choice">A. Multiple choice<a class="headerlink" href="#a-multiple-choice" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Which sort is <strong>stable</strong>?</li>
+</ol>
+<p>(a) Selection (b) Quicksort (c) <strong>Merge</strong> (d) Heapsort</p>
+<ol>
+<li>Which sort has <strong>O(n²) worst-case</strong> but is fastest in practice on average?</li>
+</ol>
+<p>(a) Merge (b) <strong>Quicksort</strong> (c) Insertion (d) Bubble</p>
+<ol>
+<li>Which sort uses <strong>O(n) auxiliary space</strong>?</li>
+</ol>
+<p>(a) Quicksort (b) Heapsort (c) <strong>Merge</strong> (d) Insertion</p>
+<ol>
+<li>Insertion sort's best case is:</li>
+</ol>
+<p>(a) O(1) (b) O(log n) (c) <strong>O(n)</strong> (d) O(n²)</p>
+<ol>
+<li>The comparison-sort lower bound is:</li>
+</ol>
+<p>(a) O(1) (b) O(log n) (c) O(n) (d) <strong>Ω(n log n)</strong></p>
+<ol>
+<li>Quicksort's worst case is triggered by:</li>
+</ol>
+<p>(a) Random data (b) <strong>Already-sorted data with last-element pivot</strong> (c) Reverse data
+   (d) All-distinct values</p>
+<ol>
+<li>Heapsort's space complexity is:</li>
+</ol>
+<p>(a) O(1) (b) <strong>O(1)</strong> (c) O(log n) (d) O(n)</p>
+<ol>
+<li>Which algorithm is <strong>never</strong> used in production?</li>
+</ol>
+<p>(a) Insertion (b) <strong>Bubble</strong> (c) Quicksort (d) Merge</p>
+<ol>
+<li>Which sort processes in-place with O(1) space?</li>
+</ol>
+<p>(a) Merge (b) <strong>Heapsort</strong> (c) Timsort (d) Radix</p>
+<ol>
+<li>
+<p>Java's <code>Arrays.sort</code> for <strong>objects</strong> uses:</p>
+<p>(a) Quicksort (b) <strong>Timsort</strong> (c) Heapsort (d) Bubble</p>
+</li>
+<li>
+<p>Which sort has an O(n) best case?</p>
+<p>(a) Selection (b) <strong>Insertion</strong> (c) Merge (d) Heapsort</p>
+</li>
+<li>
+<p><strong>Stable</strong> sorting means:</p>
+<p>(a) The algorithm is deterministic (b) <strong>Equal elements keep original relative order</strong>
+(c) It always terminates (d) It uses O(1) space</p>
+</li>
+</ol>
+<h3 id="b-fill-in-the-blank">B. Fill in the blank<a class="headerlink" href="#b-fill-in-the-blank" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>A sort is <strong>_____</strong> if it preserves the relative order of equal elements.</p>
+</li>
+<li>
+<p>A sort is <strong>_____</strong> if it uses O(1) auxiliary memory.</p>
+</li>
+<li>
+<p>Any comparison sort requires at least <strong>Ω(_____)</strong> comparisons in the worst case.</p>
+</li>
+<li>
+<p>Merge sort's recurrence is <strong>T(n) = 2 T(n/2) + O(_____)</strong>, giving <strong>O(n log n)</strong>.</p>
+</li>
+<li>
+<p>Quicksort's worst case occurs when the pivot is always the <strong>_____</strong> or <strong>_____</strong> element.</p>
+</li>
+<li>
+<p><strong>_____</strong> sort builds a max-heap, then repeatedly extracts the max.</p>
+</li>
+<li>
+<p><strong>_____</strong> sort is used by Java's <code>Arrays.sort</code> for <strong>objects</strong>.</p>
+</li>
+<li>
+<p><strong>_____</strong> sort is best for already-sorted input.</p>
+</li>
+<li>
+<p><strong>_____</strong> sort always does at most n−1 swaps.</p>
+</li>
+<li>
+<p><strong>_____</strong> sort has O(n log n) worst case AND O(1) space.</p>
+</li>
+</ol>
+<h3 id="c-define-explain">C. Define / explain<a class="headerlink" href="#c-define-explain" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Define <strong>stability</strong> and <strong>in-place</strong>. Give one sort of each combination.</p>
+</li>
+<li>
+<p>Prove the <strong>Ω(n log n)</strong> lower bound for comparison sorts.</p>
+</li>
+<li>
+<p>Explain why <strong>quicksort's worst case</strong> is O(n²). How do you prevent it?</p>
+</li>
+<li>
+<p>Compare <strong>merge sort</strong> and <strong>quicksort</strong> on: stability, space, worst case, practical speed.</p>
+</li>
+<li>
+<p>Trace <strong>bubble sort</strong> on <code>[4, 1, 3, 2]</code>. How many swaps?</p>
+</li>
+<li>
+<p>Trace <strong>insertion sort</strong> on <code>[4, 1, 3, 2]</code>. How many shifts?</p>
+</li>
+<li>
+<p>Trace <strong>merge sort</strong> on <code>[4, 1, 3, 2]</code>. Show all merge steps.</p>
+</li>
+<li>
+<p>Explain why <strong>stability matters</strong> for multi-key sorting. Give a concrete example.</p>
+</li>
+<li>
+<p>Why is <strong>insertion sort</strong> used inside quicksort for small subarrays?</p>
+</li>
+<li>
+<p>Which sort would you choose for each scenario: (a) sorting 10 million integers in memory; (b) sorting 1 million objects needing stable order; (c) nearly-sorted data; (d) sorting in O(1) space.</p>
+</li>
+</ol>
+<hr />
+<h2 id="answer-key">Answer key<a class="headerlink" href="#answer-key" title="Permanent link">&para;</a></h2>
+<details class="success">
+<summary>A. Multiple choice</summary>
+<ol>
+<li><strong>(c)</strong> Merge.</li>
+<li><strong>(b)</strong> Quicksort.</li>
+<li><strong>(c)</strong> Merge.</li>
+<li><strong>(c)</strong> O(n).</li>
+<li><strong>(d)</strong> Ω(n log n).</li>
+<li><strong>(b)</strong> Already-sorted with last-element pivot.</li>
+<li><strong>(a)</strong> O(1) (same as b).</li>
+<li><strong>(b)</strong> Bubble.</li>
+<li><strong>(b)</strong> Heapsort.</li>
+<li><strong>(b)</strong> Timsort.</li>
+<li><strong>(b)</strong> Insertion.</li>
+<li><strong>(b)</strong> Equal elements keep original order.</li>
+</ol>
+</details>
+<details class="success">
+<summary>B. Fill in the blank</summary>
+<ol>
+<li>stable</li>
+<li>in-place</li>
+<li><span class="arithmatex">\(n \log n\)</span></li>
+<li><span class="arithmatex">\(n\)</span></li>
+<li>minimum; maximum (smallest; largest)</li>
+<li>Heapsort</li>
+<li>Timsort</li>
+<li>Insertion</li>
+<li>Selection</li>
+<li>Heapsort</li>
+</ol>
+</details>
+<details class="success">
+<summary>C. Define / explain — model answers</summary>
+<ol>
+<li><em>Stable:</em> preserves original relative order of equal elements (merge, insertion, bubble — stable; quicksort, heapsort, selection — unstable). <em>In-place:</em> uses O(1) auxiliary memory (bubble, insertion, selection, heapsort, quicksort — in-place; merge — not). <em>Combinations:</em> stable+in-place = insertion; stable+not-in-place = merge; unstable+in-place = quicksort or heapsort; unstable+not-in-place = selection with extra buffer (rarely used).</li>
+<li><em>Lower-bound proof:</em> comparison sorts distinguish <code>n!</code> possible input orderings. Each comparison yields 1 bit. A binary decision tree distinguishing <code>n!</code> possibilities must have depth ≥ log₂(n!). Stirling: log₂(n!) ≈ n log₂ n − n log₂ e = Ω(n log n). So any comparison sort makes ≥ Ω(n log n) comparisons in the worst case. ∎</li>
+<li><em>Quicksort worst case:</em> with last-element pivot, sorted input causes each partition to split off one element (the pivot at the end). n partitions, each scanning ~n elements → n + (n-1) + ... = O(n²). <em>Prevention:</em> random pivot (expected O(n log n) with high probability), median-of-three, or shuffle before sort.</li>
+<li><em>Merge vs. quicksort:</em> merge — stable, O(n) space, O(n log n) worst, slower constants. Quicksort — unstable, O(1) space, O(n log n) average but O(n²) worst, faster constants. <em>When to choose:</em> merge when stability or worst-case guarantee required; quicksort when speed matters and you control the pivot.</li>
+<li><em>Bubble sort trace on <code>[4, 1, 3, 2]</code>:</em> Pass 1 — (4,1)→swap, (4,3)→swap, (4,2)→swap → <code>[1, 3, 2, 4]</code>. Pass 2 — (1,3) keep, (3,2)→swap → <code>[1, 2, 3, 4]</code>. Pass 3 — no swap → done. <strong>Total swaps: 4.</strong></li>
+<li><em>Insertion sort trace on <code>[4, 1, 3, 2]</code>:</em> i=1, key=1, shift 4 → <code>[1, 4, 3, 2]</code>. i=2, key=3, shift 4 → <code>[1, 3, 4, 2]</code>. i=3, key=2, shift 4, shift 3 → <code>[1, 2, 3, 4]</code>. <strong>Total shifts: 4.</strong></li>
+<li><em>Merge sort trace on <code>[4, 1, 3, 2]</code>:</em> divide → <code>[4,1]</code> and <code>[3,2]</code>. Sort each → <code>[1,4]</code> and <code>[2,3]</code>. Merge → <code>[1,2,3,4]</code>. <strong>Cost: O(n log n) = O(4 log 4) = O(8) comparisons.</strong></li>
+<li><em>Why stability matters:</em> for multi-key sorting, you sort by one key, then by another. Stability preserves the first sort as a tiebreaker. Example: sort employees by department, then by name — a stable sort yields alphabetically-ordered names within each department. An unstable sort scrambles the name order within each department.</li>
+<li><em>Insertion sort for small subarrays:</em> its constant factor is tiny (~1 comparison per element when data is already nearly sorted from prior partitioning). The overhead of quicksort's partition and recursion dominates for &lt; ~20 elements. So switch to insertion sort at the base case — faster than continuing to recurse.</li>
+<li><em>Sort choice:</em><ul>
+<li>(a) <strong>10M ints in memory:</strong> dual-pivot quicksort (fastest in practice).</li>
+<li>(b) <strong>1M objects, stable:</strong> Timsort (Java/Python default).</li>
+<li>(c) <strong>Nearly sorted:</strong> insertion sort (O(n) best case).</li>
+<li>(d) <strong>O(1) space:</strong> heapsort (guaranteed O(n log n), O(1) space).</li>
+</ul>
+</li>
+</ol>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>CLRS</strong>, Chapters 2 (Insertion), 4 (Divide &amp; conquer), 7 (Quicksort), 8 (Sorting lower bounds).</li>
+<li><strong>Weiss</strong>, Chapter 7 (Sorting).</li>
+<li><strong>Lafore</strong>, Chapter 3 (Simple sorting), Chapter 6 (Recursion &amp; merge sort), Chapter 7 (Advanced sorting).</li>
+<li><strong>Sedgewick &amp; Wayne</strong>, Chapters 2.1–2.5 (Elementary, merge, quicksort, priority queues, applications).</li>
+<li><strong>Knuth</strong>, <em>The Art of Computer Programming</em>, Volume 3 — the definitive reference.</li>
+<li><strong>Timsort:</strong> <a href="https://en.wikipedia.org/wiki/Timsort">en.wikipedia.org/wiki/Timsort</a> — the algorithm behind Java and Python sorts.</li>
+<li><strong>Dual-pivot quicksort</strong> paper (Yaroslavskiy, 2009) — the algorithm Java uses for primitives.</li>
+<li><strong>VisuAlgo</strong> — <a href="https://visualgo.net/en/sorting">visualgo.net/en/sorting</a> — animated comparisons of all six sorts.</li>
+</ul>
+<hr />
+<h2 id="suggested-tutorial-problems">Suggested tutorial problems<a class="headerlink" href="#suggested-tutorial-problems" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>Bubble trace.</strong> Sort <code>[5, 3, 1, 4, 2]</code> with bubble sort. Count passes, comparisons, swaps.</p>
+</li>
+<li>
+<p><strong>Insertion trace.</strong> Same array, insertion sort. Count comparisons, shifts.</p>
+</li>
+<li>
+<p><strong>Selection trace.</strong> Same array, selection sort. Count swaps.</p>
+</li>
+<li>
+<p><strong>Merge trace.</strong> Same array, merge sort. Show all merge steps and total comparisons.</p>
+</li>
+<li>
+<p><strong>Quicksort trace.</strong> Same array, quicksort with last-element pivot. Show the partition steps.</p>
+</li>
+<li>
+<p><strong>Quicksort worst case.</strong> Sort <code>[1, 2, 3, 4, 5, 6]</code> with last-element pivot quicksort. Count comparisons. Compare with sorted input.</p>
+</li>
+<li>
+<p><strong>Heapsort trace.</strong> Same array as problem 1, heapsort. Show build-heap and extract-max steps.</p>
+</li>
+<li>
+<p><strong>Stability test.</strong> Given <code>[(3,A),(1,B),(2,C),(3,D),(1,E)]</code>, sort by key with merge sort and with quicksort. Which preserves A before D and B before E?</p>
+</li>
+<li>
+<p><strong>Nearly-sorted analysis.</strong> For an array that is 90% sorted (only a few elements out of place), which sort is fastest? Estimate comparisons.</p>
+</li>
+<li>
+<p><strong>Comparison count.</strong> For <code>n = 1000</code>, estimate comparisons for each sort: best, average, worst.</p>
+</li>
+<li>
+<p><strong>External sort.</strong> Design a sort for 10 GB of data on a machine with 1 GB of RAM. What's the strategy? (Hint: external merge sort.)</p>
+</li>
+<li>
+<p><strong>Sorting integers.</strong> Given an array of 10 million integers in <code>[0, 1000]</code>, which sort is fastest? Why? (Hint: counting sort.)</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

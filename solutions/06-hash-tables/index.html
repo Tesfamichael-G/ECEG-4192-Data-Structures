@@ -1,0 +1,1941 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BSc Electrical Engineering (Computer) · Semester VII · Module Data Storage and Analysis">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+        <link rel="canonical" href="https://tesfamichael-g.github.io/ECEG-4192-Data-Structures/solutions/06-hash-tables/">
+      
+      
+        <link rel="prev" href="../05-trees/">
+      
+      
+        <link rel="next" href="../07-graphs/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>Chapter 6 - ECEG-4192 — Data Structures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#solutions-to-chapter-6-hash-tables" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-header__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECEG-4192 — Data Structures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 6
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../syllabus.md" class="md-tabs__link">
+        
+  
+    
+  
+  Syllabus
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../schedule.md" class="md-tabs__link">
+        
+  
+    
+  
+  Schedule
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapters/01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../slides/index.md" class="md-tabs__link">
+          
+  
+    
+  
+  Slides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+    
+  
+  Solutions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-nav__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    ECEG-4192 — Data Structures
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../syllabus.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syllabus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schedule
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction & Analysis of Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Linked Lists
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Stacks and Queues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Trees
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Hash Tables
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Graphs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. Sorting Algorithms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Slides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/index.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/06-hash-tables/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8 Slides
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Solutions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-linked-lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-stacks-queues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 4
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-trees/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Chapter 6
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 6
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-division-method-3-6-9-12-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Division method — {3, 6, 9, 12, 15}
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-multiplication-method-m-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Multiplication method m = 16
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-polynomial-hash-dog-vs-god-p31-m101" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Polynomial hash "dog" vs "god", p=31, m=101
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-chaining-trace-m5-keys-12-17-22-27-32-37" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Chaining trace, m=5, keys {12, 17, 22, 27, 32, 37}
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-linear-probing-m7-same-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Linear probing, m=7, same keys
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-quadratic-probing-m7-same-keys-121722273237" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Quadratic probing, m=7, same keys {12,17,22,27,32,37}
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-double-hashing-m11-keys-2233445566" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Double hashing, m=11, keys {22,33,44,55,66}
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-tombstone-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Tombstone trace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-load-factor-05-linear-probing" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Load factor α = 0.5, linear probing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-amortised-rehashing-1000-inserts-doubling" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Amortised rehashing — 1000 inserts, doubling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-universal-hashing-p1009-m20-a17-b43" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Universal hashing — p=1009, m=20, a=17, b=43
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-two-sum-3-5-2-7-11-15-target-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Two-sum [3, 5, 2, 7, 11, 15], target 9
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-longest-substring-without-repeating-chars" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. Longest substring without repeating chars
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-group-anagrams" class="md-nav__link">
+    <span class="md-ellipsis">
+      14. Group anagrams
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-subarray-sum-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      15. Subarray sum = K
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-graphs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 7
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-sorting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter 8
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-division-method-3-6-9-12-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Division method — {3, 6, 9, 12, 15}
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-multiplication-method-m-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Multiplication method m = 16
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-polynomial-hash-dog-vs-god-p31-m101" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Polynomial hash "dog" vs "god", p=31, m=101
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-chaining-trace-m5-keys-12-17-22-27-32-37" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Chaining trace, m=5, keys {12, 17, 22, 27, 32, 37}
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-linear-probing-m7-same-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Linear probing, m=7, same keys
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-quadratic-probing-m7-same-keys-121722273237" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Quadratic probing, m=7, same keys {12,17,22,27,32,37}
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-double-hashing-m11-keys-2233445566" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Double hashing, m=11, keys {22,33,44,55,66}
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-tombstone-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Tombstone trace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-load-factor-05-linear-probing" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Load factor α = 0.5, linear probing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-amortised-rehashing-1000-inserts-doubling" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Amortised rehashing — 1000 inserts, doubling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-universal-hashing-p1009-m20-a17-b43" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Universal hashing — p=1009, m=20, a=17, b=43
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-two-sum-3-5-2-7-11-15-target-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Two-sum [3, 5, 2, 7, 11, 15], target 9
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-longest-substring-without-repeating-chars" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. Longest substring without repeating chars
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-group-anagrams" class="md-nav__link">
+    <span class="md-ellipsis">
+      14. Group anagrams
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-subarray-sum-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      15. Subarray sum = K
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="solutions-to-chapter-6-hash-tables">Solutions to Chapter 6 — Hash Tables<a class="headerlink" href="#solutions-to-chapter-6-hash-tables" title="Permanent link">&para;</a></h1>
+<p><a href="../../chapters/06-hash-tables/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.78 19.03a.75.75 0 0 1-1.06 0l-6.25-6.25a.75.75 0 0 1 0-1.06l6.25-6.25a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L5.81 11.5h14.44a.75.75 0 0 1 0 1.5H5.81l4.97 4.97a.75.75 0 0 1 0 1.06Z"/></svg></span> Back to Chapter 6</a></p>
+<hr />
+<h2 id="1-division-method-3-6-9-12-15">1. Division method — <code>{3, 6, 9, 12, 15}</code><a class="headerlink" href="#1-division-method-3-6-9-12-15" title="Permanent link">&para;</a></h2>
+<p><strong>m = 4:</strong> h(k) = {3, 2, 1, 0, 3} — <strong>collision</strong> between 3 and 15 → 1 collision.</p>
+<p><strong>m = 5:</strong> h(k) = {3, 1, 4, 2, 0} — <strong>all distinct</strong> → 0 collisions.</p>
+<p><strong>m = 7:</strong> h(k) = {3, 6, 2, 5, 1} — <strong>all distinct</strong> → 0 collisions.</p>
+<p><strong>Best: m = 5 or 7</strong> (prime, doesn't share factors with the common difference 3). <strong>Worst: m = 4</strong> (has factor 2, doesn't divide 3 — so 3 and 15 collide).</p>
+<p>Wait, m=4: 15 mod 4 = 3, 3 mod 4 = 3 — collide. Why? 15 - 3 = 12, and 12 is divisible by 4. Keys differing by multiples of m collide.</p>
+<hr />
+<h2 id="2-multiplication-method-m-16">2. Multiplication method <code>m = 16</code><a class="headerlink" href="#2-multiplication-method-m-16" title="Permanent link">&para;</a></h2>
+<p><code>h(k) = ⌊16 · ((k · 0.618) mod 1)⌋</code>.</p>
+<p>For k=1..5:
+- 1·0.618 = 0.618 → 16·0.618 = 9.88 → <strong>9</strong>
+- 2·0.618 = 1.236 → fract = 0.236 → 16·0.236 = 3.78 → <strong>3</strong>
+- 3·0.618 = 1.854 → fract = 0.854 → 16·0.854 = 13.66 → <strong>13</strong>
+- 4·0.618 = 2.472 → fract = 0.472 → 7.55 → <strong>7</strong>
+- 5·0.618 = 3.09 → fract = 0.09 → 1.44 → <strong>1</strong></p>
+<p><strong>Result:</strong> [9, 3, 13, 7, 1] — <strong>all distinct</strong>, spread across range.</p>
+<hr />
+<h2 id="3-polynomial-hash-dog-vs-god-p31-m101">3. Polynomial hash <code>"dog"</code> vs <code>"god"</code>, p=31, m=101<a class="headerlink" href="#3-polynomial-hash-dog-vs-god-p31-m101" title="Permanent link">&para;</a></h2>
+<p><code>h("dog")</code>: 100 + 111·31 + 103·31² = 100 + 3441 + 98,983 = 102,524 → 102,524 mod 101 = ?</p>
+<p>101 · 1015 = 102,515. 102,524 − 102,515 = <strong>9</strong>.</p>
+<p><code>h("god")</code>: 103 + 111·31 + 100·961 = 103 + 3441 + 96,100 = 99,644.</p>
+<p>101 · 986 = 99,586. 99,644 − 99,586 = <strong>58</strong>.</p>
+<p><strong>Different (9 vs 58)</strong> — order matters, hash values differ. ✓</p>
+<hr />
+<h2 id="4-chaining-trace-m5-keys-12-17-22-27-32-37">4. Chaining trace, m=5, keys <code>{12, 17, 22, 27, 32, 37}</code><a class="headerlink" href="#4-chaining-trace-m5-keys-12-17-22-27-32-37" title="Permanent link">&para;</a></h2>
+<p>h(k) = k mod 5: {2, 2, 2, 2, 2, 2}. <strong>All collide at bucket 2!</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Bucket 0</th>
+<th style="text-align: center;">1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td>37 → 32 → 27 → 22 → 17 → 12</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Max chain length: 6.</strong> This is a terrible hash function for these keys (all ≡ 2 mod 5). <strong>Fix:</strong> use a prime <code>m</code> that doesn't divide <code>(17-12) = 5, (22-17) = 5, ...</code> — wait, all differences are 5, so any <code>m</code> that divides 5 collides. <strong>Use m = 7</strong> (prime, doesn't divide 5) → all distinct.</p>
+<hr />
+<h2 id="5-linear-probing-m7-same-keys">5. Linear probing, m=7, same keys<a class="headerlink" href="#5-linear-probing-m7-same-keys" title="Permanent link">&para;</a></h2>
+<p>h(k) = k mod 7: {5, 3, 1, 6, 4, 2} — <strong>all distinct</strong>, no probing needed.</p>
+<p>Hmm, that's different from problem 4 because m changed from 5 to 7. All distinct → 0 probes.</p>
+<p>Let me redo with m=5 (same as problem 4):
+- Insert 12: h=2, empty → slot 2.
+- Insert 17: h=2, occupied by 12 → probe 3, empty → slot 3.
+- Insert 22: h=2, occupied by 12 → probe 3 (17) → probe 4 → slot 4.
+- Insert 27: h=2 → 3 → 4 → probe 0 → slot 0.
+- Insert 32: h=2 → 3 → 4 → 0 → 1 → slot 1.
+- Insert 37: h=2 → 3 → 4 → 0 → 1 → 2 → <strong>full</strong> — need resize.</p>
+<p><strong>Table:</strong> [27, 32, 12, 17, 22] (all 5 slots filled, then resize).</p>
+<p><strong>Max probes for insert 37: 6</strong> (checked all 5 slots). Bad.</p>
+<hr />
+<h2 id="6-quadratic-probing-m7-same-keys-121722273237">6. Quadratic probing, m=7, same keys <code>{12,17,22,27,32,37}</code><a class="headerlink" href="#6-quadratic-probing-m7-same-keys-121722273237" title="Permanent link">&para;</a></h2>
+<p>h(k) = k mod 7 = {5, 3, 1, 6, 4, 2} — all distinct.</p>
+<p><strong>No probing needed.</strong> All slots filled directly.</p>
+<hr />
+<h2 id="7-double-hashing-m11-keys-2233445566">7. Double hashing, m=11, keys <code>{22,33,44,55,66}</code><a class="headerlink" href="#7-double-hashing-m11-keys-2233445566" title="Permanent link">&para;</a></h2>
+<p>h₁(k) = k mod 11, h₂(k) = 1 + (k mod 10).</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Key</th>
+<th style="text-align: center;">h₁</th>
+<th style="text-align: center;">h₂</th>
+<th>Probe sequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">22</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1+2=3</td>
+<td>0, 3, 6, 9, 1, 4, 7, 10, 2, 5, 8</td>
+</tr>
+<tr>
+<td style="text-align: center;">33</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1+3=4</td>
+<td>0, 4, 8, 1, 5, 9, 2, 6, 10, 3, 7</td>
+</tr>
+<tr>
+<td style="text-align: center;">44</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1+4=5</td>
+<td>0, 5, 10, 4, 9, 3, 8, 2, 7, 1, 6</td>
+</tr>
+<tr>
+<td style="text-align: center;">55</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1+5=6</td>
+<td>0, 6, 1, 7, 2, 8, 3, 9, 4, 10, 5</td>
+</tr>
+<tr>
+<td style="text-align: center;">66</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1+6=7</td>
+<td>0, 7, 3, 10, 6, 2, 9, 5, 1, 8, 4</td>
+</tr>
+</tbody>
+</table>
+<p><strong>All start at h₁=0 (collision)</strong> but follow <strong>different</strong> probe sequences thanks to h₂.</p>
+<p>Insertion:
+- 22 → slot 0.
+- 33 → slot 0 occupied → probe 4 → slot 4.
+- 44 → 0 occupied, 4 occupied → probe 10 → slot 10.
+- 55 → 0, 4, 10 occupied → probe 1 → slot 1.
+- 66 → 0, 4, 10, 1 occupied → probe 7 → slot 7.</p>
+<p><strong>Final:</strong> slot 0=22, 1=55, 4=33, 7=66, 10=44.</p>
+<p><strong>No primary or secondary clustering</strong> — the probe sequences diverge. ✓</p>
+<hr />
+<h2 id="8-tombstone-trace">8. Tombstone trace<a class="headerlink" href="#8-tombstone-trace" title="Permanent link">&para;</a></h2>
+<p>Insert <code>{10, 20, 30}</code> into m=5 with linear probing, h(k) = k mod 5.</p>
+<ul>
+<li>10 → slot 0.</li>
+<li>20 → slot 0 occupied → slot 1.</li>
+<li>30 → slot 0 occupied → slot 1 occupied → slot 2.</li>
+</ul>
+<p>Table: [10, 20, 30, _, _].</p>
+<p><strong>Delete 20</strong> → tombstone at slot 1: [10, X, 30, _, _].</p>
+<p><strong>Lookup 30:</strong> h(30)=0 → slot 0 (10, no match) → slot 1 (X, keep going) → slot 2 (30, match) ✓ — <strong>3 probes</strong>.</p>
+<p><strong>Now delete 10</strong> → tombstone at slot 0: [X, X, 30, _, _].</p>
+<p><strong>Lookup 30:</strong> slot 0 (X) → slot 1 (X) → slot 2 (30) ✓ — <strong>3 probes</strong>.</p>
+<p><strong>Without tombstones</strong> (set deleted slots to EMPTY): after deleting 20, slot 1 is EMPTY. Lookup 30 starts at slot 0, sees 10 (no match), then slot 1 (EMPTY → <strong>stop</strong>), returns <strong>"not found"</strong> — WRONG.</p>
+<p><strong>This is why tombstones are required.</strong> ✓</p>
+<hr />
+<h2 id="9-load-factor-05-linear-probing">9. Load factor α = 0.5, linear probing<a class="headerlink" href="#9-load-factor-05-linear-probing" title="Permanent link">&para;</a></h2>
+<p><strong>Successful lookup:</strong> expected probes = ½(1 + 1/(1−0.5)) = ½(1 + 2) = <strong>1.5</strong>.</p>
+<p><strong>Unsuccessful lookup:</strong> expected probes = ½(1 + 1/(1−0.5)²) = ½(1 + 4) = <strong>2.5</strong>.</p>
+<hr />
+<h2 id="10-amortised-rehashing-1000-inserts-doubling">10. Amortised rehashing — 1000 inserts, doubling<a class="headerlink" href="#10-amortised-rehashing-1000-inserts-doubling" title="Permanent link">&para;</a></h2>
+<p>Starting size 2, doubling at α &gt; 0.75 → resize at sizes 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024.</p>
+<p>Rehash at sizes 2, 4, ..., 512: total work = 2 + 4 + 8 + ... + 512 = <strong>1022 operations</strong>.</p>
+<p>Plus 1000 inserts = 2022 operations total. <strong>Amortised per insert: 2.022</strong> = <strong>O(1)</strong>. ✓</p>
+<hr />
+<h2 id="11-universal-hashing-p1009-m20-a17-b43">11. Universal hashing — p=1009, m=20, a=17, b=43<a class="headerlink" href="#11-universal-hashing-p1009-m20-a17-b43" title="Permanent link">&para;</a></h2>
+<p>h(k) = ((17k + 43) mod 1009) mod 20.</p>
+<ul>
+<li>h(50) = ((850 + 43) mod 1009) mod 20 = (893 mod 1009) mod 20 = 893 mod 20 = <strong>13</strong>.</li>
+<li>h(150) = ((2550 + 43) mod 1009) mod 20 = (2593 mod 1009) mod 20 = (2593 − 2018) mod 20 = 575 mod 20 = <strong>15</strong>.</li>
+<li>h(250) = ((4250 + 43) mod 1009) mod 20 = (4293 mod 1009) mod 20 = (4293 − 4·1009 = 4293 − 4036 = 257) mod 20 = <strong>17</strong>.</li>
+</ul>
+<p><strong>All distinct</strong> under this hash.</p>
+<p>Under <code>h(k) = k mod 20</code>: 50 mod 20 = 10, 150 mod 20 = 10, 250 mod 20 = 10 — <strong>all collide</strong>. ✓</p>
+<p>Universal hashing avoids the pattern.</p>
+<hr />
+<h2 id="12-two-sum-3-5-2-7-11-15-target-9">12. Two-sum <code>[3, 5, 2, 7, 11, 15]</code>, target 9<a class="headerlink" href="#12-two-sum-3-5-2-7-11-15-target-9" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Step</th>
+<th style="text-align: center;">x</th>
+<th style="text-align: center;">target − x</th>
+<th style="text-align: center;">in set?</th>
+<th>set after</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">no</td>
+<td>{3}</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">no</td>
+<td>{3, 5}</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">no</td>
+<td>{3, 5, 2}</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;"><strong>yes!</strong></td>
+<td>— return true</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pair: (2, 7).</strong> ✓</p>
+<hr />
+<h2 id="13-longest-substring-without-repeating-chars">13. Longest substring without repeating chars<a class="headerlink" href="#13-longest-substring-without-repeating-chars" title="Permanent link">&para;</a></h2>
+<p>Sliding window with hash map <code>char → last index</code>. Extend right pointer; if char repeats, jump left pointer to <code>last index + 1</code>. Track max window size.</p>
+<p><strong>O(n) time, O(min(n, alphabet)) space.</strong></p>
+<p>For <code>"abcabcbb"</code>:
+- Window "abc" (max 3) → next 'a' repeats → new window "bca" → etc.
+- <strong>Answer: 3.</strong></p>
+<hr />
+<h2 id="14-group-anagrams">14. Group anagrams<a class="headerlink" href="#14-group-anagrams" title="Permanent link">&para;</a></h2>
+<p>For each string, sort characters → use as hash map key. Append original string to the value list.</p>
+<p><strong>O(n · k log k)</strong> time (k = max string length), <strong>O(n · k)</strong> space.</p>
+<p>For <code>["eat", "tea", "tan", "ate", "nat", "bat"]</code>:
+- "eat" sorted = "aet" → ["eat"]
+- "tea" sorted = "aet" → ["eat", "tea"]
+- "tan" sorted = "ant" → ["tan"]
+- "ate" sorted = "aet" → ["eat", "tea", "ate"]
+- "nat" sorted = "ant" → ["tan", "nat"]
+- "bat" sorted = "abt" → ["bat"]</p>
+<p><strong>Groups:</strong> [["eat","tea","ate"], ["tan","nat"], ["bat"]].</p>
+<hr />
+<h2 id="15-subarray-sum-k">15. Subarray sum = K<a class="headerlink" href="#15-subarray-sum-k" title="Permanent link">&para;</a></h2>
+<p>Track prefix sums in a hash map: <code>prefix → count</code>. For each index, <code>target_prefix = current_prefix − K</code>; if <code>target_prefix</code> is in the map, add its count to answer.</p>
+<p><strong>O(n) time, O(n) space.</strong></p>
+<p>For <code>[1, 1, 1]</code>, K=2:
+- prefix = 1, map {0:1, 1:1}
+- prefix = 2, target=0 in map (count=1) → ans += 1. Map {0:1, 1:1, 2:1}.
+- prefix = 3, target=1 in map (count=1) → ans += 1. Map {0:1, 1:1, 2:1, 3:1}.</p>
+<p><strong>Answer: 2</strong> (subarrays [1,1] at indices 0-1 and 1-2). ✓</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
